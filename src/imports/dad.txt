@@ -1,0 +1,123 @@
+Sample code and API for Nano Banana 2 (Gemini 3.1 Flash Image Preview)
+OpenRouter normalizes requests and responses across providers for you.
+1
+Get your API key
+Create an API key from your OpenRouter dashboard and set it as an environment variable:
+
+Create API Key
+
+Copy
+export OPENROUTER_API_KEY=sk-or-v1-...
+2
+Make your first request
+Use google/gemini-3.1-flash-image-preview with the OpenRouter API:
+
+OpenRouter supports image generation models that can output both text and images. These models can create images from text prompts when you specify modalities: ["image", "text"] in your request. The generated images are returned as base64-encoded data URLs in the assistant message. Learn more about image generation.
+
+In the examples below, the OpenRouter-specific headers are optional. Setting them allows your app to appear on the OpenRouter leaderboards.
+
+TypeScript SDK
+Python
+TypeScript (fetch)
+cURL
+Python (OpenAI)
+TypeScript (OpenAI)
+
+Copy
+import { OpenRouter } from "@openrouter/sdk";
+
+const openrouter = new OpenRouter({
+  apiKey: "<OPENROUTER_API_KEY>"
+});
+
+const result = await openrouter.chat.send({
+  model: "google/gemini-3.1-flash-image-preview",
+  messages: [
+    {
+      role: "user",
+      content: "Generate a beautiful sunset over mountains"
+    }
+  ],
+  modalities: ["image", "text"]
+});
+
+const message = result.choices[0].message;
+if (message.images) {
+  message.images.forEach((image, index) => {
+    const imageUrl = image.image_url.url;
+    console.log(`Generated image ${index + 1}: ${imageUrl.substring(0, 50)}...`);
+  });
+}
+Using third-party SDKs
+For information about using third-party SDKs and frameworks with OpenRouter, please see our frameworks documentation.
+
+3
+Enable streaming
+Add "stream": true to your request body to receive responses as server-sent events:
+
+
+Copy
+curl -N https://openrouter.ai/api/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OPENROUTER_API_KEY" \
+  -d '{
+  "model": "google/gemini-3.1-flash-image-preview",
+  "stream": true,
+  "messages": [
+    {"role": "user", "content": "Hello"}
+  ]
+}'
+Endpoint
+Sends a request for a model response for the given chat conversation. Supports both streaming and non-streaming modes.
+
+POST
+https://openrouter.ai/api/v1/chat/completions
+Authorization
+Bearer $OPENROUTER_API_KEY
+Content-Type
+application/json
+HTTP-Referer
+optional — your site URL, for rankings
+X-Title
+optional — your site name, for rankings
+Model
+google/gemini-3.1-flash-image-preview
+Creates a streaming or non-streaming response using the OpenAI Responses API format.
+
+Docs
+POST
+https://openrouter.ai/api/v1/responses
+Authorization
+Bearer $OPENROUTER_API_KEY
+Content-Type
+application/json
+HTTP-Referer
+optional — your site URL, for rankings
+X-Title
+optional — your site name, for rankings
+Model
+google/gemini-3.1-flash-image-preview
+Creates a message using the Anthropic Messages API format. Supports text, images, PDFs, tools, and extended thinking.
+
+Docs
+POST
+https://openrouter.ai/api/v1/messages
+Authorization
+Bearer $OPENROUTER_API_KEY
+Content-Type
+application/json
+HTTP-Referer
+optional — your site URL, for rankings
+X-Title
+optional — your site name, for rankings
+Model
+google/gemini-3.1-flash-image-preview
+Parameters
+Name	Type	Default	Description
+reasoning	map	—	Controls reasoning behavior for models that support thinking tokens, including whether reasoning is enabled, the reasoning effort, maximum reasoning tokens, and whether reasoning is excluded from the response.
+max_tokens	integer	—	This sets the upper limit for the number of tokens the model can generate in response.
+temperature	float	1	This setting influences the variety in the model's responses.
+top_p	float	1	This setting limits the model's choices to a percentage of likely tokens: only the top tokens whose probabilities add up to P.
+seed	integer	—	If specified, the inferencing will sample deterministically, such that repeated requests with the same seed and parameters should return the same result.
+response_format	map	—	Forces the model to produce specific output format.
+stop	array	—	Stop generation immediately if the model encounter any token specified in the stop array.

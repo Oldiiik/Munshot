@@ -1,0 +1,317 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ffffff;
+  --muted: #222222;
+  --muted-foreground: #a3a3a3;
+  --accent: #1a1a1a;
+  --accent-foreground: #ffffff;
+  --destructive: #ff453a;
+  --destructive-foreground: #ffffff;
+  --border: #222222;
+  --input: #1a1a1a;
+  --input-background: #0a0a0a;
+  --switch-background: #333333;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #a3a3a3;
+  --radius: 1.25rem;
+  --logo-primary: #0F0F0F;
+  --logo-secondary: #B8B8B8;
+}
+
+.dark {
+  --logo-primary: #FAFAFA;
+  --logo-secondary: #4A4A4A;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ffffff;
+  --muted: #222222;
+  --muted-foreground: #a3a3a3;
+  --accent: #1a1a1a;
+  --accent-foreground: #ffffff;
+  --destructive: #ff453a;
+  --destructive-foreground: #ffffff;
+  --border: #222222;
+  --input: #1a1a1a;
+  --ring: #a3a3a3;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+  h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+  h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+  h4 {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+  label {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+  button {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+  input {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+}
+
+@keyframes slow-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Moonshot theme system: radial toggle transitions */
+.moonshot-page {
+  transition: background-color 420ms ease, color 420ms ease;
+}
+
+/* ---------- Glassmorphism surfaces (Apple-style) ---------- */
+.glass {
+  background-color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(20, 20, 40, 0.04),
+    0 24px 60px -18px rgba(40, 40, 80, 0.22);
+}
+.dark .glass {
+  background-color: rgba(20, 20, 22, 0.92);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.30),
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 18px 50px -16px rgba(0, 0, 0, 0.6);
+}
+
+.glass-strong {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(20, 20, 40, 0.06),
+    0 40px 100px -24px rgba(40, 40, 80, 0.30);
+}
+.dark .glass-strong {
+  background-color: rgba(15, 15, 18, 0.96);
+  border-color: rgba(255, 255, 255, 0.10);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    0 30px 80px -20px rgba(0, 0, 0, 0.8);
+}
+
+.glass-subtle {
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 8px 24px -8px rgba(40, 40, 80, 0.10);
+}
+.dark .glass-subtle {
+  background-color: rgba(15, 15, 18, 0.85);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Ambient light blobs that the glass frosts */
+.ambient-bloom {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ambient-bloom::before,
+.ambient-bloom::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.55;
+  will-change: transform;
+}
+@media (max-width: 640px) {
+  .ambient-bloom::before,
+  .ambient-bloom::after {
+    filter: blur(48px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-bloom::before,
+  .ambient-bloom::after {
+    animation: none !important;
+  }
+}
+.ambient-bloom::before {
+  width: 70vw;
+  height: 70vw;
+  left: -15vw;
+  top: -15vw;
+  background: radial-gradient(circle, rgba(140, 160, 220, 0.85), rgba(190, 170, 220, 0.5) 45%, transparent 70%);
+  animation: bloom-a 22s ease-in-out infinite alternate;
+  opacity: 0.9;
+}
+.ambient-bloom::after {
+  width: 65vw;
+  height: 65vw;
+  right: -20vw;
+  bottom: -20vw;
+  background: radial-gradient(circle, rgba(220, 180, 200, 0.8), rgba(240, 200, 170, 0.5) 45%, transparent 70%);
+  animation: bloom-b 26s ease-in-out infinite alternate;
+  opacity: 0.9;
+}
+.dark .ambient-bloom::before {
+  background: radial-gradient(circle, rgba(80, 80, 120, 0.45), rgba(120, 90, 130, 0.2) 50%, transparent 70%);
+  opacity: 0.7;
+}
+.dark .ambient-bloom::after {
+  background: radial-gradient(circle, rgba(60, 100, 120, 0.4), rgba(120, 80, 90, 0.2) 50%, transparent 70%);
+  opacity: 0.7;
+}
+@keyframes bloom-a {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(20vw, 15vh) scale(1.15); }
+}
+@keyframes bloom-b {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-15vw, -10vh) scale(1.2); }
+}
+
+/* Cosmic starfield — restrained twinkle */
+@keyframes twinkle {
+  0%, 100% { opacity: var(--tw-base, 0.35); transform: scale(1); }
+  50%      { opacity: var(--tw-peak, 0.85); transform: scale(1.4); }
+}
+@keyframes shoot {
+  0%   { transform: translate3d(0, 0, 0) rotate(18deg); opacity: 0; }
+  10%  { opacity: 1; }
+  60%  { opacity: 1; }
+  100% { transform: translate3d(-60vw, 22vh, 0) rotate(18deg); opacity: 0; }
+}
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.starfield .star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 9999px;
+  background: currentColor;
+  color: rgba(0, 0, 0, 0.5);
+  animation: twinkle var(--dur, 4s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+.dark .starfield .star { color: rgba(255, 255, 255, 0.75); }
+.starfield .shooting {
+  position: absolute;
+  top: var(--top, 18%);
+  right: -12vw;
+  height: 1px;
+  width: 130px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  color: rgba(0, 0, 0, 0.45);
+  filter: blur(0.4px);
+  animation: shoot var(--dur, 2.6s) cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 8s) infinite;
+}
+.dark .starfield .shooting { color: rgba(255, 255, 255, 0.85); }
+@media (prefers-reduced-motion: reduce) {
+  .starfield .star, .starfield .shooting { animation: none !important; }
+  .starfield .shooting { display: none; }
+}
+
