@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <mask id="outer">
+      <rect width="32" height="32" fill="black"/>
+      <circle cx="15" cy="17" r="12" fill="white"/>
+      <circle cx="20.5" cy="12.5" r="11.5" fill="black"/>
+    </mask>
+    <mask id="inner">
+      <rect width="32" height="32" fill="black"/>
+      <circle cx="18" cy="18.5" r="9" fill="white"/>
+      <circle cx="13.5" cy="13.5" r="9.5" fill="black"/>
+    </mask>
+  </defs>
+  <circle cx="15" cy="17" r="12" fill="#1e2b4d" mask="url(#outer)"/>
+  <circle cx="18" cy="18.5" r="9" fill="#b9c6e2" mask="url(#inner)"/>
+  <path d="M25 2.5 C25.4 6 26 6.6 29.5 7 C26 7.4 25.4 8 25 11.5 C24.6 8 24 7.4 20.5 7 C24 6.6 24.6 6 25 2.5 Z" fill="#1e2b4d"/>
+</svg>
