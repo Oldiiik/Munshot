@@ -1,8 +1,7 @@
 # Moonshot — frontend demo
 
 A frontend-only demo of [Moonshot](https://github.com/): the AI slide-deck studio.
-Same landing page and dashboard as the real product, but with **no backend** —
-no Supabase, no generation worker. Everything runs client-side:
+Everything runs client-side:
 
 - **Demo auth** — any email/password signs you in (session kept in localStorage).
 - **Seeded decks** — eight sample decks (pitch + edu) built from bundled slide images.
