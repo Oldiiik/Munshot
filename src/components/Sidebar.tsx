@@ -19,6 +19,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 
 import { cn, deckTitle } from "@/lib/utils";
+import { ThemeToggle } from "@/lib/theme";
 import { MoonLogo } from "./MoonLogo";
 import type { DeckStore } from "@/store";
 import type { Deck, Mode, View } from "@/types";
@@ -85,7 +86,7 @@ export function Sidebar({
     { input: 0, output: 0, cached: 0 }
   );
   return (
-    <aside className="flex h-full flex-col border-r border-sidebar-border bg-sidebar">
+    <aside className="flex h-full flex-col overflow-hidden rounded-[22px] border border-sidebar-border bg-sidebar shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)]">
       {/* Brand + explicit product switch */}
       <div className="drag-region flex flex-col gap-2 px-3 pb-1 pt-3">
         <div className="no-drag flex items-center gap-2.5 px-1">
@@ -249,15 +250,18 @@ export function Sidebar({
               {busy ? status || "Working…" : "Idle"}
             </span>
           </div>
-          <button
-            type="button"
-            onClick={() => void signOut()}
-            title="Sign out"
-            aria-label="Sign out"
-            className="grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-destructive/15 hover:text-destructive"
-          >
-            <LogOut className="size-4" strokeWidth={2.2} />
-          </button>
+          <div className="flex shrink-0 items-center gap-1">
+            <ThemeToggle className="size-7" />
+            <button
+              type="button"
+              onClick={() => void signOut()}
+              title="Sign out"
+              aria-label="Sign out"
+              className="grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-destructive/15 hover:text-destructive"
+            >
+              <LogOut className="size-4" strokeWidth={2.2} />
+            </button>
+          </div>
         </div>
       </div>
     </aside>

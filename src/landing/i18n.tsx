@@ -5,6 +5,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { runViewTransition } from "./vt";
 
 export type Lang = "en" | "ru";
 
@@ -354,13 +355,22 @@ interface Ctx {
 const I18nContext = createContext<Ctx | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>(() => {
+  const [lang, setLangRaw] = useState<Lang>(() => {
     const saved = localStorage.getItem(KEY);
     return saved === "ru" || saved === "en" ? saved : "en";
   });
+
   useEffect(() => {
     localStorage.setItem(KEY, lang);
   }, [lang]);
+
+  // A native view transition cross-fades the old text into the new layout in one
+  // smooth pass — no reflow flash, no manual opacity juggling.
+  const setLang = (l: Lang) => {
+    if (l === lang) return;
+    runViewTransition(() => setLangRaw(l), { slow: true });
+  };
+
   return (
     <I18nContext.Provider value={{ lang, setLang, t: DICTS[lang] }}>
       {children}

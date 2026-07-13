@@ -71,11 +71,10 @@ export function HeroPrompt({ onSubmit }: Props) {
       transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="group relative mx-auto w-full max-w-2xl"
     >
-      {/* glow ring */}
-      <div className="pointer-events-none absolute -inset-px rounded-[1.6rem] bg-gradient-to-b from-white/20 to-white/0 opacity-60 blur-[2px] transition-opacity group-focus-within:opacity-100" />
-      <div className="pointer-events-none absolute -inset-8 rounded-full bg-white/5 opacity-0 blur-3xl transition-opacity duration-700 group-focus-within:opacity-100" />
+      {/* soft neutral halo that lifts on focus */}
+      <div className="pointer-events-none absolute -inset-8 rounded-full bg-white/[0.04] opacity-0 blur-3xl transition-opacity duration-700 group-focus-within:opacity-100" />
 
-      <div className="relative rounded-[1.5rem] border border-white/12 bg-white/[0.04] p-3 shadow-2xl backdrop-blur-xl">
+      <div className="ms-glass-strong relative rounded-[1.75rem] p-3">
         <div className="relative min-h-[68px] px-3 pt-2.5">
           <textarea
             value={value}
@@ -111,7 +110,7 @@ export function HeroPrompt({ onSubmit }: Props) {
           <Button
             type="button"
             onClick={submit}
-            className="rounded-xl bg-white text-black shadow-lg hover:bg-white"
+            className="ms-btn min-w-[168px] justify-center rounded-full"
           >
             {t.prompt.generate}
             <ArrowUp className="size-4 -rotate-45" />

@@ -6,14 +6,14 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
+import type { LucideIcon } from "lucide-react";
 import { useScrollContainer } from "./scroll";
 
 interface Props {
   id: string;
-  step: string;
   kicker: string;
   title: ReactNode;
-  points: { label: string; body: string }[];
+  points: { label: string; body: string; icon: LucideIcon }[];
   video: string;
   poster?: string;
   /** Right-align the header (used to alternate the rhythm between chapters). */
@@ -30,14 +30,13 @@ interface Props {
  */
 export function FeatureScene({
   id,
-  step,
   kicker,
   title,
   points,
   video,
   poster,
   flip,
-  glow = "from-indigo-500/35 via-violet-500/15",
+  glow = "from-white/12 via-white/5",
 }: Props) {
   const container = useScrollContainer();
   const sectionRef = useRef<HTMLElement>(null);
@@ -86,11 +85,12 @@ export function FeatureScene({
         >
           <div className={`lg:col-span-8 ${flip ? "lg:order-2 lg:col-start-5" : ""}`}>
             <div
-              className={`mb-5 flex items-center gap-4 ${flip ? "justify-end" : ""}`}
+              className={`mb-6 flex items-center gap-3 ${
+                flip ? "flex-row-reverse justify-end" : ""
+              }`}
             >
-              <span className="font-display text-2xl tabular-nums text-white/25">{step}</span>
-              <span className="h-px w-10 bg-white/20" />
-              <span className="text-sm font-medium tracking-tight text-indigo-300/90">
+              <span className="h-9 w-1 rounded-full bg-gradient-to-b from-white/70 via-white/30 to-transparent" />
+              <span className="text-[13px] font-medium uppercase tracking-[0.24em] text-white/55">
                 {kicker}
               </span>
             </div>
@@ -110,15 +110,7 @@ export function FeatureScene({
               style={{ opacity: reduce ? 0.5 : glowOpacity, willChange: "opacity" }}
               className={`pointer-events-none absolute -inset-16 rounded-[4rem] bg-gradient-to-br ${glow} to-transparent blur-[80px]`}
             />
-            <div className="relative overflow-hidden rounded-[20px] border border-white/12 bg-black/60 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]">
-              <div className="flex items-center gap-2 border-b border-white/8 bg-gradient-to-b from-white/[0.06] to-transparent px-5 py-3">
-                <span className="size-3 rounded-full bg-[#ff5f57]" />
-                <span className="size-3 rounded-full bg-[#febc2e]" />
-                <span className="size-3 rounded-full bg-[#28c840]" />
-                <div className="ml-3 hidden flex-1 rounded-md bg-white/[0.05] px-3 py-1.5 text-xs text-white/40 sm:block">
-                  moonshot-ashen.vercel.app
-                </div>
-              </div>
+            <div className="ms-glass relative overflow-hidden rounded-[24px] p-2 shadow-[0_50px_140px_-30px_rgba(0,0,0,0.85)]">
               <video
                 ref={videoRef}
                 src={video}
@@ -127,30 +119,42 @@ export function FeatureScene({
                 loop
                 playsInline
                 preload="metadata"
-                className="aspect-video w-full object-cover"
+                className="aspect-video w-full rounded-[18px] object-cover"
               />
             </div>
           </motion.div>
         </div>
 
-        {/* ---- points ---- */}
-        <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:grid-cols-3">
-          {points.map((p, i) => (
-            <motion.div
-              key={p.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-[#0a0a0f] p-6 text-left"
-            >
-              <div className="mb-2 font-display text-sm text-white/30 tabular-nums">
-                0{i + 1}
-              </div>
-              <h3 className="mb-1.5 text-[15px] font-medium text-white">{p.label}</h3>
-              <p className="text-sm leading-relaxed text-white/50">{p.body}</p>
-            </motion.div>
-          ))}
+        {/* ---- capabilities — editorial columns, hairline-ruled, no boxes ---- */}
+        <div className="mt-16 grid gap-x-0 gap-y-10 sm:grid-cols-3">
+          {points.map((p, i) => {
+            const Icon = p.icon;
+            return (
+              <motion.div
+                key={p.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.65, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                className={`group relative sm:px-9 ${
+                  i > 0 ? "sm:border-l sm:border-white/10" : "sm:pl-0"
+                }`}
+              >
+                <div className="mb-5 grid size-12 place-items-center rounded-full border border-white/15 text-white/80 transition-all duration-500 group-hover:border-white/45 group-hover:text-white group-hover:[transform:translateY(-2px)]">
+                  <Icon className="size-5" strokeWidth={1.5} />
+                </div>
+
+                <h3 className="text-[18px] font-semibold tracking-tight text-white">
+                  {p.label}
+                </h3>
+                <p className="mt-2 max-w-[30ch] text-[14.5px] leading-relaxed text-white/55">
+                  {p.body}
+                </p>
+
+                <span className="mt-5 block h-px w-9 bg-white/25 transition-all duration-500 ease-out group-hover:w-16 group-hover:bg-white/55" />
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Ticket, Loader2 } from "lucide-react";
+import { Ticket, Loader2, Plus } from "lucide-react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 
@@ -23,7 +23,8 @@ import {
   buildCanvaPrompt,
   CANVA_DIRECTIVE,
 } from "./lib/prompts";
-import { cleanMessage } from "./lib/utils";
+import { cleanMessage, deckTitle } from "./lib/utils";
+import { ThemeToggle } from "./lib/theme";
 import { useAuth } from "./auth/AuthContext";
 import { PENDING_BRIEF_KEY } from "./Root";
 import { navigate, usePathname } from "./lib/router";
@@ -636,34 +637,39 @@ export default function App() {
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="grid h-screen w-screen grid-cols-[256px_1fr] grid-rows-[minmax(0,1fr)] overflow-hidden bg-background text-foreground">
-        <Sidebar
-          view={view}
-          setView={setView}
-          decks={decks}
-          mode={mode}
-          onModeChange={switchMode}
-          busy={busy}
-          generatingDeckId={generatingDeckId}
-          status={status}
-          onNewDeck={newDeck}
-          isAdmin={isAdmin}
-        />
-        <main className="flex min-h-0 min-w-0 flex-col overflow-hidden">
-          {view === "studio" && renderStudio()}
-          {view === "insights" && <InsightsView deck={active ?? null} />}
-          {view === "community" && <CommunityView />}
-          {view === "dev" && isAdmin && (
-            <DevConsole entries={log} onClear={() => setLog([])} />
-          )}
-          {view === "settings" && (
-            <SettingsView
-              settings={settings}
-              onChange={updateSettings}
-              onReset={resetSettings}
-            />
-          )}
-        </main>
+      <div className="ms-app-shell h-screen w-screen overflow-hidden p-2.5 text-foreground">
+        <div className="grid h-full grid-cols-[268px_minmax(0,1fr)] gap-2.5">
+          <Sidebar
+            view={view}
+            setView={setView}
+            decks={decks}
+            mode={mode}
+            onModeChange={switchMode}
+            busy={busy}
+            generatingDeckId={generatingDeckId}
+            status={status}
+            onNewDeck={newDeck}
+            isAdmin={isAdmin}
+          />
+          <main className="relative flex min-h-0 min-w-0 flex-col overflow-hidden rounded-[22px] border border-border bg-card shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)]">
+            <Topbar view={view} deck={active ?? null} mode={mode} onNewDeck={newDeck} busy={busy} />
+            <div className="min-h-0 flex-1 overflow-hidden">
+              {view === "studio" && renderStudio()}
+              {view === "insights" && <InsightsView deck={active ?? null} />}
+              {view === "community" && <CommunityView />}
+              {view === "dev" && isAdmin && (
+                <DevConsole entries={log} onClear={() => setLog([])} />
+              )}
+              {view === "settings" && (
+                <SettingsView
+                  settings={settings}
+                  onChange={updateSettings}
+                  onReset={resetSettings}
+                />
+              )}
+            </div>
+          </main>
+        </div>
       </div>
 
       {codePromptDeck && (
@@ -678,6 +684,66 @@ export default function App() {
         />
       )}
     </TooltipProvider>
+  );
+}
+
+const VIEW_META: Record<View, { title: string; sub: string }> = {
+  studio: { title: "Studio", sub: "Draft, plan and render your deck" },
+  insights: { title: "Insights", sub: "Token usage and timing per deck" },
+  community: { title: "Community", sub: "Decks shared by the community" },
+  admin: { title: "Admin", sub: "Operations and controls" },
+  dev: { title: "Activity", sub: "Live generation log" },
+  settings: { title: "Settings", sub: "System prompts that steer generation" },
+};
+
+/** Slim contextual header above every view — breadcrumb, a primary action and
+ *  the global controls (theme, account). */
+function Topbar({
+  view,
+  deck,
+  onNewDeck,
+  busy,
+}: {
+  view: View;
+  deck: Deck | null;
+  mode: Mode;
+  onNewDeck: () => void;
+  busy: boolean;
+}) {
+  const { user } = useAuth();
+  const meta = VIEW_META[view];
+  const initial = (user?.email?.[0] ?? "M").toUpperCase();
+  return (
+    <header className="flex shrink-0 items-center justify-between gap-4 border-b border-border/70 px-6 py-3.5">
+      <div className="min-w-0">
+        <div className="flex items-center gap-2 text-[13px]">
+          <span className="font-semibold tracking-tight text-foreground">{meta.title}</span>
+          {view === "studio" && deck && (
+            <>
+              <span className="text-muted-foreground/40">/</span>
+              <span className="truncate text-muted-foreground">{deckTitle(deck)}</span>
+            </>
+          )}
+        </div>
+        <p className="mt-0.5 truncate text-xs text-muted-foreground">{meta.sub}</p>
+      </div>
+      <div className="flex shrink-0 items-center gap-2">
+        {view === "studio" && (
+          <Button
+            size="sm"
+            onClick={onNewDeck}
+            disabled={busy}
+            className="gap-1.5 rounded-full"
+          >
+            <Plus className="size-3.5" /> New deck
+          </Button>
+        )}
+        <ThemeToggle className="size-8" />
+        <div className="grid size-8 place-items-center rounded-full bg-primary text-[12px] font-semibold text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
+          {initial}
+        </div>
+      </div>
+    </header>
   );
 }
 

@@ -1,9 +1,18 @@
-import { useMemo, useRef } from "react";
-import { motion } from "motion/react";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { motion, useMotionValueEvent, useScroll } from "motion/react";
+import {
+  ArrowRight,
+  ChevronDown,
+  ExternalLink,
+  Fingerprint,
+  ImageIcon,
+  Layers,
+  ListTree,
+  PenLine,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useTheme, ThemeToggle } from "@/lib/theme";
 import { Logo } from "./Logo";
 import { HeroPrompt } from "./HeroPrompt";
 import { FeatureScene } from "./FeatureScene";
@@ -84,49 +93,118 @@ function LangToggle() {
   );
 }
 
+/** Center nav links with a soft highlight that glides between them on hover. */
+function NavLinks() {
+  const { t } = useI18n();
+  const [hovered, setHovered] = useState<string | null>(null);
+  const links = [
+    { href: "#generate", label: "Generate" },
+    { href: "#edit", label: "Edit" },
+    { href: "#output", label: "Examples" },
+    { href: "#export", label: "Export" },
+    { href: "#pricing", label: t.nav.pricing },
+  ];
+  return (
+    <div
+      onMouseLeave={() => setHovered(null)}
+      className="relative hidden items-center md:flex"
+    >
+      {links.map((l) => (
+        <a
+          key={l.href}
+          href={l.href}
+          onMouseEnter={() => setHovered(l.href)}
+          className="relative rounded-full px-3.5 py-1.5 text-sm text-white/60 transition-colors duration-300 hover:text-white"
+        >
+          {hovered === l.href && (
+            <motion.span
+              layoutId="nav-highlight"
+              className="absolute inset-0 -z-0 rounded-full bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+              transition={{ type: "spring", stiffness: 480, damping: 40 }}
+            />
+          )}
+          <span className="relative z-10">{l.label}</span>
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function LandingInner({ onAuth }: Props) {
   const { t } = useI18n();
+  const { theme } = useTheme();
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // condense the nav once the page leaves the very top
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll({ container: scrollRef });
+  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 16));
+
   return (
     <ScrollContainerContext.Provider value={scrollRef}>
-    <div ref={scrollRef} className="landing-scroll text-white">
+    <div
+      ref={scrollRef}
+      className="landing-scroll text-white"
+    >
       {/* scroll-reactive parallax backdrop */}
-      <ScrollAtmosphere />
+      <ScrollAtmosphere theme={theme} />
 
       <div className="relative z-10">
         {/* ---------- Nav ---------- */}
         <header className="sticky top-0 z-50 px-4 pt-4">
-          <nav className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/10 bg-black/40 py-2 pl-5 pr-2 backdrop-blur-xl">
-            <a href="#top" className="flex items-center gap-2">
-              <Logo className="size-6 text-white" />
-              <span className="text-[15px] font-semibold tracking-tight">Moonshot</span>
-            </a>
-            <div className="hidden items-center gap-7 text-sm text-white/60 md:flex">
-              <a href="#generate" className="transition-colors hover:text-white">Generate</a>
-              <a href="#edit" className="transition-colors hover:text-white">Edit</a>
-              <a href="#output" className="transition-colors hover:text-white">Examples</a>
-              <a href="#export" className="transition-colors hover:text-white">Export</a>
-              <a href="#pricing" className="transition-colors hover:text-white">{t.nav.pricing}</a>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <LangToggle />
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onAuth("signin")}
-                className="rounded-full text-white/70 hover:bg-white/10 hover:text-white"
-              >
-                {t.nav.signIn}
-              </Button>
-              <Button
-                size="sm"
-                onClick={() => onAuth("register")}
-                className="rounded-full bg-white text-black hover:bg-white"
-              >
-                {t.nav.getStarted} <ArrowRight className="size-3.5" />
-              </Button>
-            </div>
-          </nav>
+          <div
+            className={`ms-force-dark relative mx-auto text-white transition-[max-width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              scrolled ? "max-w-4xl" : "max-w-6xl"
+            }`}
+          >
+            {/* soft aura that deepens as you scroll — the magical lift */}
+            <div
+              className={`pointer-events-none absolute -inset-x-6 -bottom-6 -top-2 -z-10 rounded-full bg-white/10 blur-2xl transition-opacity duration-500 ${
+                scrolled ? "opacity-100" : "opacity-0"
+              }`}
+            />
+            <nav
+              className={`ms-glass flex items-center justify-between rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                scrolled
+                  ? "py-1.5 pl-5 pr-1.5 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.7)]"
+                  : "py-2 pl-5 pr-2"
+              }`}
+            >
+              {/* bright specular top edge — the luxury hairline (stays light in both themes) */}
+              <span className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.45)] to-transparent" />
+
+              <a href="#top" className="group flex items-center gap-2">
+                <span className="relative">
+                  <Logo className="size-6 text-white transition-transform duration-500 group-hover:rotate-[8deg]" />
+                  <span className="absolute inset-0 -z-10 rounded-full bg-[rgba(255,255,255,0.5)] opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-60" />
+                </span>
+                <span className="text-[15px] font-semibold tracking-tight">Moonshot</span>
+              </a>
+
+              <NavLinks />
+
+              <div className="flex items-center gap-1.5">
+                <ThemeToggle />
+                <LangToggle />
+                <span className="mx-1 hidden h-5 w-px bg-white/10 sm:block" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onAuth("signin")}
+                  className="hidden min-w-[76px] justify-center rounded-full text-white/70 hover:bg-white/10 hover:text-white sm:inline-flex"
+                >
+                  {t.nav.signIn}
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => onAuth("register")}
+                  className="ms-btn min-w-[120px] justify-center rounded-full sm:min-w-[132px]"
+                >
+                  {t.nav.getStarted} <ArrowRight className="size-3.5" />
+                </Button>
+              </div>
+            </nav>
+          </div>
         </header>
 
         {/* ---------- Hero ---------- */}
@@ -140,7 +218,7 @@ function LandingInner({ onAuth }: Props) {
               (no flat-black band, no hard seam) */}
           <div className="pointer-events-none absolute inset-0">
             <div
-              className="absolute inset-0 bg-cover bg-center"
+              className="ms-photo absolute inset-0 bg-cover bg-center"
               style={{
                 backgroundImage: "url(/hero-bg.webp)",
                 WebkitMaskImage:
@@ -149,17 +227,11 @@ function LandingInner({ onAuth }: Props) {
                   "radial-gradient(150% 96% at 50% -2%, #000 38%, rgba(0,0,0,0.5) 64%, transparent 82%)",
               }}
             />
-            <div className="absolute inset-0 bg-[radial-gradient(900px_520px_at_50%_38%,rgba(6,6,10,0.72),transparent_70%)]" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#06060a]/30 via-transparent to-transparent" />
-            <Starfield count={40} />
-
-            {/* drifting moon orb */}
-            <img
-              src="/moon-orb.webp"
-              alt=""
-              className="absolute right-[6%] top-28 hidden w-40 opacity-80 drop-shadow-[0_0_50px_rgba(150,170,255,0.3)] lg:block"
-              style={{ animation: "ms-float 9s ease-in-out infinite" }}
-            />
+            <div className="ms-darkveil absolute inset-0 bg-[radial-gradient(900px_520px_at_50%_38%,rgba(6,6,10,0.72),transparent_70%)]" />
+            <div className="ms-darkveil absolute inset-0 bg-gradient-to-b from-[#06060a]/30 via-transparent to-transparent" />
+            <Starfield count={22} />
+            {/* the drifting moon lives once, in <ScrollAtmosphere/>, so the hero
+                shows a single moon in every theme (no day-time double) */}
           </div>
 
           <div className="relative mx-auto max-w-3xl text-center">
@@ -171,7 +243,7 @@ function LandingInner({ onAuth }: Props) {
             >
               {t.hero.title1}
               <br />
-              <span className="text-indigo-200/90">{t.hero.title2}</span>
+              <span className="ms-accent">{t.hero.title2}</span>
             </motion.h1>
 
             <motion.p
@@ -198,12 +270,11 @@ function LandingInner({ onAuth }: Props) {
           </div>
         </section>
 
-        {/* ---------- 01 · Generate ---------- */}
+        {/* ---------- Generate ---------- */}
         <FeatureScene
           id="generate"
-          step="01"
           kicker="Generate"
-          glow="from-indigo-500/40 via-violet-500/15"
+          glow="from-white/12 via-white/5"
           title={
             <>
               A sentence in.
@@ -211,20 +282,19 @@ function LandingInner({ onAuth }: Props) {
             </>
           }
           points={[
-            { label: "Reads your brand", body: "Logo, refs and docs go in; the look comes back inferred, not templated." },
-            { label: "Editable outline", body: "Reorder, rewrite and trim the plan before a single slide renders." },
-            { label: "Rendered, not faked", body: "Each slide is a real image, one consistent visual system across the deck." },
+            { icon: Fingerprint, label: "Reads your brand", body: "Logo, refs and docs go in; the look comes back inferred, not templated." },
+            { icon: ListTree, label: "Editable outline", body: "Reorder, rewrite and trim the plan before a single slide renders." },
+            { icon: ImageIcon, label: "Rendered, not faked", body: "Each slide is a real image, one consistent visual system across the deck." },
           ]}
           video="/demo/generate.mp4"
         />
 
-        {/* ---------- 02 · Edit ---------- */}
+        {/* ---------- Edit ---------- */}
         <FeatureScene
           id="edit"
-          step="02"
           kicker="Edit"
           flip
-          glow="from-sky-400/40 via-cyan-400/15"
+          glow="from-white/12 via-white/5"
           title={
             <>
               Then keep
@@ -232,9 +302,9 @@ function LandingInner({ onAuth }: Props) {
             </>
           }
           points={[
-            { label: "Per-slide or all of it", body: "Send a single slide or batch the entire deck in one action." },
-            { label: "Truly editable", body: "Live elements you can move and restyle, never a flattened export." },
-            { label: "Straight to your account", body: "Opens in your own Canva workspace, ready to keep working." },
+            { icon: Layers, label: "Per-slide or all of it", body: "Send a single slide or batch the entire deck in one action." },
+            { icon: PenLine, label: "Truly editable", body: "Live elements you can move and restyle, never a flattened export." },
+            { icon: ExternalLink, label: "Straight to your account", body: "Opens in your own Canva workspace, ready to keep working." },
           ]}
           video="/demo/edit.mp4"
         />
@@ -291,11 +361,11 @@ function LandingInner({ onAuth }: Props) {
         <section className="ms-grain relative overflow-hidden px-4 py-36">
           <div className="pointer-events-none absolute inset-0">
             <div
-              className="absolute inset-0 bg-cover bg-center opacity-70"
+              className="ms-photo absolute inset-0 bg-cover bg-center opacity-70"
               style={{ backgroundImage: "url(/cta-bg.webp)" }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#08080a] via-[#08080a]/50 to-[#08080a]" />
-            <Starfield count={30} />
+            <div className="ms-darkveil absolute inset-0 bg-gradient-to-b from-[#08080a] via-[#08080a]/50 to-[#08080a]" />
+            <Starfield count={16} />
           </div>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -307,17 +377,17 @@ function LandingInner({ onAuth }: Props) {
             <img
               src="/moon-orb.webp"
               alt=""
-              className="mx-auto mb-2 w-36 drop-shadow-[0_0_40px_rgba(150,170,255,0.35)] sm:w-44"
+              className="ms-moon mx-auto mb-2 w-36 drop-shadow-[0_0_40px_rgba(150,170,255,0.35)] sm:w-44"
               style={{ animation: "ms-float 7s ease-in-out infinite" }}
             />
             <h2 className="font-display font-display-tight text-[clamp(2.4rem,6vw,4.5rem)] leading-[1] text-white">
-              {t.cta.title} <span className="text-indigo-200/90">{t.cta.accent}</span>
+              {t.cta.title} <span className="ms-accent">{t.cta.accent}</span>
             </h2>
             <p className="mx-auto mt-4 max-w-md text-white/60">{t.cta.subtitle}</p>
             <Button
               size="lg"
               onClick={() => onAuth("register")}
-              className="mt-8 rounded-full bg-white text-black hover:bg-white"
+              className="ms-btn mt-8 min-w-[160px] justify-center rounded-full"
             >
               {t.cta.button} <ArrowRight className="size-4" />
             </Button>
@@ -358,45 +428,43 @@ export function Landing({ onAuth }: Props) {
 
 function Section({
   id,
-  eyebrow,
   title,
   subtitle,
   children,
 }: {
   id?: string;
-  eyebrow: string;
+  /** kept for API compatibility; no longer rendered as an eyebrow */
+  eyebrow?: string;
   title: string;
   subtitle?: string;
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="relative px-4 py-24">
-      <div className="mx-auto mb-12 max-w-2xl text-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mb-3 flex justify-center"
-        >
-          <Badge
-            variant="outline"
-            className="rounded-full border-white/10 bg-white/[0.03] px-3 py-1 uppercase tracking-[0.18em] text-white/45"
-          >
-            {eyebrow}
-          </Badge>
-        </motion.div>
+    <section id={id} className="relative px-4 py-28">
+      <div className="mx-auto mb-14 max-w-3xl text-center">
         <motion.h2
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="font-display text-4xl tracking-tight sm:text-5xl"
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="font-display font-display-tight text-[clamp(2.6rem,6vw,4.8rem)] leading-[1.02] tracking-tight text-white"
         >
           {title}
         </motion.h2>
-        {subtitle && <p className="mx-auto mt-3 max-w-lg text-white/50">{subtitle}</p>}
+        {subtitle && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mx-auto mt-5 max-w-lg text-[17px] leading-relaxed text-white/55"
+          >
+            {subtitle}
+          </motion.p>
+        )}
       </div>
       {children}
     </section>
   );
 }
+

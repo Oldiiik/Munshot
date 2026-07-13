@@ -5,7 +5,7 @@
 
 /* ---- Moonshot dark theme (near-black monochrome / OLED, always dark) ---- */
 :root {
-  --radius: 0.8rem;
+  --radius: 1.25rem;
 
   --background: oklch(0.135 0 0);
   --foreground: oklch(0.97 0 0);
@@ -46,46 +46,8 @@
   --sidebar-ring: oklch(0.55 0 0);
 }
 
-/* ---- Moonshot Edu light theme (warm paper + indigo accent) ---- */
-.theme-edu {
-  --background: oklch(0.985 0.003 95);
-  --foreground: oklch(0.22 0.02 270);
-
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.02 270);
-
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.02 270);
-
-  /* primary = indigo accent CTA with white text */
-  --primary: oklch(0.55 0.18 274);
-  --primary-foreground: oklch(0.99 0 0);
-
-  --secondary: oklch(0.95 0.01 270);
-  --secondary-foreground: oklch(0.3 0.03 274);
-
-  --muted: oklch(0.955 0.006 270);
-  --muted-foreground: oklch(0.5 0.02 270);
-
-  --accent: oklch(0.94 0.03 274);
-  --accent-foreground: oklch(0.4 0.12 274);
-
-  --destructive: oklch(0.58 0.19 25);
-  --destructive-foreground: oklch(0.99 0 0);
-
-  --border: oklch(0.9 0.008 270);
-  --input: oklch(0.9 0.008 270);
-  --ring: oklch(0.55 0.18 274);
-
-  --sidebar: oklch(0.965 0.006 270);
-  --sidebar-foreground: oklch(0.25 0.02 270);
-  --sidebar-primary: oklch(0.55 0.18 274);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.92 0.035 274);
-  --sidebar-accent-foreground: oklch(0.38 0.12 274);
-  --sidebar-border: oklch(0.9 0.01 270);
-  --sidebar-ring: oklch(0.55 0.18 274);
-}
+/* Moonshot Edu owns a distinct palette — see html.theme-edu below the light
+   theme (placed there so it wins over .ms-light in Edu mode). */
 
 /* Smooth cross-fade when switching modes */
 .theme-edu,
@@ -131,8 +93,11 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system,
+  /* Poppins carries Latin; it lacks Cyrillic, so RU glyphs fall through to
+     Montserrat (the closest geometric match with full Cyrillic coverage). */
+  --font-sans: "Poppins", "Montserrat", ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @layer base {
@@ -194,15 +159,409 @@
   -webkit-app-region: no-drag;
 }
 
-/* ---- Landing page ---- */
+/* ---- Landing page — Poppins, monochrome, Apple-style glass ---- */
 .font-display {
-  font-family: "Clash Display", "Inter", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
   text-wrap: balance;
 }
 .font-display-tight {
-  letter-spacing: -0.035em;
+  letter-spacing: -0.055em;
+}
+
+/* utility / stage-readout labels */
+.font-mono-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-weight: 500;
+}
+
+/* signature accent: a tonal two-tone headline — same face, softened weight and
+   colour. No italic, no gradient. */
+.ms-accent {
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  color: color-mix(in oklab, var(--foreground) 42%, transparent);
+}
+
+/* ---- Material glassmorphism — deep, detailed, luxurious ----
+   Each surface layers a diagonal sheen over a frosted fill, a bright top edge,
+   a soft interior floor-shadow, and a wide ambient drop. The ::after adds a
+   faint specular highlight sweeping the top-left, the way real polished glass
+   catches a light source. */
+.ms-glass,
+.ms-glass-strong,
+.ms-glass-subtle {
+  position: relative;
+  isolation: isolate;
+}
+.ms-glass::after,
+.ms-glass-strong::after,
+.ms-glass-subtle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 90% at 15% -10%,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0) 55%
+  );
+  opacity: 0.9;
+  /* sits above the frosted fill but below content — isolate keeps it in-panel */
+  z-index: -1;
+}
+
+.ms-glass {
+  background-image: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.09),
+    rgba(255, 255, 255, 0.02) 42%,
+    rgba(255, 255, 255, 0.05)
+  );
+  background-color: rgba(22, 22, 26, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px) saturate(135%);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    inset 0 -14px 30px -18px rgba(0, 0, 0, 0.7),
+    0 2px 6px rgba(0, 0, 0, 0.35), 0 26px 64px -22px rgba(0, 0, 0, 0.72);
+}
+.ms-glass-strong {
+  background-image: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.11),
+    rgba(255, 255, 255, 0.025) 44%,
+    rgba(255, 255, 255, 0.06)
+  );
+  background-color: rgba(17, 17, 21, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+    inset 0 -18px 40px -20px rgba(0, 0, 0, 0.75),
+    0 3px 8px rgba(0, 0, 0, 0.45), 0 40px 90px -26px rgba(0, 0, 0, 0.85);
+}
+.ms-glass-subtle {
+  background-image: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.015) 50%,
+    rgba(255, 255, 255, 0.035)
+  );
+  background-color: rgba(20, 20, 24, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(12px) saturate(125%);
+  -webkit-backdrop-filter: blur(12px) saturate(125%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 12px 34px -18px rgba(0, 0, 0, 0.6);
+}
+
+/* solid pill button — foreground on background, flips with the theme */
+.ms-btn {
+  background: var(--foreground);
+  color: var(--background);
+  font-weight: 500;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.ms-btn:hover {
+  opacity: 0.9;
+}
+
+/* ---- Keep a subtree dark even inside the light theme ----
+   The navbar stays a deep, magical dark glass in both themes. It resets the
+   colour tokens back to dark and re-asserts the dark glass over the light
+   overrides (higher specificity + later in the cascade). */
+.ms-light .ms-force-dark {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --foreground: oklch(0.97 0 0);
+  --background: oklch(0.15 0 0);
+  color: #fff;
+}
+.ms-light .ms-force-dark .ms-glass,
+.ms-light .ms-force-dark .ms-glass-subtle {
+  background-image: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.09),
+    rgba(255, 255, 255, 0.02) 42%,
+    rgba(255, 255, 255, 0.05)
+  );
+  background-color: rgba(20, 20, 26, 0.55);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 2px 6px rgba(0, 0, 0, 0.35), 0 26px 64px -22px rgba(0, 0, 0, 0.72);
+}
+.ms-light .ms-force-dark .ms-glass::after,
+.ms-light .ms-force-dark .ms-glass-subtle::after {
+  background: radial-gradient(
+    120% 90% at 15% -10%,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0) 55%
+  );
+}
+
+/* ---- Shimmer — a slow specular sheen that sweeps a surface (the white theme's
+   "magic"). Applied to day-mode glass and hero surfaces. ---- */
+@keyframes ms-shimmer {
+  0% {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+.ms-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.ms-shimmer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  mix-blend-mode: overlay;
+  animation: ms-shimmer 7s cubic-bezier(0.16, 1, 0.3, 1) 1.5s infinite;
+}
+
+/* language switch gets a gentler, longer cross-fade than the theme flip */
+html.ms-vt-slow::view-transition-old(root),
+html.ms-vt-slow::view-transition-new(root) {
+  animation-duration: 0.62s;
+}
+
+/* slow breathing glow — cheap (opacity only) light for the dawn atmosphere */
+@keyframes ms-glow-pulse {
+  0%,
+  100% {
+    opacity: var(--o, 0.4);
+  }
+  50% {
+    opacity: calc(var(--o, 0.4) * 1.4);
+  }
+}
+/* a big soft light orb that drifts on its own path (transform only) */
+@keyframes ms-orb-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(4vw, 3vh, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ---- Theme switch: one buttery GPU cross-fade via the View Transitions API ----
+   No per-element colour transitions (those are what made switching laggy). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.42s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  mix-blend-mode: normal;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ---- Global light theme (monochrome "Munshot day") ----
+   Applied as `.ms-light` on <html>, so landing, auth and the dashboard all flip
+   together. Two mechanisms:
+   1. --color-white / --color-black flip the hard-coded text-white / bg-white /
+      border-white utilities the landing + auth use (kept per-alpha).
+   2. The design tokens (--background, --card, --sidebar, --primary…) are
+      redefined monochrome-light so the token-based dashboard themes cleanly. */
+html.ms-light {
+  color-scheme: light;
+
+  --color-white: #201a2b; /* ink */
+  --color-black: #f7f5f2; /* paper */
+
+  --background: #f5f3ef;
+  --foreground: #201a2b;
+  --card: #ffffff;
+  --card-foreground: #201a2b;
+  --popover: #ffffff;
+  --popover-foreground: #201a2b;
+
+  /* dark pill buttons on light — the Munshot day CTA */
+  --primary: #201a2b;
+  --primary-foreground: #f7f5f2;
+
+  --secondary: #ece7e0;
+  --secondary-foreground: #201a2b;
+  --muted: #eee9e2;
+  --muted-foreground: #6c6675;
+  --accent: #e9e3db;
+  --accent-foreground: #201a2b;
+
+  --destructive: oklch(0.58 0.19 25);
+  --destructive-foreground: #ffffff;
+
+  --border: rgba(30, 24, 40, 0.1);
+  --input: rgba(30, 24, 40, 0.14);
+  --ring: rgba(30, 24, 40, 0.32);
+
+  --sidebar: #f0ebe4;
+  --sidebar-foreground: #201a2b;
+  --sidebar-primary: #201a2b;
+  --sidebar-primary-foreground: #f7f5f2;
+  --sidebar-accent: #e5ded5;
+  --sidebar-accent-foreground: #201a2b;
+  --sidebar-border: rgba(30, 24, 40, 0.1);
+  --sidebar-ring: rgba(30, 24, 40, 0.32);
+}
+/* the marketing scroller paints its own warm-white field in day mode */
+.ms-light .landing-scroll {
+  background: #f7f5f2;
+}
+
+/* ---- Moonshot Edu — its own identity: "study garden" (emerald on warm cream).
+   Placed after .ms-light and given equal specificity so it wins in Edu mode
+   whatever the light/dark preference — Edu is one distinct, fresh palette. ---- */
+html.theme-edu {
+  color-scheme: light;
+
+  /* Edu ignores the hard-coded white/black flip — it's its own world */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --background: oklch(0.98 0.014 120); /* warm cream with a green whisper */
+  --foreground: oklch(0.27 0.045 165); /* deep forest ink */
+
+  --card: oklch(0.995 0.006 120);
+  --card-foreground: oklch(0.27 0.045 165);
+  --popover: oklch(0.995 0.006 120);
+  --popover-foreground: oklch(0.27 0.045 165);
+
+  /* primary = vivid emerald with cream text */
+  --primary: oklch(0.62 0.135 162);
+  --primary-foreground: oklch(0.99 0.01 120);
+
+  --secondary: oklch(0.945 0.02 150);
+  --secondary-foreground: oklch(0.34 0.06 165);
+
+  --muted: oklch(0.955 0.014 140);
+  --muted-foreground: oklch(0.5 0.03 160);
+
+  --accent: oklch(0.92 0.05 155);
+  --accent-foreground: oklch(0.4 0.1 165);
+
+  --destructive: oklch(0.58 0.19 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.9 0.02 150);
+  --input: oklch(0.9 0.02 150);
+  --ring: oklch(0.62 0.135 162);
+
+  --sidebar: oklch(0.965 0.022 145);
+  --sidebar-foreground: oklch(0.3 0.05 165);
+  --sidebar-primary: oklch(0.62 0.135 162);
+  --sidebar-primary-foreground: oklch(0.99 0.01 120);
+  --sidebar-accent: oklch(0.91 0.055 155);
+  --sidebar-accent-foreground: oklch(0.38 0.1 165);
+  --sidebar-border: oklch(0.9 0.025 150);
+  --sidebar-ring: oklch(0.62 0.135 162);
+}
+
+/* ---- Dashboard shell: floating panels on a softly-lit field ---- */
+.ms-app-shell {
+  background: radial-gradient(
+      1200px 700px at 100% -5%,
+      color-mix(in oklab, var(--primary) 12%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 600px at -5% 105%,
+      color-mix(in oklab, var(--foreground) 5%, transparent),
+      transparent 55%
+    ),
+    var(--background);
+}
+
+/* light glass — bright frosted panels, dark hairline (Munshot day surfaces) */
+.ms-light .ms-glass,
+.ms-light .ms-glass-strong,
+.ms-light .ms-glass-subtle {
+  border-color: rgba(20, 16, 26, 0.08);
+}
+.ms-light .ms-glass::after,
+.ms-light .ms-glass-strong::after,
+.ms-light .ms-glass-subtle::after {
+  background: radial-gradient(
+    120% 90% at 15% -10%,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0) 55%
+  );
+}
+.ms-light .ms-glass {
+  background-image: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.6)
+  );
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(20, 16, 26, 0.05), 0 2px 6px rgba(40, 30, 60, 0.06),
+    0 26px 64px -22px rgba(40, 30, 60, 0.22);
+}
+.ms-light .ms-glass-strong {
+  background-image: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.75)
+  );
+  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(20, 16, 26, 0.06), 0 3px 8px rgba(40, 30, 60, 0.08),
+    0 40px 90px -26px rgba(40, 30, 60, 0.28);
+}
+.ms-light .ms-glass-subtle {
+  background-image: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.45)
+  );
+  background-color: rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 34px -18px rgba(40, 30, 60, 0.16);
+}
+
+/* dark space photos read wrong on a light page — hide them by day */
+.ms-light .ms-photo {
+  opacity: 0 !important;
+}
+/* the hero/CTA hard-coded dark vignettes must not tint the light page */
+.ms-light .ms-darkveil {
+  opacity: 0 !important;
+}
+
+/* the moon by day: cooler, grounded with a soft cast shadow so the pale disc
+   reads beautifully against the bright sky instead of glowing like night */
+.ms-light .ms-moon {
+  opacity: 0.95 !important;
+  filter: saturate(0.7) brightness(0.97) contrast(1.05)
+    drop-shadow(0 22px 46px rgba(70, 60, 110, 0.38)) !important;
 }
 
 /* exponential ease-out curves — confident, no bounce */

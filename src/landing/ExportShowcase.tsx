@@ -30,8 +30,12 @@ function PanelFrame({
       whileInView={{ opacity: 1, y: 0, rotate: tilt }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay: index * 0.12, ease: EASE }}
-      whileHover={{ rotate: 0, y: -10 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-[18px] border border-white/12 bg-gradient-to-b from-white/[0.06] to-white/[0.02] p-3 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.85)] backdrop-blur-md"
+      whileHover={{
+        rotate: 0,
+        y: -10,
+        transition: { type: "spring", stiffness: 200, damping: 22 },
+      }}
+      className="ms-glass group relative flex h-full flex-col overflow-hidden rounded-[18px] p-3"
     >
       {/* window bar */}
       <div className="flex items-center gap-2 px-2 pb-3 pt-1">
@@ -111,10 +115,9 @@ function SlideCarousel({
     start();
   };
 
-  const ring =
-    accent === "sky"
-      ? "border-sky-400/70 ring-1 ring-sky-400/40"
-      : "border-indigo-400/70 ring-1 ring-indigo-400/40";
+  // accent kept in the signature for API compat, but the ring stays monochrome
+  void accent;
+  const ring = "border-white/45 ring-1 ring-white/25";
 
   return (
     <>
@@ -185,19 +188,19 @@ const FORMATS = [
     icon: FileImage,
     name: "PNG",
     body: "Crisp per-slide images, ready to drop anywhere.",
-    tone: "text-sky-300",
+    tone: "text-white/75",
   },
   {
     icon: FileText,
     name: "PDF",
     body: "Print-ready, one slide per page, sized to the art.",
-    tone: "text-rose-300",
+    tone: "text-white/75",
   },
   {
     icon: PenLine,
     name: "Canva",
     body: "Hand off live, editable elements — never a flat image.",
-    tone: "text-violet-300",
+    tone: "text-white/75",
   },
 ];
 
@@ -238,7 +241,7 @@ export function ExportShowcase() {
         tilt={1.6}
         file="investor-deck.key"
         badge="Moonshot"
-        badgeTone="text-indigo-200 bg-indigo-500/15 border-indigo-400/20"
+        badgeTone="text-white/80 bg-white/10 border-white/15"
         title="Pitch it"
         caption="Investor-ready decks with a brand the AI infers from your assets. Tap through the deck."
       >
@@ -250,7 +253,7 @@ export function ExportShowcase() {
         tilt={0}
         file="future-shock.key"
         badge="Moonshot Edu"
-        badgeTone="text-sky-200 bg-sky-500/15 border-sky-400/20"
+        badgeTone="text-white/80 bg-white/10 border-white/15"
         title="Teach it"
         caption="Edu mode turns any topic into a clear, visual explainer — one idea, beautifully laid out."
       >
@@ -262,7 +265,7 @@ export function ExportShowcase() {
         tilt={-1.6}
         file="export.pdf"
         badge="PDF · PNG · Canva"
-        badgeTone="text-violet-200 bg-violet-500/15 border-violet-400/20"
+        badgeTone="text-white/80 bg-white/10 border-white/15"
         title="Take it anywhere"
         caption="When the deck is done, it leaves in whatever format the room needs."
       >

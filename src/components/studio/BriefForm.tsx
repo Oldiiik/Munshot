@@ -91,28 +91,30 @@ export function BriefForm({ deck, busy, status, onChange, onGenerate, onBrowseCo
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, ease: "easeOut" }}
-        className="w-full max-w-2xl"
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-3xl"
       >
-        <div className="mb-7 text-center">
-          <div className="mx-auto mb-4 grid size-11 place-items-center rounded-2xl border border-border bg-card shadow-sm">
+        <div className="mb-9 text-center">
+          <div className="mx-auto mb-5 grid size-14 place-items-center rounded-[20px] border border-border bg-gradient-to-b from-primary/15 to-transparent text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
             {edu ? (
-              <GraduationCap className="size-5 text-foreground" />
+              <GraduationCap className="size-6" strokeWidth={1.75} />
             ) : (
-              <Sparkles className="size-5 text-foreground" />
+              <Sparkles className="size-6" strokeWidth={1.75} />
             )}
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight">
+          <h1 className="text-[30px] font-semibold leading-tight tracking-tight">
             {edu ? "Build a lesson from the curriculum" : "Design a deck from a brief"}
           </h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">
+          <p className="mx-auto mt-2.5 max-w-md text-[15px] leading-relaxed text-muted-foreground">
             {edu
               ? "Name one topic and drop in the source material — it plans a clear, student-friendly lesson you can refine."
               : "Describe your presentation and drop in brand assets — it learns the brand and drafts an outline you can refine."}
           </p>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card/80 p-2.5 shadow-xl backdrop-blur-xl">
+        <div className="relative">
+          <div className="pointer-events-none absolute -inset-4 -z-10 rounded-[32px] bg-primary/[0.07] blur-2xl" />
+          <div className="rounded-[26px] border border-border bg-card/90 p-3 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
           <Textarea
             value={deck.brief}
             onChange={(e) => onChange({ brief: e.target.value })}
@@ -232,6 +234,7 @@ export function BriefForm({ deck, busy, status, onChange, onGenerate, onBrowseCo
               <Wand2 className="size-4" />
               {edu ? "Plan lesson" : "Create outline"}
             </Button>
+          </div>
           </div>
         </div>
 
