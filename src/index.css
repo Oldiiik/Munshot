@@ -2963,7 +2963,7 @@ html.ms-light .ms-community-pulse, .ms-light .ms-community-pulse > div + div, .m
   transform: translateX(0);
   transition: max-width 150ms cubic-bezier(.22, 1, .36, 1), opacity 100ms ease, transform 150ms cubic-bezier(.22, 1, .36, 1);
 }
-.ms-sidebar-active-indicator { z-index: 0 !important; border-radius: 7px !important; background: linear-gradient(105deg, rgba(255,255,255,.14), rgba(255,255,255,.07)) !important; box-shadow: inset 2px 0 0 rgba(255,255,255,.85), inset 0 1px 0 rgba(255,255,255,.12) !important; }
+.ms-reference-nav button.is-active { color: rgba(250,251,253,.98) !important; background: linear-gradient(105deg, rgba(255,255,255,.14), rgba(255,255,255,.07)) !important; box-shadow: inset 2px 0 0 rgba(255,255,255,.85), inset 0 1px 0 rgba(255,255,255,.12) !important; }
 .ms-reference-nav button > svg,
 .ms-reference-nav .ms-sidebar-nav-label { position: relative; z-index: 1; }
 .ms-reference-today { display: none !important; }
@@ -3030,7 +3030,7 @@ html.ms-light .ms-community-pulse, .ms-light .ms-community-pulse > div + div, .m
 .ms-app-sidebar.is-collapsed .ms-reference-nav { gap: 4px !important; margin-top: 23px !important; padding: 0 10px !important; }
 .ms-app-sidebar.is-collapsed .ms-reference-nav button { justify-content: center; gap: 0 !important; min-height: 39px !important; padding: 0 !important; }
 .ms-app-sidebar.is-collapsed .ms-reference-nav button svg { width: 17px !important; height: 17px !important; }
-.ms-app-sidebar.is-collapsed .ms-sidebar-active-indicator { border-radius: 7px !important; box-shadow: inset 2px 0 0 rgba(255,255,255,.8) !important; }
+.ms-app-sidebar.is-collapsed .ms-reference-nav button.is-active { border-radius: 7px !important; box-shadow: inset 2px 0 0 rgba(255,255,255,.8) !important; }
 .ms-app-sidebar.is-collapsed .ms-reference-decks-head,
 .ms-app-sidebar.is-collapsed .ms-reference-decks { max-height: 0; margin: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; overflow: hidden; opacity: 0; pointer-events: none; transition: max-height 160ms cubic-bezier(.22, 1, .36, 1), margin 160ms cubic-bezier(.22, 1, .36, 1), opacity 100ms ease; }
 .ms-app-sidebar.is-collapsed .ms-reference-account { padding: 12px 0 14px !important; background: transparent !important; border-top-color: transparent !important; }

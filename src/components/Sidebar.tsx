@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import {
   ChartBar as BarChart3,
   BookOpen,
@@ -106,18 +105,12 @@ export function Sidebar({
               aria-current={activeNav ? "page" : undefined}
               className={cn(
                 "relative flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-colors",
+                activeNav && "is-active",
                 activeNav
                   ? "text-sidebar-accent-foreground"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              {activeNav && (
-                <motion.span
-                  layoutId="nav-active"
-                  className="ms-sidebar-active-indicator absolute inset-0 rounded-lg bg-sidebar-accent"
-                  transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                />
-              )}
               <Icon weight={activeNav ? "fill" : "regular"} className="relative z-10 size-4" />
               <span className="ms-sidebar-nav-label relative z-10">{label}</span>
             </button>

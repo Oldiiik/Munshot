@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   ChartBar as BarChart3,
   BookOpen,
@@ -89,7 +88,6 @@ export default function App() {
   const { settings, update: updateSettings, reset: resetSettings } = useSettings();
   const { isAdmin, profile, refreshProfile } = useAuth();
   const { active } = decks;
-  const reduceMotion = useReducedMotion();
 
   // Deck awaiting a capacity code before its outline can run (null = no prompt).
   const [codePromptDeck, setCodePromptDeck] = useState<Deck | null>(null);
@@ -721,15 +719,7 @@ export default function App() {
           />
           <main className="ms-app-main relative flex min-h-0 min-w-0 flex-col overflow-hidden bg-card">
             <div className="ms-app-view min-h-0 flex-1 overflow-hidden">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={`${view}-${studioEditorOpen}-${learnEditorOpen}-${active?.id ?? "home"}`}
-                  className="h-full"
-                  initial={reduceMotion ? { opacity: 0 } : { opacity: 0, transform: "translateY(7px)", filter: "blur(3px)" }}
-                  animate={{ opacity: 1, transform: "translateY(0px)", filter: "blur(0px)" }}
-                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, transform: "translateY(-3px)", filter: "blur(2px)" }}
-                  transition={{ duration: reduceMotion ? 0.01 : 0.2, ease: [0.22, 1, 0.36, 1] }}
-                >
+              <div className="h-full">
               {view === "studio" && (
                 studioEditorOpen ? renderStudio() : (
                   <DashboardView
@@ -764,8 +754,7 @@ export default function App() {
                   onReset={resetSettings}
                 />
               )}
-                </motion.div>
-              </AnimatePresence>
+              </div>
             </div>
             <MobileNav view={view} setView={setView} onOpenDashboard={openDashboard} />
           </main>
