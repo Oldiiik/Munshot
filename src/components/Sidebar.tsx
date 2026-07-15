@@ -118,7 +118,7 @@ export function Sidebar({
                   transition={{ type: "spring", stiffness: 400, damping: 32 }}
                 />
               )}
-              <Icon className="relative z-10 size-4" />
+              <Icon weight={activeNav ? "fill" : "regular"} className="relative z-10 size-4" />
               <span className="ms-sidebar-nav-label relative z-10">{label}</span>
             </button>
           );

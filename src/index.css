@@ -2939,13 +2939,18 @@ html.ms-light .ms-community-pulse, .ms-light .ms-community-pulse > div + div, .m
   align-items: center;
   gap: 10px !important;
   padding: 0 10px !important;
-  overflow: hidden;
+  /* The active pill travels between buttons via a shared layout animation;
+     clipping here slices it mid-flight. Labels clip themselves instead. */
+  overflow: visible;
   color: rgba(232,236,245,.56) !important;
   background: transparent !important;
   border-radius: 7px !important;
   transition: color 150ms ease, background-color 150ms ease, transform 150ms cubic-bezier(.22, 1, .36, 1) !important;
 }
 .ms-reference-nav button:hover { color: rgba(250,251,253,.9) !important; background: rgba(255,255,255,.05) !important; }
+.ms-reference-nav button[aria-current="page"] { color: #fdfdff !important; }
+.ms-reference-nav button[aria-current="page"]:hover { background: transparent !important; }
+.ms-reference-nav button[aria-current="page"] .ms-sidebar-nav-label { font-weight: 500 !important; }
 .ms-reference-nav button:active { transform: scale(.98); }
 .ms-reference-nav button svg { flex: 0 0 16px; width: 16px !important; height: 16px !important; }
 .ms-sidebar-nav-label {
@@ -2954,10 +2959,11 @@ html.ms-light .ms-community-pulse, .ms-light .ms-community-pulse > div + div, .m
   font-size: 11px !important;
   opacity: 1;
   text-overflow: clip;
+  white-space: nowrap;
   transform: translateX(0);
   transition: max-width 150ms cubic-bezier(.22, 1, .36, 1), opacity 100ms ease, transform 150ms cubic-bezier(.22, 1, .36, 1);
 }
-.ms-sidebar-active-indicator { z-index: 0 !important; border-radius: 7px !important; background: rgba(255,255,255,.09) !important; box-shadow: inset 2px 0 0 rgba(255,255,255,.78) !important; }
+.ms-sidebar-active-indicator { z-index: 0 !important; border-radius: 7px !important; background: linear-gradient(105deg, rgba(255,255,255,.14), rgba(255,255,255,.07)) !important; box-shadow: inset 2px 0 0 rgba(255,255,255,.85), inset 0 1px 0 rgba(255,255,255,.12) !important; }
 .ms-reference-nav button > svg,
 .ms-reference-nav .ms-sidebar-nav-label { position: relative; z-index: 1; }
 .ms-reference-today { display: none !important; }
@@ -3197,7 +3203,8 @@ html.ms-light .ms-reference-compose:hover { background: #313644 !important; }
 html.ms-light .ms-reference-nav button { color: rgba(41,46,58,.62) !important; }
 html.ms-light .ms-reference-nav button:hover { color: #1e222b !important; }
 html.ms-light .ms-reference-nav button[aria-current="page"] { color: #1b1f27 !important; }
-html.ms-light .ms-reference-nav .bg-sidebar-accent { background: linear-gradient(105deg, rgba(34,39,51,.1), rgba(34,39,51,.045)) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,.65) !important; }
+html.ms-light .ms-reference-nav .bg-sidebar-accent { background: linear-gradient(105deg, rgba(34,39,51,.1), rgba(34,39,51,.045)) !important; box-shadow: inset 2px 0 0 rgba(34,39,51,.72), inset 0 1px 0 rgba(255,255,255,.65) !important; }
+html.ms-light .ms-reference-nav button[aria-current="page"]:hover { background: transparent !important; }
 html.ms-light .ms-sidebar-section-label,
 html.ms-light .ms-reference-nav > span,
 html.ms-light .ms-reference-decks-head > span { color: rgba(38,43,54,.52) !important; }
