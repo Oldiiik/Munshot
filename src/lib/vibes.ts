@@ -33,29 +33,99 @@ export interface VibeGenInput {
   files?: File[];
 }
 
+function toHex(value: number) {
+  return value.toString(16).padStart(2, "0");
+}
+
+function colourDistance(left: string, right: string) {
+  const values = (value: string) => [1, 3, 5].map((index) => Number.parseInt(value.slice(index, index + 2), 16));
+  const [lr, lg, lb] = values(left);
+  const [rr, rg, rb] = values(right);
+  return Math.hypot(lr - rr, lg - rg, lb - rb);
+}
+
+async function sampledImagePalette(file: File): Promise<string[]> {
+  if (!file.type.startsWith("image/")) return [];
+  const source = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.src = source;
+    await image.decode();
+    const canvas = document.createElement("canvas");
+    const size = 40;
+    canvas.width = size;
+    canvas.height = Math.max(1, Math.round(size * (image.naturalHeight / image.naturalWidth)));
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+    if (!context) return [];
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    const buckets = new Map<string, number>();
+    const { data } = context.getImageData(0, 0, canvas.width, canvas.height);
+    for (let index = 0; index < data.length; index += 16) {
+      if (data[index + 3] < 180) continue;
+      const r = Math.round(data[index] / 32) * 32;
+      const g = Math.round(data[index + 1] / 32) * 32;
+      const b = Math.round(data[index + 2] / 32) * 32;
+      const key = `#${toHex(Math.min(r, 255))}${toHex(Math.min(g, 255))}${toHex(Math.min(b, 255))}`;
+      buckets.set(key, (buckets.get(key) ?? 0) + 1);
+    }
+    const palette: string[] = [];
+    for (const [colour] of [...buckets.entries()].sort((left, right) => right[1] - left[1])) {
+      if (palette.every((picked) => colourDistance(picked, colour) > 78)) palette.push(colour);
+      if (palette.length === 3) break;
+    }
+    return palette;
+  } catch {
+    return [];
+  } finally {
+    URL.revokeObjectURL(source);
+  }
+}
+
+function fallbackPalette(signal: string) {
+  if (/warm|paper|heritage|editorial|earth|craft/.test(signal)) return ["#211c18", "#b78352", "#f1e3cf"];
+  if (/blue|product|tech|clean|apple|minimal/.test(signal)) return ["#111827", "#6d93dc", "#eff4fb"];
+  if (/nature|green|organic|calm|wellness/.test(signal)) return ["#12211d", "#7ba88e", "#edf4ec"];
+  if (/bold|red|sport|energy|music/.test(signal)) return ["#1a1418", "#dc5d61", "#fff2ef"];
+  return ["#151722", "#8c7cff", "#edf0ff"];
+}
+
+function directionName(signal: string) {
+  if (/warm|paper|heritage|editorial|earth|craft/.test(signal)) return "Tactile editorial";
+  if (/blue|product|tech|clean|apple|minimal/.test(signal)) return "Product clarity";
+  if (/nature|green|organic|calm|wellness/.test(signal)) return "Grounded calm";
+  if (/bold|red|sport|energy|music/.test(signal)) return "Kinetic contrast";
+  return "Reference study";
+}
+
 /**
- * Demo vibe generation: returns a canned, plausible style guide after a short
- * delay (the cloud build runs a real AI analysis of the references here).
+ * Reference-aware demo generation. Image files contribute sampled colour
+ * signals; PDF/doc names, URLs, and the user's note inform the written guide.
+ * A production worker can replace this one function without changing the UI.
  */
 export async function generateVibe(
   input: VibeGenInput
 ): Promise<Pick<Vibe, "name" | "description" | "styleGuide" | "swatch">> {
-  await delay(1600);
+  await delay(720);
+  const files = input.files ?? [];
+  const fileSignal = files.map((file) => file.name.replace(/[-_]/g, " ")).join(" ");
+  const signal = `${input.description} ${input.url ?? ""} ${fileSignal}`.toLowerCase();
+  const sampled = (await Promise.all(files.map(sampledImagePalette))).flat();
+  const palette = sampled.length >= 2 ? [...sampled, ...fallbackPalette(signal)].slice(0, 3) : fallbackPalette(signal);
   const hint = input.description.trim().split(/[.\n]/)[0].trim();
+  const sources = [
+    input.url ? "linked reference" : "",
+    files.length ? `${files.length} uploaded ${files.length === 1 ? "reference" : "references"}` : "",
+    hint ? "creative note" : "",
+  ].filter(Boolean).join(", ");
   return {
-    name: "Midnight Editorial",
+    name: directionName(signal),
     description: hint
       ? hint.length > 48
         ? `${hint.slice(0, 48)}…`
         : hint
-      : "Dark, luminous, magazine-grade slides.",
-    styleGuide: `Use a dark editorial design language: near-black fields, one luminous
-violet-to-cyan accent gradient, and oversized display headlines with tight tracking.
-Favor a single strong focal element per slide — one image, one number, or one
-diagram — framed by generous negative space and thin hairline rules. Keep body copy
-short and confident; avoid clutter, drop shadows and more than two accent colours.
-Photography and renders should be moody and softly lit, never flat clip-art.`,
-    swatch: ["#0b0b12", "#7c6cff", "#38e1ff"],
+      : `A reusable direction distilled from ${sources || "your references"}.`,
+    styleGuide: `Build from the visual signals in ${sources || "the supplied references"}. Use ${palette[0]} as the anchoring field, ${palette[1]} for emphasis, and ${palette[2]} for light or contrast. Keep the composition deliberate: establish one focal subject, use a visible grid, and give captions and data a quieter supporting role. Carry the reference's material, crop rhythm, and type scale forward without copying its exact layout or branding. Avoid generic gradients, decorative UI fragments, and unrelated stock imagery.`,
+    swatch: palette,
   };
 }
 
@@ -103,7 +173,7 @@ export function useVibes() {
 
   /** Create a custom vibe; returns the saved vibe. */
   const createVibe = useCallback(
-    async (input: Pick<Vibe, "name" | "description" | "styleGuide" | "swatch">) => {
+    (input: Pick<Vibe, "name" | "description" | "styleGuide" | "swatch">) => {
       const vibe: Vibe = {
         id: uid(),
         name: input.name,
@@ -119,7 +189,7 @@ export function useVibes() {
   );
 
   const updateVibe = useCallback(
-    async (id: string, input: Pick<Vibe, "name" | "description" | "styleGuide" | "swatch">) => {
+    (id: string, input: Pick<Vibe, "name" | "description" | "styleGuide" | "swatch">) => {
       let updated: Vibe | null = null;
       mutate((prev) =>
         prev.map((v) => {
@@ -135,14 +205,14 @@ export function useVibes() {
 
   /** Share a vibe to the Community gallery (or unshare it). */
   const setVibePublished = useCallback(
-    async (id: string, published: boolean) => {
+    (id: string, published: boolean) => {
       mutate((prev) => prev.map((v) => (v.id === id ? { ...v, published } : v)));
     },
     [mutate]
   );
 
   const deleteVibe = useCallback(
-    async (id: string) => {
+    (id: string) => {
       mutate((prev) => prev.filter((v) => v.id !== id));
     },
     [mutate]

@@ -1,15 +1,15 @@
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowLeft,
-  ChevronUp,
-  ChevronDown,
-  Trash2,
+  CaretUp as ChevronUp,
+  CaretDown as ChevronDown,
+  Trash as Trash2,
   Plus,
-  RefreshCw,
+  ArrowsClockwise as RefreshCw,
   Images,
   ArrowRight,
-  MessageCircleQuestion,
-} from "lucide-react";
+  ChatCircleDots as MessageCircleQuestion,
+} from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -67,9 +67,9 @@ export function OutlineEditor({
   const brand = deck.brand;
 
   return (
-    <div className="relative flex h-full flex-col overflow-hidden">
+    <div className="ms-outline-view relative flex h-full flex-col overflow-hidden">
       {/* Toolbar */}
-      <div className="flex shrink-0 items-center justify-between gap-3 border-b border-border/70 px-6 py-3">
+      <div className="ms-editor-toolbar flex shrink-0 items-center justify-between gap-3 border-b border-border/70 px-6 py-3">
         <div className="flex min-w-0 items-center gap-3">
           <Button
             variant="ghost"

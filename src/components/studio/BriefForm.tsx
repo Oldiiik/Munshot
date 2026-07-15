@@ -1,26 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import {
-  Sparkles,
+  Sparkle as Sparkles,
   GraduationCap,
   Paperclip,
-  ImageIcon,
+  Image as ImageIcon,
   FileText,
   X,
-  Wand2,
+  MagicWand as Wand2,
   Minus,
   Plus,
-  Globe,
-  MessageCircleQuestion,
+  GlobeHemisphereWest as Globe,
+  ChatCircleDots as MessageCircleQuestion,
   ArrowRight,
   Palette,
-  Pencil,
-  Trash2,
+  PencilSimple as Pencil,
+  Trash as Trash2,
   Check,
-  Loader2,
-  Share2,
-  Link2,
-} from "lucide-react";
+  CircleNotch as Loader2,
+  ShareNetwork as Share2,
+  LinkSimple as Link2,
+} from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -87,19 +87,19 @@ export function BriefForm({ deck, busy, status, onChange, onGenerate, onBrowseCo
   const canGenerate = !busy && deck.brief.trim().length > 0;
 
   return (
-    <div className="flex h-full items-center justify-center overflow-y-auto px-6 py-10">
+    <div className="ms-brief-view flex h-full items-center justify-center overflow-y-auto px-6 py-10">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-3xl"
+        className="ms-compose-shell w-full max-w-3xl"
       >
-        <div className="mb-9 text-center">
-          <div className="mx-auto mb-5 grid size-14 place-items-center rounded-[20px] border border-border bg-gradient-to-b from-primary/15 to-transparent text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+        <div className="ms-compose-intro mb-9 text-center">
+          <div className="ms-compose-intro-mark mx-auto mb-5 grid size-14 place-items-center rounded-[20px] border border-border bg-gradient-to-b from-primary/15 to-transparent text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
             {edu ? (
-              <GraduationCap className="size-6" strokeWidth={1.75} />
+              <GraduationCap className="size-6" />
             ) : (
-              <Sparkles className="size-6" strokeWidth={1.75} />
+              <Sparkles className="size-6" />
             )}
           </div>
           <h1 className="text-[30px] font-semibold leading-tight tracking-tight">
@@ -112,9 +112,9 @@ export function BriefForm({ deck, busy, status, onChange, onGenerate, onBrowseCo
           </p>
         </div>
 
-        <div className="relative">
+        <div className="ms-compose-workspace relative">
           <div className="pointer-events-none absolute -inset-4 -z-10 rounded-[32px] bg-primary/[0.07] blur-2xl" />
-          <div className="rounded-[26px] border border-border bg-card/90 p-3 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+          <div className="ms-brief-composer rounded-[26px] border border-border bg-card/90 p-3 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
           <Textarea
             value={deck.brief}
             onChange={(e) => onChange({ brief: e.target.value })}
@@ -153,7 +153,7 @@ export function BriefForm({ deck, busy, status, onChange, onGenerate, onBrowseCo
             </div>
           )}
 
-          <div className="flex items-center justify-between gap-3 px-1 pt-1.5">
+          <div className="ms-brief-toolbar flex items-center justify-between gap-3 px-1 pt-1.5">
             <div className="flex items-center gap-2">
               <input
                 ref={fileInput}
@@ -300,7 +300,7 @@ function CommunityStrip({ onBrowseCommunity }: { onBrowseCommunity: () => void }
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.15 }}
-      className="mt-10"
+      className="ms-compose-community-strip mt-10"
     >
       <div className="mb-3 flex items-center justify-between px-1">
         <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
@@ -406,7 +406,7 @@ function VibePicker({
           transition={{ duration: 0.14, ease: "easeOut" }}
           className="absolute bottom-full left-0 z-30 mb-2 w-72 origin-bottom-left rounded-xl border border-border bg-popover p-1.5 shadow-xl"
         >
-          <div className="px-2 pb-1.5 pt-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
+          <div className="px-2 pb-1.5 pt-1 text-[11.5px] font-medium text-muted-foreground/75">
             Presentation vibe
           </div>
           <div className="max-h-72 space-y-0.5 overflow-y-auto">

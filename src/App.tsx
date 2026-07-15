@@ -1,5 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Ticket, Loader2, Plus } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import {
+  ChartBar as BarChart3,
+  BookOpen,
+  GlobeHemisphereWest as Globe,
+  SquaresFour as LayoutTemplate,
+  CircleNotch as Loader2,
+  GearSix as Settings2,
+  Palette,
+  Ticket,
+} from "@phosphor-icons/react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 
@@ -11,6 +21,9 @@ import { DevConsole } from "./components/DevConsole";
 import { InsightsView } from "./components/InsightsView";
 import { SettingsView } from "./components/SettingsView";
 import { CommunityView } from "./components/CommunityView";
+import { VibesView } from "./components/VibesView";
+import { LearnView } from "./components/LearnView";
+import { DashboardView } from "./components/DashboardView";
 
 import { useDecks, uid } from "./store";
 import { useSettings } from "./settings";
@@ -23,8 +36,7 @@ import {
   buildCanvaPrompt,
   CANVA_DIRECTIVE,
 } from "./lib/prompts";
-import { cleanMessage, deckTitle } from "./lib/utils";
-import { ThemeToggle } from "./lib/theme";
+import { cleanMessage } from "./lib/utils";
 import { useAuth } from "./auth/AuthContext";
 import { PENDING_BRIEF_KEY } from "./Root";
 import { navigate, usePathname } from "./lib/router";
@@ -34,7 +46,6 @@ import type {
   Deck,
   DevChannel,
   DevLogEntry,
-  Mode,
   OutlineSlide,
   TurnRecord,
   View,
@@ -43,9 +54,10 @@ import type {
 /** URL for each app view (lightweight pathname routing — no react-router). */
 const VIEW_PATHS: Record<View, string> = {
   studio: "/app",
+  learn: "/app/learn",
   insights: "/app/insights",
   community: "/app/community",
-  admin: "/app/admin",
+  vibes: "/app/vibes",
   dev: "/app/activity",
   settings: "/app/settings",
 };
@@ -77,6 +89,7 @@ export default function App() {
   const { settings, update: updateSettings, reset: resetSettings } = useSettings();
   const { isAdmin, profile, refreshProfile } = useAuth();
   const { active } = decks;
+  const reduceMotion = useReducedMotion();
 
   // Deck awaiting a capacity code before its outline can run (null = no prompt).
   const [codePromptDeck, setCodePromptDeck] = useState<Deck | null>(null);
@@ -84,20 +97,28 @@ export default function App() {
   const pathname = usePathname();
   const view = viewFromPath(pathname);
   const setView = useCallback((v: View) => navigate(VIEW_PATHS[v]), []);
-  const [mode, setMode] = useState<Mode>("moonshot");
   const [busy, setBusy] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [studioEditorOpen, setStudioEditorOpen] = useState(false);
+  const [learnEditorOpen, setLearnEditorOpen] = useState(false);
 
-  // Theme the whole document (body bg + tokens) by mode, with a cross-fade.
+  // Learn is a page inside Moonshot, so it no longer re-themes the whole product.
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.add("mode-anim");
-    root.classList.toggle("theme-edu", mode === "edu");
-  }, [mode]);
+    document.documentElement.classList.remove("theme-edu");
+  }, []);
 
-  // Follow the active deck's mode when switching decks.
   useEffect(() => {
-    if (active?.mode) setMode(active.mode);
-  }, [active?.id, active?.mode]);
+    if (view !== "learn") setLearnEditorOpen(false);
+    if (view !== "studio") setStudioEditorOpen(false);
+  }, [view]);
+
+  // Studio owns presentation decks only; lessons stay inside the Learn page.
+  useEffect(() => {
+    if (decks.loading || view !== "studio" || active?.mode !== "edu") return;
+    const presentation = decks.decks.find((deck) => deck.mode === "moonshot");
+    if (presentation) decks.setActiveId(presentation.id);
+    else decks.createDeck(settingsRef.current.defaultSlideCount, "moonshot");
+  }, [active?.mode, decks, view]);
 
   const [status, setStatus] = useState("");
   const [generatingId, setGeneratingId] = useState<string | null>(null);
@@ -124,6 +145,7 @@ export default function App() {
     localStorage.removeItem(PENDING_BRIEF_KEY);
     const d = decks.createDeck(settingsRef.current.defaultSlideCount, "moonshot");
     decks.updateDeck(d.id, (deck) => ({ ...deck, brief }));
+    setStudioEditorOpen(true);
     setView("studio");
   }, [decks, setView]);
 
@@ -559,29 +581,72 @@ export default function App() {
   }, []);
 
   const newDeck = useCallback(() => {
-    const count =
-      mode === "edu" ? EDU_DEFAULT_SLIDES : settingsRef.current.defaultSlideCount;
-    decks.createDeck(count, mode);
+    decks.createDeck(settingsRef.current.defaultSlideCount, "moonshot");
+    setStudioEditorOpen(true);
     setView("studio");
-  }, [decks, mode]);
+  }, [decks, setView]);
 
-  // Switch product mode: jump to (or start) a deck belonging to that mode.
-  const switchMode = useCallback(
-    (m: Mode) => {
-      if (m === mode) return;
-      setMode(m);
-      setView("studio");
-      const existing = decks.decks.find((d) => d.mode === m);
-      if (existing) {
-        decks.setActiveId(existing.id);
-      } else {
-        const count =
-          m === "edu" ? EDU_DEFAULT_SLIDES : settingsRef.current.defaultSlideCount;
-        decks.createDeck(count, m);
-      }
-    },
-    [mode, decks]
-  );
+  const createDeckFromBrief = useCallback((brief: string) => {
+    const deck = decks.createDeck(settingsRef.current.defaultSlideCount, "moonshot");
+    decks.updateDeck(deck.id, (current) => ({ ...current, brief }));
+    setStudioEditorOpen(true);
+    setView("studio");
+  }, [decks, setView]);
+
+  const createDeckFromCommunityReference = useCallback((reference: { deckTitle: string; slideTitle?: string; vibe: Deck["vibe"] }) => {
+    const deck = decks.createDeck(settingsRef.current.defaultSlideCount, "moonshot");
+    const source = reference.slideTitle ? `the slide “${reference.slideTitle}” from “${reference.deckTitle}”` : `the deck “${reference.deckTitle}”`;
+    decks.updateDeck(deck.id, (current) => ({
+      ...current,
+      title: `After “${reference.deckTitle}”`,
+      brief: `Create an original presentation using ${source} as a visual reference. Carry over its pacing, hierarchy, and sense of atmosphere, but do not copy its wording, branding, or exact layout.`,
+      vibe: reference.vibe,
+    }));
+    setStudioEditorOpen(true);
+    setView("studio");
+  }, [decks, setView]);
+
+  const createDeckWithVibe = useCallback((vibe: Deck["vibe"]) => {
+    if (!vibe) return;
+    const deck = decks.createDeck(settingsRef.current.defaultSlideCount, "moonshot");
+    decks.updateDeck(deck.id, (current) => ({ ...current, vibe, brief: `Create an original presentation using the ${vibe.name} visual direction. ${vibe.description}` }));
+    setStudioEditorOpen(true);
+    setView("studio");
+  }, [decks, setView]);
+
+  const openDashboard = useCallback(() => {
+    setStudioEditorOpen(false);
+    setView("studio");
+  }, [setView]);
+
+  const openDeck = useCallback((id: string) => {
+    decks.setActiveId(id);
+    setStudioEditorOpen(true);
+    setView("studio");
+  }, [decks, setView]);
+
+  const openDeckInsights = useCallback((id: string) => {
+    decks.setActiveId(id);
+    setView("insights");
+  }, [decks, setView]);
+
+  const newLesson = useCallback(() => {
+    decks.createDeck(EDU_DEFAULT_SLIDES, "edu");
+    setLearnEditorOpen(true);
+    setView("learn");
+  }, [decks, setView]);
+
+  const newLessonFromTopic = useCallback((topic: string) => {
+    const lesson = decks.createDeck(EDU_DEFAULT_SLIDES, "edu");
+    decks.updateDeck(lesson.id, (current) => ({ ...current, brief: topic, title: topic.slice(0, 72) || current.title }));
+    setLearnEditorOpen(true);
+    setView("learn");
+  }, [decks, setView]);
+
+  const openLesson = useCallback((id: string) => {
+    decks.setActiveId(id);
+    setLearnEditorOpen(true);
+  }, [decks]);
 
   // ---- Main view ----
   const renderStudio = () => {
@@ -637,26 +702,58 @@ export default function App() {
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="ms-app-shell h-screen w-screen overflow-hidden p-2.5 text-foreground">
-        <div className="grid h-full grid-cols-[268px_minmax(0,1fr)] gap-2.5">
+      <div className="ms-app-shell h-screen w-screen overflow-hidden text-foreground">
+        <div className={`ms-app-frame grid h-full grid-cols-[268px_minmax(0,1fr)]${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}>
           <Sidebar
             view={view}
             setView={setView}
             decks={decks}
-            mode={mode}
-            onModeChange={switchMode}
             busy={busy}
             generatingDeckId={generatingDeckId}
             status={status}
+            studioOpen={studioEditorOpen}
             onNewDeck={newDeck}
+            onOpenDashboard={openDashboard}
+            onOpenDeck={openDeck}
+            collapsed={sidebarCollapsed}
+            onToggleCollapsed={() => setSidebarCollapsed((current) => !current)}
             isAdmin={isAdmin}
           />
-          <main className="relative flex min-h-0 min-w-0 flex-col overflow-hidden rounded-[22px] border border-border bg-card shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)]">
-            <Topbar view={view} deck={active ?? null} mode={mode} onNewDeck={newDeck} busy={busy} />
-            <div className="min-h-0 flex-1 overflow-hidden">
-              {view === "studio" && renderStudio()}
-              {view === "insights" && <InsightsView deck={active ?? null} />}
-              {view === "community" && <CommunityView />}
+          <main className="ms-app-main relative flex min-h-0 min-w-0 flex-col overflow-hidden bg-card">
+            <div className="ms-app-view min-h-0 flex-1 overflow-hidden">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={`${view}-${studioEditorOpen}-${learnEditorOpen}-${active?.id ?? "home"}`}
+                  className="h-full"
+                  initial={reduceMotion ? { opacity: 0 } : { opacity: 0, transform: "translateY(7px)", filter: "blur(3px)" }}
+                  animate={{ opacity: 1, transform: "translateY(0px)", filter: "blur(0px)" }}
+                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, transform: "translateY(-3px)", filter: "blur(2px)" }}
+                  transition={{ duration: reduceMotion ? 0.01 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+                >
+              {view === "studio" && (
+                studioEditorOpen ? renderStudio() : (
+                  <DashboardView
+                    decks={decks.decks.filter((deck) => deck.mode === "moonshot")}
+                    onCreate={newDeck}
+                    onCreateFromBrief={createDeckFromBrief}
+                    onOpen={openDeck}
+                    onOpenInsights={openDeckInsights}
+                  />
+                )
+              )}
+              {view === "learn" && (
+                learnEditorOpen && active?.mode === "edu" ? renderStudio() : (
+                  <LearnView
+                    lessons={decks.decks.filter((deck) => deck.mode === "edu")}
+                    onCreate={newLesson}
+                    onCreateFromTopic={newLessonFromTopic}
+                    onOpen={openLesson}
+                  />
+                )
+              )}
+              {view === "insights" && <InsightsView deck={active ?? null} decks={decks.decks.filter((item) => item.mode === "moonshot")} onSelect={decks.setActiveId} />}
+              {view === "community" && <CommunityView vibes={vibes} onUseReference={createDeckFromCommunityReference} />}
+              {view === "vibes" && <VibesView vibes={vibes} onCompose={createDeckWithVibe} />}
               {view === "dev" && isAdmin && (
                 <DevConsole entries={log} onClear={() => setLog([])} />
               )}
@@ -667,7 +764,10 @@ export default function App() {
                   onReset={resetSettings}
                 />
               )}
+                </motion.div>
+              </AnimatePresence>
             </div>
+            <MobileNav view={view} setView={setView} onOpenDashboard={openDashboard} />
           </main>
         </div>
       </div>
@@ -687,63 +787,30 @@ export default function App() {
   );
 }
 
-const VIEW_META: Record<View, { title: string; sub: string }> = {
-  studio: { title: "Studio", sub: "Draft, plan and render your deck" },
-  insights: { title: "Insights", sub: "Token usage and timing per deck" },
-  community: { title: "Community", sub: "Decks shared by the community" },
-  admin: { title: "Admin", sub: "Operations and controls" },
-  dev: { title: "Activity", sub: "Live generation log" },
-  settings: { title: "Settings", sub: "System prompts that steer generation" },
-};
+const MOBILE_NAV: { id: View; label: string; icon: typeof LayoutTemplate }[] = [
+  { id: "studio", label: "Home", icon: LayoutTemplate },
+  { id: "learn", label: "Learn", icon: BookOpen },
+  { id: "insights", label: "Insights", icon: BarChart3 },
+  { id: "community", label: "Library", icon: Globe },
+  { id: "vibes", label: "Vibes", icon: Palette },
+  { id: "settings", label: "Settings", icon: Settings2 },
+];
 
-/** Slim contextual header above every view — breadcrumb, a primary action and
- *  the global controls (theme, account). */
-function Topbar({
-  view,
-  deck,
-  onNewDeck,
-  busy,
-}: {
-  view: View;
-  deck: Deck | null;
-  mode: Mode;
-  onNewDeck: () => void;
-  busy: boolean;
-}) {
-  const { user } = useAuth();
-  const meta = VIEW_META[view];
-  const initial = (user?.email?.[0] ?? "M").toUpperCase();
+function MobileNav({ view, setView, onOpenDashboard }: { view: View; setView: (view: View) => void; onOpenDashboard: () => void }) {
   return (
-    <header className="flex shrink-0 items-center justify-between gap-4 border-b border-border/70 px-6 py-3.5">
-      <div className="min-w-0">
-        <div className="flex items-center gap-2 text-[13px]">
-          <span className="font-semibold tracking-tight text-foreground">{meta.title}</span>
-          {view === "studio" && deck && (
-            <>
-              <span className="text-muted-foreground/40">/</span>
-              <span className="truncate text-muted-foreground">{deckTitle(deck)}</span>
-            </>
-          )}
-        </div>
-        <p className="mt-0.5 truncate text-xs text-muted-foreground">{meta.sub}</p>
-      </div>
-      <div className="flex shrink-0 items-center gap-2">
-        {view === "studio" && (
-          <Button
-            size="sm"
-            onClick={onNewDeck}
-            disabled={busy}
-            className="gap-1.5 rounded-full"
-          >
-            <Plus className="size-3.5" /> New deck
-          </Button>
-        )}
-        <ThemeToggle className="size-8" />
-        <div className="grid size-8 place-items-center rounded-full bg-primary text-[12px] font-semibold text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
-          {initial}
-        </div>
-      </div>
-    </header>
+    <nav className="ms-mobile-nav" aria-label="Mobile navigation">
+      {MOBILE_NAV.map(({ id, label, icon: Icon }) => (
+        <button
+          key={id}
+          type="button"
+          className={view === id ? "is-active" : ""}
+          onClick={() => id === "studio" ? onOpenDashboard() : setView(id)}
+        >
+          <Icon />
+          <span>{label}</span>
+        </button>
+      ))}
+    </nav>
   );
 }
 

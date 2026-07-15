@@ -20,6 +20,7 @@ interface Props {
   flip?: boolean;
   /** Tailwind gradient classes for the glow behind the video. */
   glow?: string;
+  variant: "signal" | "handoff";
 }
 
 /**
@@ -37,6 +38,7 @@ export function FeatureScene({
   poster,
   flip,
   glow = "from-white/12 via-white/5",
+  variant,
 }: Props) {
   const container = useScrollContainer();
   const sectionRef = useRef<HTMLElement>(null);
@@ -90,7 +92,7 @@ export function FeatureScene({
               }`}
             >
               <span className="h-9 w-1 rounded-full bg-gradient-to-b from-white/70 via-white/30 to-transparent" />
-              <span className="text-[13px] font-medium uppercase tracking-[0.24em] text-white/55">
+              <span className="text-[15px] font-medium text-white/60">
                 {kicker}
               </span>
             </div>
@@ -125,38 +127,43 @@ export function FeatureScene({
           </motion.div>
         </div>
 
-        {/* ---- capabilities — editorial columns, hairline-ruled, no boxes ---- */}
-        <div className="mt-16 grid gap-x-0 gap-y-10 sm:grid-cols-3">
-          {points.map((p, i) => {
-            const Icon = p.icon;
-            return (
-              <motion.div
-                key={p.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.65, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                className={`group relative sm:px-9 ${
-                  i > 0 ? "sm:border-l sm:border-white/10" : "sm:pl-0"
-                }`}
-              >
-                <div className="mb-5 grid size-12 place-items-center rounded-full border border-white/15 text-white/80 transition-all duration-500 group-hover:border-white/45 group-hover:text-white group-hover:[transform:translateY(-2px)]">
-                  <Icon className="size-5" strokeWidth={1.5} />
-                </div>
-
-                <h3 className="text-[18px] font-semibold tracking-tight text-white">
-                  {p.label}
-                </h3>
-                <p className="mt-2 max-w-[30ch] text-[14.5px] leading-relaxed text-white/55">
-                  {p.body}
-                </p>
-
-                <span className="mt-5 block h-px w-9 bg-white/25 transition-all duration-500 ease-out group-hover:w-16 group-hover:bg-white/55" />
-              </motion.div>
-            );
-          })}
-        </div>
+        {variant === "signal" ? <SignalLedger points={points} /> : <HandoffStoryboard points={points} />}
       </div>
     </section>
+  );
+}
+
+function SignalLedger({ points }: Pick<Props, "points">) {
+  return (
+    <div className="ms-signal-ledger mt-16">
+      <div className="ms-signal-ledger-grid">
+        {points.map((point, index) => {
+          const Icon = point.icon;
+          return <motion.article key={point.label} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.38, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}>
+            <div className="ms-signal-icon"><Icon strokeWidth={1.65} /></div>
+            <div><h3>{point.label}</h3><p>{point.body}</p></div>
+          </motion.article>;
+        })}
+      </div>
+    </div>
+  );
+}
+
+function HandoffStoryboard({ points }: Pick<Props, "points">) {
+  return (
+    <div className="ms-handoff-storyboard mt-16">
+      <div className="ms-handoff-orbit" aria-hidden="true"><span /><i /><b /></div>
+      <div className="ms-handoff-intro"><p>Not an export. A working file with room to keep directing the idea.</p></div>
+      <div className="ms-handoff-steps">
+        {points.map((point, index) => {
+          const Icon = point.icon;
+          return <motion.article key={point.label} initial={{ opacity: 0, y: 16, filter: "blur(3px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.42, delay: index * 0.09, ease: [0.22, 1, 0.36, 1] }}>
+            <div className="ms-handoff-icon"><Icon strokeWidth={1.55} /></div>
+            <h3>{point.label}</h3>
+            <p>{point.body}</p>
+          </motion.article>;
+        })}
+      </div>
+    </div>
   );
 }

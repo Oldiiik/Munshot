@@ -3,19 +3,19 @@ import { jsPDF } from "jspdf";
 import { motion } from "motion/react";
 import {
   Images,
-  RefreshCw,
-  Download,
-  FileDown,
-  Loader2,
-  ImageOff,
+  ArrowsClockwise as RefreshCw,
+  DownloadSimple as Download,
+  FileArrowDown as FileDown,
+  CircleNotch as Loader2,
+  ImageBroken as ImageOff,
   Square,
   X,
-  ListOrdered,
-  Globe,
+  ListNumbers as ListOrdered,
+  GlobeHemisphereWest as Globe,
   Check,
-  PenLine,
-  ExternalLink,
-} from "lucide-react";
+  PencilSimpleLine as PenLine,
+  ArrowSquareOut as ExternalLink,
+} from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import { cleanMessage } from "@/lib/utils";
@@ -150,9 +150,9 @@ export function SlideDeck({
   const fmtSecs = (ms: number) => `${(ms / 1000).toFixed(1)}s`;
 
   return (
-    <div className="flex h-full flex-col overflow-hidden">
+    <div className="ms-slide-view flex h-full flex-col overflow-hidden">
       {/* Toolbar */}
-      <div className="flex shrink-0 items-center justify-between gap-3 border-b border-border/70 px-6 py-3">
+      <div className="ms-editor-toolbar flex shrink-0 items-center justify-between gap-3 border-b border-border/70 px-6 py-3">
         <div className="flex min-w-0 items-center gap-3">
           <div className="min-w-0">
             <p className="truncate text-sm font-medium">{deck.title}</p>
@@ -290,7 +290,7 @@ export function SlideDeck({
           </h2>
 
           <div className="rounded-xl border border-border bg-card/60 p-4">
-            <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
+            <p className="text-[11.5px] font-medium text-muted-foreground/75">
               Prompt
             </p>
             <p className="mt-1 whitespace-pre-wrap text-sm text-foreground/90">

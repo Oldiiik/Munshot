@@ -1,275 +1,68 @@
-import {
-  BarChart3,
-  Coins,
-  Clock,
-  DatabaseZap,
-  Image as ImageIcon,
-  Layers,
-  CheckCircle2,
-  XCircle,
-  FileText,
-} from "lucide-react";
+import { type CSSProperties, type ReactNode } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { ArrowRight, CaretDown, ChartBar, Check, Clock as Clock3, Cpu, File, Image, ListChecks, Sparkle } from "@phosphor-icons/react";
 
 import { cn, deckTitle } from "@/lib/utils";
 import type { Deck, TurnRecord } from "@/types";
 
-interface Props {
-  deck: Deck | null;
+interface Props { deck: Deck | null; decks: Deck[]; onSelect: (id: string) => void }
+const ease = [0.22, 1, 0.36, 1] as const;
+const fmtTokens = (value: number) => value >= 1_000_000 ? `${(value / 1_000_000).toFixed(1)}M` : value >= 1_000 ? `${(value / 1_000).toFixed(1)}k` : value.toLocaleString();
+const fmtTime = (value: number) => value < 1000 ? `${value}ms` : value < 60_000 ? `${(value / 1000).toFixed(1)}s` : `${Math.floor(value / 60_000)}m ${Math.round(value % 60_000 / 1000)}s`;
+
+export function InsightsView({ deck, decks, onSelect }: Props) {
+  const reduce = useReducedMotion();
+  const observedDeck = deck?.stats.length ? deck : decks.find((item) => item.stats.length) ?? deck ?? decks[0] ?? null;
+  const stats = observedDeck?.stats ?? [];
+  const input = stats.reduce((sum, turn) => sum + turn.usage.inputTokens, 0);
+  const output = stats.reduce((sum, turn) => sum + turn.usage.outputTokens, 0);
+  const cached = stats.reduce((sum, turn) => sum + turn.usage.cachedInputTokens, 0);
+  const duration = stats.reduce((sum, turn) => sum + turn.durationMs, 0);
+  const failures = stats.filter((turn) => !turn.ok).length;
+  const rendered = stats.filter((turn) => turn.kind === "slide" && turn.ok).length;
+  const success = stats.length ? Math.round((stats.length - failures) / stats.length * 100) : 0;
+  const cacheRate = input ? Math.round(cached / input * 100) : 0;
+  const maxDuration = Math.max(...stats.map((turn) => turn.durationMs), 1);
+  const entry = (delay = 0) => reduce ? { initial: { opacity: 0 }, animate: { opacity: 1 } } : { initial: { opacity: 0, y: 8, filter: "blur(3px)" }, animate: { opacity: 1, y: 0, filter: "blur(0px)" }, transition: { duration: .22, delay, ease } };
+
+  if (!stats.length) return <EmptyInsights deck={observedDeck} decks={decks} onSelect={onSelect} entry={entry} />;
+
+  return <main className="ms-intelligence h-full overflow-y-auto"><div className="ms-intelligence-shell">
+    <motion.header className="ms-intelligence-head" {...entry()}><div><h1>See what shaped the deck.</h1><label className="ms-insight-deck-select"><span>Looking at</span><select value={observedDeck?.id ?? ""} onChange={(event) => onSelect(event.target.value)}>{decks.map((item) => <option key={item.id} value={item.id}>{deckTitle(item)}</option>)}</select><CaretDownIcon /></label><p>{stats.length} recorded moments / {observedDeck?.stats.length ? "a living production record" : "waiting for the first run"}</p></div></motion.header>
+
+    <motion.section className="ms-intelligence-instrument" {...entry(.04)}>
+      <div className="ms-efficiency-dial" style={{ "--dial": `${Math.max(8, Math.round((success + cacheRate) / 2))}%` } as CSSProperties}><div><small>Run quality</small><strong>{Math.max(0, Math.round((success + cacheRate) / 2))}</strong><span>of 100</span></div></div>
+      <div className="ms-instrument-copy"><h2>{success >= 90 ? "Everything held together." : "A good run, with a few places to sharpen."}</h2><p>Planning and rendering stay in one thread, so it is easy to see where the story needed more direction.</p><div className="ms-instrument-facts"><Fact icon={<Clock3 />} label="Time" value={fmtTime(duration)} /><Fact icon={<ImageIcon />} label="Slides" value={String(rendered)} /><Fact icon={<Sparkles />} label="Reuse" value={`${cacheRate}%`} /></div></div>
+      <div className="ms-token-portrait"><span>Context profile</span><TokenArc label="Prompt input" value={input} total={input + output} /><TokenArc label="Model output" value={output} total={input + output} /><TokenArc label="Cache reused" value={cached} total={input || 1} subdued /></div>
+    </motion.section>
+
+    <section className="ms-execution-log"><motion.div className="ms-intelligence-section-head" {...entry(.09)}><div><h2>Every step, in context.</h2></div><span>{fmtTokens(input + output)} total tokens</span></motion.div><div className="ms-execution-table">{stats.map((turn, index) => <TurnRow key={turn.id} turn={turn} index={index} maxDuration={maxDuration} reduce={!!reduce} />)}</div></section>
+  </div></main>;
 }
 
-function fmtTokens(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
-  return n.toLocaleString();
+function EmptyInsights({ deck, decks, onSelect, entry }: { deck: Deck | null; decks: Deck[]; onSelect: (id: string) => void; entry: (delay?: number) => Record<string, unknown> }) {
+  const readiness = [
+    { icon: <ListChecks />, label: "Narrative plan", detail: deck?.brief ? "Brief captured and ready to shape." : "Add a brief to establish the narrative." },
+    { icon: <ImageIcon />, label: "Visual direction", detail: deck?.vibe ? `${deck.vibe.name} is attached to this deck.` : "Choose a Vibe or attach references before render." },
+    { icon: <ChartBar />, label: "Production trace", detail: "Timing, token use, and cache reuse appear after the first run." },
+  ];
+  return <main className="ms-intelligence h-full overflow-y-auto"><div className="ms-intelligence-shell ms-insights-ready">
+    <motion.header className="ms-intelligence-head" {...entry()}><div><h1>Know what the next run will reveal.</h1><p>Insights becomes a production record once this deck reaches planning or rendering. Until then, use it to make sure the setup is intentional.</p><label className="ms-insight-deck-select"><span>Preparing</span><select value={deck?.id ?? ""} onChange={(event) => onSelect(event.target.value)}>{decks.map((item) => <option key={item.id} value={item.id}>{deckTitle(item)}</option>)}</select><CaretDownIcon /></label></div></motion.header>
+    <motion.section className="ms-insights-ready-grid" {...entry(.05)}><article className="ms-insights-ready-lead"><span><Cpu weight="duotone" /></span><div><small>Next production signal</small><h2>{deck?.brief ? "Plan the narrative when you are ready." : "Start with one clear brief."}</h2><p>{deck?.brief ? "The outline run will record the narrative decisions, time spent, and context used for this deck." : "A good brief gives the planner a real point of view to work from."}</p></div><ArrowRight /></article><div className="ms-insights-ready-checks">{readiness.map((item) => <article key={item.label}><span>{item.icon}</span><div><strong>{item.label}</strong><p>{item.detail}</p></div><Check /></article>)}</div></motion.section>
+    <motion.section className="ms-insights-measure" {...entry(.1)}><div><h2>Useful signals, not decorative charts.</h2></div><div><article><strong>Thread continuity</strong><p>How much deck context was reused from the previous turn.</p></article><article><strong>Time by stage</strong><p>Where planning or rendering asked for more attention.</p></article><article><strong>Rendered output</strong><p>Which slides completed cleanly and which need another pass.</p></article></div></motion.section>
+  </div></main>;
 }
 
-function fmtDuration(ms: number): string {
-  if (ms < 1000) return `${ms}ms`;
-  const s = ms / 1000;
-  if (s < 60) return `${s.toFixed(1)}s`;
-  const m = Math.floor(s / 60);
-  return `${m}m ${Math.round(s % 60)}s`;
+function Fact({ icon, label, value }: { icon: ReactNode; label: string; value: string }) { return <div><span>{icon}{label}</span><strong>{value}</strong></div>; }
+function TokenArc({ label, value, total, subdued = false }: { label: string; value: number; total: number; subdued?: boolean }) { const amount = total ? Math.round(value / total * 100) : 0; return <div className={subdued ? "is-subdued" : ""}><span>{label}</span><i><b style={{ transform: `scaleX(${Math.max(value ? .04 : 0, amount / 100)})` }} /></i><strong>{fmtTokens(value)}</strong></div>; }
+function TurnRow({ turn, index, maxDuration, reduce }: { turn: TurnRecord; index: number; maxDuration: number; reduce: boolean }) {
+  const tokenCount = turn.usage.inputTokens + turn.usage.outputTokens;
+  const width = Math.max(4, turn.durationMs / maxDuration * 100);
+  return <motion.div initial={reduce ? { opacity: 0 } : { opacity: 0, x: -7 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .18, delay: reduce ? 0 : Math.min(index * .03, .16), ease }}>
+    <span className="ms-execution-index">{String(index + 1).padStart(2, "0")}</span><span className="ms-execution-icon">{turn.kind === "slide" ? <ImageIcon /> : <FileText />}</span><span className="ms-execution-name"><strong>{turn.label}</strong><small>{turn.kind === "slide" ? "Slide render" : "Narrative plan"}</small></span><span className="ms-execution-duration"><i><b className={!turn.ok ? "is-error" : ""} style={{ transform: `scaleX(${width / 100})` }} /></i><small>{fmtTime(turn.durationMs)}</small></span><span className="ms-execution-tokens">{fmtTokens(tokenCount)} tok</span><span className={cn("ms-execution-result", !turn.ok && "is-error")}>{turn.ok ? "Complete" : "Failed"}</span>
+  </motion.div>;
 }
-
-interface Aggregate {
-  turns: number;
-  inputTokens: number;
-  cachedInputTokens: number;
-  outputTokens: number;
-  durationMs: number;
-  images: number;
-  failures: number;
-}
-
-function aggregate(stats: TurnRecord[]): Aggregate {
-  return stats.reduce<Aggregate>(
-    (a, t) => ({
-      turns: a.turns + 1,
-      inputTokens: a.inputTokens + t.usage.inputTokens,
-      cachedInputTokens: a.cachedInputTokens + t.usage.cachedInputTokens,
-      outputTokens: a.outputTokens + t.usage.outputTokens,
-      durationMs: a.durationMs + t.durationMs,
-      images: a.images + (t.kind === "slide" && t.ok ? 1 : 0),
-      failures: a.failures + (t.ok ? 0 : 1),
-    }),
-    {
-      turns: 0,
-      inputTokens: 0,
-      cachedInputTokens: 0,
-      outputTokens: 0,
-      durationMs: 0,
-      images: 0,
-      failures: 0,
-    }
-  );
-}
-
-export function InsightsView({ deck }: Props) {
-  const stats = deck?.stats ?? [];
-  const agg = aggregate(stats);
-  const totalTokens = agg.inputTokens + agg.outputTokens;
-  const cachePct =
-    agg.inputTokens > 0
-      ? Math.round((agg.cachedInputTokens / agg.inputTokens) * 100)
-      : 0;
-  const avgSlide =
-    agg.images > 0
-      ? stats
-          .filter((t) => t.kind === "slide" && t.ok)
-          .reduce((s, t) => s + t.durationMs, 0) / agg.images
-      : 0;
-  const maxDuration = stats.reduce((m, t) => Math.max(m, t.durationMs), 0) || 1;
-
-  return (
-    <div className="flex h-full flex-col overflow-hidden">
-      <div className="flex shrink-0 items-center justify-between border-b border-border/70 px-6 py-3">
-        <div className="flex items-center gap-2.5">
-          <BarChart3 className="size-4 text-muted-foreground" />
-          <div>
-            <p className="text-sm font-medium">Insights</p>
-            <p className="text-xs text-muted-foreground">
-              Generation usage for{" "}
-              {deck ? `“${deckTitle(deck)}”` : "the active deck"}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {stats.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center px-6 text-center text-sm text-muted-foreground/70">
-          No session data yet — generate an outline or render slides to see token
-          usage and timing here.
-        </div>
-      ) : (
-        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
-          <div className="mx-auto w-full max-w-4xl space-y-7">
-            {/* Aggregate cards */}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              <StatCard
-                icon={Coins}
-                label="Total tokens"
-                value={fmtTokens(totalTokens)}
-                sub={`${fmtTokens(agg.inputTokens)} in · ${fmtTokens(
-                  agg.outputTokens
-                )} out`}
-              />
-              <StatCard
-                icon={DatabaseZap}
-                label="Cache reuse"
-                value={`${cachePct}%`}
-                sub={`${fmtTokens(agg.cachedInputTokens)} cached input`}
-                accent="emerald"
-              />
-              <StatCard
-                icon={Clock}
-                label="Total time"
-                value={fmtDuration(agg.durationMs)}
-                sub={
-                  avgSlide ? `${fmtDuration(avgSlide)} avg / slide` : "—"
-                }
-              />
-              <StatCard
-                icon={Layers}
-                label="Turns"
-                value={String(agg.turns)}
-                sub={`${agg.images} slide${agg.images === 1 ? "" : "s"} rendered`}
-              />
-              <StatCard
-                icon={ImageIcon}
-                label="Images"
-                value={String(agg.images)}
-                sub="PNG slides produced"
-              />
-              <StatCard
-                icon={agg.failures ? XCircle : CheckCircle2}
-                label="Failures"
-                value={String(agg.failures)}
-                sub={agg.failures ? "turns errored" : "all turns ok"}
-                accent={agg.failures ? "destructive" : undefined}
-              />
-            </div>
-
-            {/* Cache reuse explainer */}
-            {agg.cachedInputTokens > 0 && (
-              <p className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3.5 py-2.5 text-xs leading-relaxed text-muted-foreground">
-                <span className="font-medium text-emerald-400">
-                  {cachePct}% of input tokens were served from cache.
-                </span>{" "}
-                Slides resume the deck's generation context, so the brand and
-                earlier slides stay in context without being re-sent — cheaper and
-                more consistent.
-              </p>
-            )}
-
-            {/* Per-turn timeline */}
-            <section className="space-y-2">
-              <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground/70">
-                Turn timeline
-              </h2>
-              <div className="space-y-1.5">
-                {stats.map((t, i) => (
-                  <TurnRow
-                    key={t.id}
-                    record={t}
-                    index={i}
-                    widthPct={(t.durationMs / maxDuration) * 100}
-                  />
-                ))}
-              </div>
-            </section>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function StatCard({
-  icon: Icon,
-  label,
-  value,
-  sub,
-  accent,
-}: {
-  icon: typeof Coins;
-  label: string;
-  value: string;
-  sub: string;
-  accent?: "emerald" | "destructive";
-}) {
-  return (
-    <div className="rounded-xl border border-border bg-card/70 p-3.5">
-      <div className="flex items-center gap-1.5 text-muted-foreground">
-        <Icon
-          className={cn(
-            "size-3.5",
-            accent === "emerald" && "text-emerald-400",
-            accent === "destructive" && "text-destructive"
-          )}
-        />
-        <span className="text-[11px] uppercase tracking-wide">{label}</span>
-      </div>
-      <p
-        className={cn(
-          "mt-1.5 text-2xl font-semibold tabular-nums tracking-tight",
-          accent === "emerald" && "text-emerald-400",
-          accent === "destructive" && "text-destructive"
-        )}
-      >
-        {value}
-      </p>
-      <p className="mt-0.5 truncate text-[11px] text-muted-foreground">{sub}</p>
-    </div>
-  );
-}
-
-function TurnRow({
-  record,
-  index,
-  widthPct,
-}: {
-  record: TurnRecord;
-  index: number;
-  widthPct: number;
-}) {
-  const tok = record.usage.inputTokens + record.usage.outputTokens;
-  const isSlide = record.kind === "slide";
-  return (
-    <div className="flex items-center gap-3 rounded-lg border border-border/60 bg-card/40 px-3 py-2">
-      <span className="grid size-6 shrink-0 place-items-center rounded-md bg-background/60 text-muted-foreground">
-        {isSlide ? (
-          <ImageIcon className="size-3.5" />
-        ) : (
-          <FileText className="size-3.5" />
-        )}
-      </span>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <span className="truncate text-sm font-medium">
-            {index + 1}. {record.label}
-          </span>
-          {!record.ok && (
-            <span className="shrink-0 rounded bg-destructive/15 px-1.5 py-0.5 text-[10px] uppercase text-destructive">
-              failed
-            </span>
-          )}
-        </div>
-        <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-border/50">
-          <div
-            className={cn(
-              "h-full rounded-full",
-              record.ok ? "bg-primary/70" : "bg-destructive/60"
-            )}
-            style={{ width: `${Math.max(widthPct, 3)}%` }}
-          />
-        </div>
-      </div>
-      <div className="shrink-0 text-right tabular-nums">
-        <p className="text-xs font-medium">{fmtDuration(record.durationMs)}</p>
-        <p className="text-[10.5px] text-muted-foreground">
-          {fmtTokens(tok)} tok
-        </p>
-      </div>
-    </div>
-  );
-}
+const CaretDownIcon = CaretDown;
+const FileText = File;
+const ImageIcon = Image;
+const Sparkles = Sparkle;

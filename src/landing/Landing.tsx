@@ -151,7 +151,7 @@ function LandingInner({ onAuth }: Props) {
 
       <div className="relative z-10">
         {/* ---------- Nav ---------- */}
-        <header className="sticky top-0 z-50 px-4 pt-4">
+        <header className="absolute inset-x-0 top-0 z-50 px-4 pt-4">
           <div
             className={`ms-force-dark relative mx-auto text-white transition-[max-width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               scrolled ? "max-w-4xl" : "max-w-6xl"
@@ -210,7 +210,7 @@ function LandingInner({ onAuth }: Props) {
         {/* ---------- Hero ---------- */}
         <section
           id="top"
-          className="ms-grain relative overflow-hidden px-4 pb-24 pt-24 sm:pt-32"
+          className="ms-grain relative overflow-hidden px-4 pb-24 pt-32 sm:pt-40"
         >
           {/* background layers — the hero photo dissolves on an organic mask
               into the shared fixed <ScrollAtmosphere/> behind it, so the hero's
@@ -286,6 +286,7 @@ function LandingInner({ onAuth }: Props) {
             { icon: ListTree, label: "Editable outline", body: "Reorder, rewrite and trim the plan before a single slide renders." },
             { icon: ImageIcon, label: "Rendered, not faked", body: "Each slide is a real image, one consistent visual system across the deck." },
           ]}
+          variant="signal"
           video="/demo/generate.mp4"
         />
 
@@ -306,6 +307,7 @@ function LandingInner({ onAuth }: Props) {
             { icon: PenLine, label: "Truly editable", body: "Live elements you can move and restyle, never a flattened export." },
             { icon: ExternalLink, label: "Straight to your account", body: "Opens in your own Canva workspace, ready to keep working." },
           ]}
+          variant="handoff"
           video="/demo/edit.mp4"
         />
 
@@ -467,4 +469,3 @@ function Section({
     </section>
   );
 }
-

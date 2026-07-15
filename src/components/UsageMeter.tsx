@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Gauge, Coins, X, Eye } from "lucide-react";
+import { Gauge, Coins, X, Eye } from "@phosphor-icons/react";
 
 import { cn } from "@/lib/utils";
 import { fetchUsage } from "@/lib/api";

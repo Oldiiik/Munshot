@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Terminal, Trash2, ChevronRight } from "lucide-react";
+import { TerminalWindow as Terminal, Trash as Trash2, CaretRight as ChevronRight } from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -30,7 +30,7 @@ export function DevConsole({ entries, onClear }: Props) {
   }, [entries, autoscroll]);
 
   return (
-    <div className="flex h-full flex-col overflow-hidden">
+    <div className="ms-dev-console flex h-full flex-col overflow-hidden">
       <div className="flex shrink-0 items-center justify-between border-b border-border/70 px-6 py-3">
         <div className="flex items-center gap-2.5">
           <Terminal className="size-4 text-muted-foreground" />

@@ -299,8 +299,15 @@ export function saveDemoDecks(decks: Deck[]) {
 
 /** Published decks, read fresh from storage (Community + brief-form strip). */
 export function publishedDecks(): Deck[] {
-  return loadDemoDecks()
+  const decks = loadDemoDecks();
+  const published = decks
     .filter((d) => d.published && d.phase === "slides")
+    .sort((a, b) => b.updatedAt - a.updatedAt);
+  // The demo wall should feel alive on a fresh install. Real published work
+  // always wins; otherwise the rendered sample deck library fills the gallery.
+  return published.length ? published : decks
+    .filter((d) => d.phase === "slides")
+    .slice(0, 8)
     .sort((a, b) => b.updatedAt - a.updatedAt);
 }
 

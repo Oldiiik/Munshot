@@ -217,7 +217,7 @@ function Field({
           placeholder={placeholder}
           required
           minLength={minLength}
-          className="h-11 w-full rounded-xl border border-white/10 bg-white/[0.03] pl-10 pr-3 text-[15px] text-white outline-none transition-all placeholder:text-white/30 focus:border-white/25 focus:bg-white/[0.05] focus:ring-4 focus:ring-white/[0.06]"
+          className="h-11 w-full rounded-xl border border-white/10 bg-white/[0.03] pl-10 pr-3 text-[15px] text-white outline-none transition-[border-color,background-color,box-shadow] duration-150 placeholder:text-white/30 focus:border-white/25 focus:bg-white/[0.05] focus:ring-4 focus:ring-white/[0.06]"
         />
       </div>
     </div>
