@@ -1,0 +1,1713 @@
+/* Moonshot product v2: creative-tool structure with landing-derived chrome. */
+
+.ms-app-shell {
+  --ms-bg: #08090d;
+  --ms-chrome: rgba(11, 12, 18, 0.9);
+  --ms-canvas: #111218;
+  --ms-panel: #161820;
+  --ms-panel-strong: #1b1d26;
+  --ms-hover: rgba(255, 255, 255, 0.055);
+  --ms-selected: rgba(202, 211, 255, 0.11);
+  --ms-line: rgba(232, 237, 249, 0.1);
+  --ms-line-strong: rgba(223, 230, 248, 0.18);
+  --ms-text: rgba(248, 249, 253, 0.95);
+  --ms-text-2: rgba(229, 234, 246, 0.68);
+  --ms-text-3: rgba(224, 230, 243, 0.52);
+  --ms-accent: #d5dcff;
+  --ms-accent-ink: #151721;
+  --ms-success: #8ccda4;
+  --ms-warning: #e0b77a;
+  --ms-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  padding: 8px;
+  color: var(--ms-text);
+  background: var(--ms-bg) url("/hero-bg.webp") center / cover fixed !important;
+  font-family: var(--font-sans);
+}
+
+.ms-app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(6, 7, 11, 0.82);
+}
+
+.ms-app-frame {
+  position: relative;
+  z-index: 1;
+  grid-template-columns: 236px minmax(0, 1fr) !important;
+  gap: 8px;
+  background: transparent !important;
+}
+
+.ms-app-frame.is-sidebar-collapsed {
+  grid-template-columns: 64px minmax(0, 1fr) !important;
+}
+
+.ms-app-sidebar {
+  color: var(--ms-text);
+  background: var(--ms-chrome) !important;
+  border: 1px solid var(--ms-line-strong) !important;
+  border-radius: 12px;
+  box-shadow: none !important;
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+}
+
+.ms-app-sidebar::before,
+.ms-app-sidebar::after {
+  display: none !important;
+}
+
+.ms-app-main {
+  color: var(--ms-text);
+  background: var(--ms-canvas) !important;
+  border: 1px solid var(--ms-line-strong);
+  border-radius: 12px;
+  box-shadow: none !important;
+}
+
+.ms-app-view,
+.ms-app-view > div {
+  background: transparent !important;
+}
+
+.ms-reference-brand {
+  min-height: 63px;
+  padding: 14px 13px 10px !important;
+}
+
+.ms-sidebar-brand {
+  min-height: 38px !important;
+  padding: 0 4px;
+}
+
+.ms-sidebar-logo {
+  width: 22px !important;
+  height: 22px !important;
+  color: #eef1ff !important;
+  filter: drop-shadow(0 5px 10px rgba(200, 214, 255, 0.2));
+}
+
+.ms-sidebar-wordmark {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.ms-sidebar-wordmark strong {
+  color: var(--ms-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ms-sidebar-wordmark small {
+  color: var(--ms-text-3);
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.ms-sidebar-collapse {
+  width: 28px !important;
+  height: 28px !important;
+  margin-left: auto;
+  color: var(--ms-text-3) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.ms-reference-compose-wrap {
+  padding: 0 12px 15px !important;
+}
+
+.ms-reference-compose {
+  min-height: 40px !important;
+  gap: 9px !important;
+  padding: 0 12px !important;
+  color: var(--ms-accent-ink) !important;
+  background: var(--ms-accent) !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+  font-weight: 650 !important;
+}
+
+.ms-reference-compose svg {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.ms-reference-nav {
+  display: grid !important;
+  gap: 3px !important;
+  margin-top: 0 !important;
+  padding: 0 10px !important;
+}
+
+.ms-reference-nav > span,
+.ms-reference-decks-head > span,
+.ms-sidebar-section-label {
+  margin: 11px 0 5px !important;
+  padding: 0 8px !important;
+  color: var(--ms-text-3) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.ms-reference-nav button {
+  min-height: 36px !important;
+  gap: 10px !important;
+  padding: 0 10px !important;
+  color: var(--ms-text-2) !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 7px !important;
+  box-shadow: none !important;
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, transform 120ms var(--ms-ease) !important;
+}
+
+.ms-reference-nav button svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.ms-sidebar-nav-label {
+  font-size: 12px !important;
+  font-weight: 450 !important;
+}
+
+.ms-reference-nav button.is-active,
+.ms-reference-nav button[aria-current="page"] {
+  color: var(--ms-text) !important;
+  background: var(--ms-selected) !important;
+  border-color: rgba(205, 216, 255, 0.18) !important;
+  box-shadow: none !important;
+}
+
+.ms-reference-nav button.is-active svg,
+.ms-reference-nav button[aria-current="page"] svg {
+  color: var(--ms-accent);
+}
+
+.ms-reference-decks-head {
+  margin-top: 15px !important;
+  padding: 0 10px 5px !important;
+}
+
+.ms-reference-decks-head .ms-sidebar-section-label {
+  margin: 0 !important;
+}
+
+.ms-reference-decks-head button {
+  color: var(--ms-text-3) !important;
+}
+
+.ms-reference-decks {
+  gap: 2px !important;
+  padding: 0 10px !important;
+}
+
+.ms-reference-decks .group {
+  min-height: 48px !important;
+  padding: 6px 8px !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 7px !important;
+}
+
+.ms-reference-decks .group > button:first-of-type > span:first-child {
+  color: var(--ms-text-2) !important;
+  font-size: 10.5px !important;
+  font-weight: 500;
+}
+
+.ms-reference-decks .group > button:first-of-type > span:last-child {
+  margin-top: 3px;
+  color: var(--ms-text-3) !important;
+  font-size: 9px !important;
+}
+
+.ms-reference-account {
+  margin-top: 8px !important;
+  padding: 10px !important;
+  background: rgba(0, 0, 0, 0.14) !important;
+  border-top: 1px solid var(--ms-line) !important;
+}
+
+.ms-sidebar-profile {
+  min-height: 43px !important;
+  padding: 4px !important;
+}
+
+.ms-sidebar-profile-copy strong {
+  color: var(--ms-text-2) !important;
+  font-size: 10.5px !important;
+}
+
+.ms-sidebar-profile-copy small,
+.ms-sidebar-profile-actions {
+  color: var(--ms-text-3) !important;
+  font-size: 9px !important;
+}
+
+.ms-product-topbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(200px, 1fr) auto;
+  align-items: center;
+  min-height: 52px;
+  flex: 0 0 52px;
+  gap: 22px;
+  padding: 0 18px;
+  background: rgba(17, 18, 24, 0.96);
+  border-bottom: 1px solid var(--ms-line);
+}
+
+.ms-product-breadcrumb,
+.ms-product-topbar-actions,
+.ms-product-topbar-actions > span,
+.ms-product-topbar-actions > button {
+  display: flex;
+  align-items: center;
+}
+
+.ms-product-breadcrumb {
+  min-width: 0;
+  gap: 6px;
+  color: var(--ms-text-3);
+  font-size: 10.5px;
+}
+
+.ms-product-breadcrumb svg {
+  width: 11px;
+  height: 11px;
+}
+
+.ms-product-breadcrumb strong {
+  overflow: hidden;
+  color: var(--ms-text-2);
+  font-size: 11px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-product-topbar > p {
+  overflow: hidden;
+  margin: 0;
+  color: var(--ms-text-3);
+  font-size: 10.5px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-product-topbar-actions {
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.ms-product-topbar-actions > span {
+  gap: 5px;
+  max-width: 220px;
+  overflow: hidden;
+  color: var(--ms-text-3);
+  font-size: 9.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-product-topbar-actions > span.is-working {
+  color: var(--ms-success);
+}
+
+.ms-product-topbar-actions > span svg {
+  width: 12px;
+  height: 12px;
+}
+
+.ms-product-topbar-actions > button {
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  color: var(--ms-accent-ink);
+  background: var(--ms-accent);
+  border: 0;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.ms-product-topbar-actions > button svg {
+  width: 13px;
+  height: 13px;
+}
+
+.ms-home-canvas,
+.ms-learning-shell,
+.ms-intelligence-shell,
+.ms-community-shell,
+.ms-vibes-shell,
+.ms-settings-shell {
+  width: min(100% - 56px, 1240px) !important;
+  max-width: 1240px !important;
+  margin-inline: auto !important;
+  padding: 28px 0 88px !important;
+}
+
+.ms-home,
+.ms-learning-studio,
+.ms-intelligence,
+.ms-community-view,
+.ms-vibes-view,
+.ms-settings-pro {
+  color: var(--ms-text) !important;
+  background: var(--ms-canvas) !important;
+}
+
+.ms-home-head,
+.ms-learning-head,
+.ms-intelligence-head,
+.ms-community-hero,
+.ms-vibes-head,
+.ms-settings-overview {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 28px !important;
+  min-height: 98px !important;
+  padding: 5px 0 24px !important;
+  border-bottom: 1px solid var(--ms-line) !important;
+}
+
+.ms-home-head h1,
+.ms-learning-head h1,
+.ms-intelligence-head h1,
+.ms-community-hero h1,
+.ms-vibes-head h1,
+.ms-settings-overview h1 {
+  max-width: 760px !important;
+  margin: 5px 0 0 !important;
+  color: var(--ms-text) !important;
+  font-size: 32px !important;
+  font-weight: 550 !important;
+  line-height: 1.08 !important;
+  letter-spacing: 0 !important;
+  text-wrap: balance;
+}
+
+.ms-home-head p,
+.ms-learning-head p,
+.ms-intelligence-head p,
+.ms-community-hero p,
+.ms-vibes-head p,
+.ms-settings-overview p {
+  max-width: 640px !important;
+  margin: 8px 0 0 !important;
+  color: var(--ms-text-2) !important;
+  font-size: 12.5px !important;
+  line-height: 1.55 !important;
+}
+
+.ms-home-head > div:first-child > span,
+.ms-home-create-head > span,
+.ms-home-section-head span,
+.ms-community-kicker,
+.ms-vibes-head > div > span,
+.ms-vibe-control-head > span,
+.ms-vibes-library-head span,
+.ms-learning-brief label,
+.ms-learning-outcome > span,
+.ms-insight-deck-select > span {
+  color: var(--ms-text-3) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.ms-home-head-actions,
+.ms-learning-head > button,
+.ms-vibes-head > button {
+  flex: 0 0 auto;
+}
+
+.ms-home-search {
+  width: 220px !important;
+  height: 36px !important;
+  color: var(--ms-text-3) !important;
+  background: var(--ms-panel) !important;
+  border-color: var(--ms-line-strong) !important;
+  border-radius: 7px !important;
+}
+
+.ms-home-search input {
+  color: var(--ms-text) !important;
+  font-size: 11px !important;
+}
+
+.ms-home-new,
+.ms-learning-head > button,
+.ms-vibes-head > button {
+  min-height: 36px !important;
+  padding: 0 12px !important;
+  color: var(--ms-accent-ink) !important;
+  background: var(--ms-accent) !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  box-shadow: none !important;
+  font-size: 10.5px !important;
+  font-weight: 650 !important;
+}
+
+.ms-home-create {
+  padding: 22px 0 26px !important;
+  border-bottom-color: var(--ms-line) !important;
+}
+
+.ms-home-create-head p {
+  color: var(--ms-text-3) !important;
+  font-size: 10.5px !important;
+}
+
+.ms-home-create-strip {
+  margin-top: 12px !important;
+  background: var(--ms-panel) !important;
+  border-color: var(--ms-line-strong) !important;
+  border-radius: 8px !important;
+}
+
+.ms-home-create-strip > button {
+  min-height: 82px !important;
+  padding: 13px !important;
+  color: var(--ms-text-2) !important;
+  background: transparent !important;
+  border-color: var(--ms-line) !important;
+}
+
+.ms-home-create-strip > button > svg:first-child {
+  color: var(--ms-accent) !important;
+}
+
+.ms-home-create-strip strong {
+  font-size: 11px !important;
+  font-weight: 550 !important;
+}
+
+.ms-home-create-strip small {
+  color: var(--ms-text-3) !important;
+  font-size: 9.5px !important;
+}
+
+.ms-home-workspace {
+  grid-template-columns: minmax(0, 1fr) 292px !important;
+  gap: 32px !important;
+  padding-top: 28px !important;
+}
+
+.ms-home-section-head,
+.ms-learning-section-head,
+.ms-intelligence-section-head,
+.ms-community-toolbar,
+.ms-vibes-library-head {
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid var(--ms-line) !important;
+}
+
+.ms-home-section-head h2,
+.ms-learning-section-head h2,
+.ms-intelligence-section-head h2,
+.ms-community-toolbar h2,
+.ms-vibes-library-head h2 {
+  margin: 4px 0 0 !important;
+  color: var(--ms-text) !important;
+  font-size: 16px !important;
+  font-weight: 550 !important;
+  letter-spacing: 0 !important;
+}
+
+.ms-home-project-grid {
+  gap: 13px !important;
+  padding-top: 14px !important;
+}
+
+.ms-home-project,
+.ms-community-deck,
+.ms-vibe-library-new,
+.ms-vibe-library-card {
+  color: var(--ms-text) !important;
+  background: var(--ms-panel) !important;
+  border-color: var(--ms-line) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+.ms-home-project-cover,
+.ms-community-deck-cover {
+  background: #20222b !important;
+}
+
+.ms-home-project-copy {
+  padding: 11px 11px 0 !important;
+}
+
+.ms-home-project-copy strong,
+.ms-community-deck-copy strong,
+.ms-vibe-library-card strong {
+  color: var(--ms-text) !important;
+  font-size: 11.5px !important;
+  font-weight: 550 !important;
+}
+
+.ms-home-project-copy small,
+.ms-home-project-meta,
+.ms-community-deck-copy small,
+.ms-vibe-library-card small {
+  color: var(--ms-text-3) !important;
+  font-size: 9.5px !important;
+}
+
+.ms-home-project-cover em {
+  color: rgba(250, 251, 255, 0.88) !important;
+  background: rgba(8, 9, 13, 0.82) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  border-radius: 4px !important;
+  font-size: 8px !important;
+  letter-spacing: 0 !important;
+}
+
+.ms-home-review {
+  padding-left: 24px !important;
+  border-left: 1px solid var(--ms-line) !important;
+}
+
+.ms-home-review-list,
+.ms-home-review-list > button,
+.ms-home-space-list > button {
+  border-color: var(--ms-line) !important;
+}
+
+.ms-home-review-list > button,
+.ms-home-space-list > button {
+  color: var(--ms-text-2) !important;
+}
+
+.ms-home-review-list strong,
+.ms-home-space-list strong {
+  color: var(--ms-text-2) !important;
+  font-size: 10.5px !important;
+}
+
+.ms-home-review-list small,
+.ms-home-space-list small {
+  color: var(--ms-text-3) !important;
+  font-size: 9px !important;
+}
+
+.ms-home-review-mark,
+.ms-home-space-list i {
+  color: var(--ms-accent) !important;
+  background: rgba(213, 220, 255, 0.07) !important;
+}
+
+.ms-learning-brief {
+  grid-template-columns: 42px minmax(0, 1fr) auto !important;
+  gap: 14px !important;
+  min-height: 96px !important;
+  margin-top: 22px !important;
+  padding: 14px 16px !important;
+  background: var(--ms-panel) !important;
+  background-image: none !important;
+  border: 1px solid var(--ms-line-strong) !important;
+  border-radius: 9px !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.ms-learning-brief > span {
+  display: grid;
+  place-items: center;
+  width: 36px !important;
+  height: 36px !important;
+  color: var(--ms-accent) !important;
+  background: rgba(213, 220, 255, 0.07) !important;
+  border: 1px solid rgba(213, 220, 255, 0.14) !important;
+  border-radius: 7px !important;
+}
+
+.ms-learning-brief input {
+  color: var(--ms-text) !important;
+  font-size: 14px !important;
+}
+
+.ms-learning-brief input::placeholder {
+  color: rgba(229, 234, 246, 0.48) !important;
+}
+
+.ms-learning-brief > div > div button {
+  color: var(--ms-text-3) !important;
+  font-size: 9.5px !important;
+}
+
+.ms-learning-brief > button {
+  min-height: 36px !important;
+  padding: 0 12px !important;
+  color: var(--ms-accent-ink) !important;
+  background: var(--ms-accent) !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  font-size: 10px !important;
+}
+
+.ms-learning-architecture {
+  margin-top: 30px !important;
+  padding-top: 0 !important;
+  border-top: 1px solid var(--ms-line) !important;
+}
+
+.ms-learning-architecture-head {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 28px !important;
+  padding: 20px 0 13px !important;
+  border-bottom: 1px solid var(--ms-line) !important;
+}
+
+.ms-learning-architecture-head h2 {
+  margin: 0 !important;
+  color: var(--ms-text) !important;
+  font-size: 16px !important;
+  font-weight: 550 !important;
+}
+
+.ms-learning-architecture-head p {
+  max-width: 520px !important;
+  margin: 0 !important;
+  color: var(--ms-text-3) !important;
+  font-size: 10.5px !important;
+}
+
+.ms-learning-architecture-grid {
+  display: grid !important;
+  grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr) !important;
+  gap: 0 !important;
+  border-bottom: 1px solid var(--ms-line) !important;
+}
+
+.ms-learning-outcome {
+  padding: 22px 22px 24px 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-right: 1px solid var(--ms-line) !important;
+  border-radius: 0 !important;
+}
+
+.ms-learning-outcome strong {
+  color: var(--ms-text) !important;
+  font-size: 16px !important;
+  line-height: 1.35 !important;
+}
+
+.ms-learning-outcome p {
+  color: var(--ms-text-3) !important;
+  font-size: 10px !important;
+}
+
+.ms-learning-sequence {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.ms-learning-sequence li {
+  min-height: 112px !important;
+  padding: 20px !important;
+  border: 0 !important;
+  border-right: 1px solid var(--ms-line) !important;
+  border-bottom: 1px solid var(--ms-line) !important;
+}
+
+.ms-learning-sequence li:nth-child(2n) {
+  border-right: 0 !important;
+}
+
+.ms-learning-sequence li:nth-child(n + 3) {
+  border-bottom: 0 !important;
+}
+
+.ms-learning-sequence li strong {
+  color: var(--ms-text-2) !important;
+  font-size: 11px !important;
+}
+
+.ms-learning-sequence li small {
+  color: var(--ms-text-3) !important;
+  font-size: 9.5px !important;
+  line-height: 1.5 !important;
+}
+
+.ms-learning-work {
+  margin-top: 32px !important;
+}
+
+.ms-lesson-focus {
+  margin-top: 14px !important;
+  padding: 16px !important;
+  background: var(--ms-panel) !important;
+  background-image: none !important;
+  border: 1px solid var(--ms-line-strong) !important;
+  border-radius: 9px !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.ms-intelligence-head > div {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: end !important;
+  width: 100%;
+  gap: 4px 28px !important;
+}
+
+.ms-intelligence-head h1,
+.ms-intelligence-head p {
+  grid-column: 1;
+}
+
+.ms-insight-deck-select {
+  grid-column: 2 !important;
+  grid-row: 1 / span 2 !important;
+  align-self: end;
+  min-width: 230px;
+  color: var(--ms-text-2) !important;
+  background: var(--ms-panel) !important;
+  border: 1px solid var(--ms-line-strong) !important;
+  border-radius: 7px !important;
+}
+
+.ms-insight-deck-select select {
+  color: var(--ms-text) !important;
+  background: transparent !important;
+  font-size: 10.5px !important;
+}
+
+.ms-intelligence-instrument {
+  grid-template-columns: 150px minmax(0, 1fr) 260px !important;
+  gap: 24px !important;
+  margin-top: 22px !important;
+  padding: 22px !important;
+  background: var(--ms-panel) !important;
+  background-image: none !important;
+  border: 1px solid var(--ms-line-strong) !important;
+  border-radius: 9px !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.ms-efficiency-dial {
+  width: 118px !important;
+  height: 118px !important;
+  box-shadow: none !important;
+}
+
+.ms-efficiency-dial::before {
+  background: var(--ms-panel) !important;
+}
+
+.ms-instrument-copy h2 {
+  color: var(--ms-text) !important;
+  font-size: 21px !important;
+  font-weight: 500 !important;
+}
+
+.ms-instrument-copy > p,
+.ms-token-portrait > span,
+.ms-token-portrait > div > span,
+.ms-token-portrait strong {
+  color: var(--ms-text-3) !important;
+}
+
+.ms-execution-log {
+  margin-top: 30px !important;
+}
+
+.ms-execution-table,
+.ms-project-ledger,
+.ms-learning-list {
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.ms-execution-table > div,
+.ms-learning-list > button {
+  min-height: 60px !important;
+  color: var(--ms-text-2) !important;
+  border-color: var(--ms-line) !important;
+}
+
+.ms-insights-ready-grid {
+  margin-top: 22px !important;
+  background: var(--ms-panel) !important;
+  border-color: var(--ms-line-strong) !important;
+  border-radius: 9px !important;
+}
+
+.ms-insights-ready-lead,
+.ms-insights-ready-checks article {
+  background: transparent !important;
+  border-color: var(--ms-line) !important;
+}
+
+.ms-insights-ready-lead h2,
+.ms-insights-ready-checks strong,
+.ms-insights-measure h2,
+.ms-insights-measure strong {
+  color: var(--ms-text) !important;
+}
+
+.ms-insights-ready-lead p,
+.ms-insights-ready-checks p,
+.ms-insights-measure p {
+  color: var(--ms-text-3) !important;
+}
+
+.ms-community-view {
+  padding: 0 !important;
+}
+
+.ms-community-hero {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.ms-community-nav {
+  min-height: 54px !important;
+  padding: 9px 0 !important;
+  border-color: var(--ms-line) !important;
+}
+
+.ms-community-nav [role="tablist"],
+.ms-community-filters,
+.ms-community-layout-controls {
+  background: var(--ms-panel) !important;
+  border: 1px solid var(--ms-line) !important;
+  border-radius: 7px !important;
+}
+
+.ms-community-nav [role="tab"].is-active,
+.ms-community-filters button.is-active,
+.ms-community-layout-controls button.is-active {
+  color: var(--ms-accent-ink) !important;
+  background: var(--ms-accent) !important;
+}
+
+.ms-community-search {
+  background: transparent !important;
+  border-color: var(--ms-line-strong) !important;
+}
+
+.ms-community-feature {
+  margin-top: 18px !important;
+  overflow: hidden;
+  background: var(--ms-panel) !important;
+  border: 1px solid var(--ms-line-strong) !important;
+  border-radius: 9px !important;
+  box-shadow: none !important;
+}
+
+.ms-community-feature-copy {
+  padding: 26px !important;
+}
+
+.ms-community-feature-copy h2 {
+  color: var(--ms-text) !important;
+  font-size: 24px !important;
+  font-weight: 500 !important;
+}
+
+.ms-community-feature-copy > p {
+  color: var(--ms-text-2) !important;
+  font-size: 11px !important;
+}
+
+.ms-community-gallery {
+  gap: 14px !important;
+}
+
+.ms-community-collections {
+  border-color: var(--ms-line) !important;
+}
+
+.ms-vibes-workspace {
+  grid-template-columns: minmax(0, 1fr) 360px !important;
+  align-items: start !important;
+  gap: 18px !important;
+  margin-top: 20px !important;
+}
+
+.ms-vibe-artboard {
+  align-self: start;
+  height: clamp(490px, 58vh, 620px);
+  min-height: 490px !important;
+  padding: 26px !important;
+  border-radius: 9px !important;
+  box-shadow: none !important;
+}
+
+.ms-vibe-artboard::before {
+  top: 0 !important;
+  right: 0 !important;
+  width: 22% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  background: var(--vibe-signal) !important;
+  border-radius: 0 !important;
+  filter: none !important;
+  opacity: 0.32 !important;
+}
+
+.ms-vibe-artboard::after {
+  right: 26px !important;
+  bottom: 26px !important;
+  width: 24% !important;
+  height: 34% !important;
+  aspect-ratio: auto !important;
+  border: 1px solid color-mix(in srgb, var(--vibe-paper) 34%, transparent) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-vibe-artboard-copy {
+  max-width: 66% !important;
+}
+
+.ms-vibe-artboard-copy h2 {
+  font-size: 44px !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+}
+
+.ms-vibe-controls {
+  background: var(--ms-panel) !important;
+  border-color: var(--ms-line-strong) !important;
+  border-radius: 9px !important;
+  box-shadow: none !important;
+}
+
+.ms-vibe-reference,
+.ms-vibe-controls textarea,
+.ms-vibe-controls input,
+.ms-vibe-reference-url {
+  background: rgba(0, 0, 0, 0.12) !important;
+  border-color: var(--ms-line-strong) !important;
+  border-radius: 7px !important;
+}
+
+.ms-vibes-library {
+  margin-top: 38px !important;
+}
+
+.ms-vibes-library-grid {
+  gap: 12px !important;
+  padding-top: 14px !important;
+}
+
+.ms-settings-shell {
+  display: grid !important;
+  grid-template-columns: 190px minmax(0, 1fr) !important;
+  grid-template-areas: "overview overview" "rail content" !important;
+  column-gap: 34px !important;
+  align-items: start !important;
+}
+
+.ms-settings-overview {
+  grid-area: overview;
+}
+
+.ms-settings-rail {
+  grid-area: rail;
+  position: sticky;
+  top: 20px;
+  display: grid !important;
+  gap: 3px !important;
+  margin-top: 22px !important;
+  padding: 8px !important;
+  background: var(--ms-panel) !important;
+  border: 1px solid var(--ms-line-strong) !important;
+  border-radius: 8px !important;
+}
+
+.ms-settings-rail button {
+  justify-content: flex-start !important;
+  min-height: 36px !important;
+  gap: 9px !important;
+  padding: 0 10px !important;
+  color: var(--ms-text-2) !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+}
+
+.ms-settings-rail button.is-active {
+  color: var(--ms-text) !important;
+  background: var(--ms-selected) !important;
+  border-color: rgba(205, 216, 255, 0.16) !important;
+}
+
+.ms-settings-content {
+  grid-area: content;
+  min-width: 0;
+  padding: 22px 0 0 !important;
+}
+
+.ms-settings-page {
+  max-width: 840px;
+}
+
+.ms-settings-page > header {
+  padding: 0 0 20px !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--ms-line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-settings-page > header h2 {
+  color: var(--ms-text) !important;
+  font-size: 20px !important;
+  font-weight: 550 !important;
+}
+
+.ms-settings-page > header p {
+  color: var(--ms-text-2) !important;
+  font-size: 11px !important;
+}
+
+.ms-settings-group {
+  margin-top: 26px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-settings-group > h3 {
+  padding-bottom: 9px;
+  color: var(--ms-text-3) !important;
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+}
+
+.ms-settings-rows {
+  overflow: hidden;
+  background: var(--ms-panel) !important;
+  border: 1px solid var(--ms-line-strong) !important;
+  border-radius: 8px !important;
+}
+
+.ms-setting-row,
+.ms-pipeline-row {
+  min-height: 68px !important;
+  color: var(--ms-text-2) !important;
+  border-color: var(--ms-line) !important;
+}
+
+.ms-setting-copy strong,
+.ms-pipeline-row strong {
+  color: var(--ms-text-2) !important;
+  font-size: 11px !important;
+}
+
+.ms-setting-copy p,
+.ms-pipeline-row p {
+  color: var(--ms-text-3) !important;
+  font-size: 9.5px !important;
+}
+
+.ms-choice-control,
+.ms-number-control {
+  background: rgba(0, 0, 0, 0.14) !important;
+  border-color: var(--ms-line) !important;
+  border-radius: 7px !important;
+}
+
+.ms-choice-control button.is-active {
+  color: var(--ms-accent-ink) !important;
+  background: var(--ms-accent) !important;
+}
+
+.ms-engine-status,
+.ms-settings-note,
+.ms-advanced-warning {
+  background: var(--ms-panel) !important;
+  background-image: none !important;
+  border-color: var(--ms-line-strong) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+.ms-app-shell button,
+.ms-app-shell a,
+.ms-app-shell input,
+.ms-app-shell textarea,
+.ms-app-shell select {
+  outline: none;
+}
+
+.ms-app-shell button:focus-visible,
+.ms-app-shell a:focus-visible,
+.ms-app-shell input:focus-visible,
+.ms-app-shell textarea:focus-visible,
+.ms-app-shell select:focus-visible {
+  outline: 2px solid rgba(213, 220, 255, 0.78) !important;
+  outline-offset: 2px;
+}
+
+.ms-app-shell button:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ms-sidebar-collapse:hover {
+    color: var(--ms-text) !important;
+    background: var(--ms-hover) !important;
+  }
+
+  .ms-reference-nav button:hover,
+  .ms-reference-decks .group:hover,
+  .ms-home-space-list > button:hover,
+  .ms-home-review-list > button:hover,
+  .ms-execution-table > div:hover,
+  .ms-learning-list > button:hover {
+    color: var(--ms-text) !important;
+    background: var(--ms-hover) !important;
+  }
+
+  .ms-home-project:hover,
+  .ms-community-deck:hover,
+  .ms-vibe-library-card:hover,
+  .ms-vibe-library-new:hover {
+    border-color: var(--ms-line-strong) !important;
+    background: var(--ms-panel-strong) !important;
+    transform: translateY(-2px);
+  }
+
+  .ms-home-create-strip > button:hover {
+    background: var(--ms-hover) !important;
+  }
+}
+
+html.ms-light .ms-app-shell {
+  --ms-bg: #e8ebf1;
+  --ms-chrome: rgba(247, 249, 253, 0.91);
+  --ms-canvas: #f5f6f9;
+  --ms-panel: #ffffff;
+  --ms-panel-strong: #f0f2f7;
+  --ms-hover: rgba(33, 39, 54, 0.055);
+  --ms-selected: rgba(69, 83, 135, 0.09);
+  --ms-line: rgba(34, 40, 54, 0.1);
+  --ms-line-strong: rgba(34, 40, 54, 0.16);
+  --ms-text: rgba(24, 28, 37, 0.96);
+  --ms-text-2: rgba(35, 40, 53, 0.72);
+  --ms-text-3: rgba(42, 48, 62, 0.68);
+  --ms-accent: #27304d;
+  --ms-accent-ink: #ffffff;
+  --ms-success: #347b4b;
+  --ms-warning: #946626;
+  background: var(--ms-bg) url("/hero-bg.webp") center / cover fixed !important;
+}
+
+html.ms-light .ms-app-shell::before {
+  background: rgba(235, 239, 246, 0.8);
+}
+
+html.ms-light .ms-app-sidebar,
+html.ms-light .ms-app-main,
+html.ms-light .ms-product-topbar {
+  color: var(--ms-text) !important;
+  border-color: var(--ms-line-strong) !important;
+}
+
+html.ms-light .ms-app-sidebar {
+  background: var(--ms-chrome) !important;
+}
+
+html.ms-light .ms-app-main,
+html.ms-light .ms-product-topbar,
+html.ms-light .ms-home,
+html.ms-light .ms-learning-studio,
+html.ms-light .ms-intelligence,
+html.ms-light .ms-community-view,
+html.ms-light .ms-vibes-view,
+html.ms-light .ms-settings-pro {
+  background: var(--ms-canvas) !important;
+}
+
+html.ms-light .ms-sidebar-wordmark strong,
+html.ms-light .ms-home-head h1,
+html.ms-light .ms-learning-head h1,
+html.ms-light .ms-intelligence-head h1,
+html.ms-light .ms-community-hero h1,
+html.ms-light .ms-vibes-head h1,
+html.ms-light .ms-settings-overview h1 {
+  color: var(--ms-text) !important;
+}
+
+html.ms-light .ms-reference-compose,
+html.ms-light .ms-home-new,
+html.ms-light .ms-learning-head > button,
+html.ms-light .ms-vibes-head > button,
+html.ms-light .ms-product-topbar-actions > button,
+html.ms-light .ms-learning-brief > button {
+  color: var(--ms-accent-ink) !important;
+  background: var(--ms-accent) !important;
+  box-shadow: none !important;
+}
+
+html.ms-light .ms-reference-nav button,
+html.ms-light .ms-reference-decks .group > button:first-of-type > span:first-child,
+html.ms-light .ms-sidebar-profile-copy strong {
+  color: var(--ms-text-2) !important;
+}
+
+html.ms-light .ms-reference-nav button.is-active,
+html.ms-light .ms-reference-nav button[aria-current="page"] {
+  color: var(--ms-text) !important;
+  background: var(--ms-selected) !important;
+  border-color: var(--ms-line-strong) !important;
+}
+
+html.ms-light .ms-home-project,
+html.ms-light .ms-community-deck,
+html.ms-light .ms-vibe-library-card,
+html.ms-light .ms-vibe-library-new,
+html.ms-light .ms-learning-brief,
+html.ms-light .ms-lesson-focus,
+html.ms-light .ms-intelligence-instrument,
+html.ms-light .ms-vibe-controls,
+html.ms-light .ms-settings-rows,
+html.ms-light .ms-settings-rail {
+  color: var(--ms-text) !important;
+  background: var(--ms-panel) !important;
+  border-color: var(--ms-line-strong) !important;
+  box-shadow: none !important;
+}
+
+html.ms-light .ms-home-project-cover,
+html.ms-light .ms-community-deck-cover {
+  background: #e7eaf0 !important;
+}
+
+html.ms-light .ms-learning-outcome,
+html.ms-light .ms-learning-sequence li,
+html.ms-light .ms-home-review,
+html.ms-light .ms-home-review-list > button,
+html.ms-light .ms-home-space-list > button {
+  border-color: var(--ms-line) !important;
+}
+
+@media (max-width: 1060px) {
+  .ms-product-topbar {
+    grid-template-columns: minmax(180px, 1fr) auto;
+  }
+
+  .ms-product-topbar > p {
+    display: none;
+  }
+
+  .ms-home-workspace {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ms-home-create-strip {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+
+  .ms-home-create-strip > button:nth-child(3),
+  .ms-home-create-strip > button:nth-child(n + 4) {
+    border-top: 0 !important;
+    border-right: 1px solid var(--ms-line) !important;
+  }
+
+  .ms-home-create-strip > button:last-child {
+    border-right: 0 !important;
+  }
+
+  .ms-home-review {
+    display: block !important;
+    padding: 26px 0 0 !important;
+    border-top: 1px solid var(--ms-line) !important;
+    border-left: 0 !important;
+  }
+
+  .ms-vibes-workspace {
+    grid-template-columns: minmax(0, 1fr) 330px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .ms-app-frame {
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+  }
+
+  .ms-app-sidebar:not(.is-collapsed) .ms-sidebar-wordmark,
+  .ms-app-sidebar:not(.is-collapsed) .ms-sidebar-compose-label,
+  .ms-app-sidebar:not(.is-collapsed) .ms-sidebar-nav-label,
+  .ms-app-sidebar:not(.is-collapsed) .ms-sidebar-section-label,
+  .ms-app-sidebar:not(.is-collapsed) .ms-reference-decks-head,
+  .ms-app-sidebar:not(.is-collapsed) .ms-reference-decks,
+  .ms-app-sidebar:not(.is-collapsed) .ms-sidebar-profile-copy,
+  .ms-app-sidebar:not(.is-collapsed) .ms-sidebar-profile > svg,
+  .ms-app-sidebar:not(.is-collapsed) .ms-sidebar-profile-actions {
+    display: none !important;
+  }
+
+  .ms-app-sidebar:not(.is-collapsed) .ms-reference-brand,
+  .ms-app-sidebar:not(.is-collapsed) .ms-reference-compose-wrap,
+  .ms-app-sidebar:not(.is-collapsed) .ms-reference-nav {
+    padding-inline: 10px !important;
+  }
+
+  .ms-app-sidebar:not(.is-collapsed) .ms-sidebar-brand,
+  .ms-app-sidebar:not(.is-collapsed) .ms-reference-nav button {
+    justify-content: center;
+  }
+
+  .ms-app-sidebar:not(.is-collapsed) .ms-sidebar-collapse {
+    display: none;
+  }
+
+  .ms-app-sidebar:not(.is-collapsed) .ms-reference-compose {
+    justify-content: center;
+    padding: 0 !important;
+  }
+
+  .ms-app-sidebar:not(.is-collapsed) .ms-reference-account {
+    margin-top: auto !important;
+  }
+
+  .ms-learning-architecture-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ms-learning-outcome {
+    padding-right: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--ms-line) !important;
+  }
+
+  .ms-intelligence-instrument {
+    grid-template-columns: 130px minmax(0, 1fr) !important;
+  }
+
+  .ms-token-portrait {
+    grid-column: 1 / -1;
+  }
+
+  .ms-vibes-workspace {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ms-vibe-controls {
+    min-height: 0 !important;
+  }
+
+  .ms-settings-shell {
+    grid-template-columns: 160px minmax(0, 1fr) !important;
+    column-gap: 24px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .ms-app-shell {
+    padding: 0;
+    background: var(--ms-canvas) !important;
+  }
+
+  .ms-app-shell::before {
+    display: none;
+  }
+
+  .ms-app-frame,
+  .ms-app-frame.is-sidebar-collapsed {
+    display: block !important;
+  }
+
+  .ms-app-sidebar {
+    display: none !important;
+  }
+
+  .ms-app-main {
+    height: 100% !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .ms-product-topbar {
+    min-height: 48px;
+    flex-basis: 48px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 0 14px;
+  }
+
+  .ms-product-breadcrumb > span,
+  .ms-product-breadcrumb > svg,
+  .ms-product-topbar-actions > span {
+    display: none;
+  }
+
+  .ms-product-breadcrumb strong {
+    font-size: 12px;
+  }
+
+  .ms-product-topbar-actions > button {
+    min-height: 30px;
+  }
+
+  .ms-home-canvas,
+  .ms-learning-shell,
+  .ms-intelligence-shell,
+  .ms-community-shell,
+  .ms-vibes-shell,
+  .ms-settings-shell {
+    width: min(100% - 28px, 1240px) !important;
+    padding: 20px 0 92px !important;
+  }
+
+  .ms-home-head,
+  .ms-learning-head,
+  .ms-intelligence-head,
+  .ms-community-hero,
+  .ms-vibes-head,
+  .ms-settings-overview {
+    display: block !important;
+    min-height: 0 !important;
+    padding: 3px 0 20px !important;
+  }
+
+  .ms-home-head h1,
+  .ms-learning-head h1,
+  .ms-intelligence-head h1,
+  .ms-community-hero h1,
+  .ms-vibes-head h1,
+  .ms-settings-overview h1 {
+    font-size: 27px !important;
+  }
+
+  .ms-home-head-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    margin-top: 18px !important;
+  }
+
+  .ms-home-search {
+    width: 100% !important;
+  }
+
+  .ms-learning-head > button,
+  .ms-vibes-head > button {
+    margin-top: 16px;
+  }
+
+  .ms-home-create-strip {
+    display: flex !important;
+    gap: 0;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+  }
+
+  .ms-home-create-strip > button,
+  .ms-home-create-strip > button:nth-child(3) {
+    flex: 0 0 176px;
+    min-height: 82px !important;
+    border-top: 0 !important;
+    border-right: 1px solid var(--ms-line) !important;
+    scroll-snap-align: start;
+  }
+
+  .ms-home-project-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ms-home-project {
+    display: grid !important;
+    grid-template-columns: 126px minmax(0, 1fr) !important;
+    align-items: center;
+  }
+
+  .ms-home-project-cover {
+    grid-row: span 2;
+    width: 100% !important;
+    height: 100%;
+    min-height: 108px;
+    aspect-ratio: auto !important;
+  }
+
+  .ms-home-project-copy {
+    padding: 12px 12px 0 !important;
+  }
+
+  .ms-home-project-meta {
+    padding: 8px 12px 12px !important;
+  }
+
+  .ms-learning-brief {
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+  }
+
+  .ms-learning-brief > button {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+
+  .ms-learning-architecture-head {
+    display: block !important;
+  }
+
+  .ms-learning-architecture-head p {
+    margin-top: 8px !important;
+  }
+
+  .ms-learning-sequence {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .ms-learning-sequence li {
+    flex: 0 0 210px;
+    border-right: 1px solid var(--ms-line) !important;
+    border-bottom: 0 !important;
+    scroll-snap-align: start;
+  }
+
+  .ms-intelligence-head > div {
+    display: block !important;
+  }
+
+  .ms-insight-deck-select {
+    min-width: 0;
+    margin-top: 15px;
+  }
+
+  .ms-intelligence-instrument {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ms-efficiency-dial {
+    justify-self: start;
+  }
+
+  .ms-community-nav {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .ms-community-search {
+    width: 100% !important;
+  }
+
+  .ms-community-feature {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ms-community-feature-copy {
+    padding: 20px 16px !important;
+  }
+
+  .ms-vibe-artboard {
+    height: 390px !important;
+    min-height: 390px !important;
+  }
+
+  .ms-vibe-artboard-copy {
+    max-width: 80% !important;
+  }
+
+  .ms-vibe-artboard-copy h2 {
+    font-size: 34px !important;
+  }
+
+  .ms-settings-shell {
+    display: block !important;
+  }
+
+  .ms-settings-session {
+    margin-top: 14px;
+  }
+
+  .ms-settings-rail {
+    position: sticky;
+    z-index: 3;
+    top: 0;
+    display: flex !important;
+    gap: 3px !important;
+    margin-top: 14px !important;
+    overflow-x: auto;
+  }
+
+  .ms-settings-rail button {
+    flex: 0 0 auto;
+  }
+
+  .ms-settings-content {
+    padding-top: 24px !important;
+  }
+
+  .ms-setting-row {
+    grid-template-columns: 32px minmax(0, 1fr) !important;
+    padding: 15px !important;
+  }
+
+  .ms-setting-control {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .ms-mobile-nav {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    min-height: 62px !important;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: rgba(12, 13, 18, 0.96) !important;
+    border-top: 1px solid var(--ms-line-strong) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .ms-mobile-nav button {
+    color: var(--ms-text-3) !important;
+  }
+
+  .ms-mobile-nav button.is-active {
+    color: var(--ms-text) !important;
+  }
+
+  .ms-mobile-nav span {
+    font-size: 7.5px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-app-shell *,
+  .ms-app-shell *::before,
+  .ms-app-shell *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

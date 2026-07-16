@@ -23,12 +23,14 @@ export function InsightsView({ deck, decks, onSelect }: Props) {
   const success = stats.length ? Math.round((stats.length - failures) / stats.length * 100) : 0;
   const cacheRate = input ? Math.round(cached / input * 100) : 0;
   const maxDuration = Math.max(...stats.map((turn) => turn.durationMs), 1);
-  const entry = (delay = 0) => reduce ? { initial: { opacity: 0 }, animate: { opacity: 1 } } : { initial: { opacity: 0, y: 8, filter: "blur(3px)" }, animate: { opacity: 1, y: 0, filter: "blur(0px)" }, transition: { duration: .22, delay, ease } };
+  const entry = (delay = 0) => reduce
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 } }
+    : { initial: { opacity: 0, y: 4 }, animate: { opacity: 1, y: 0 }, transition: { duration: .18, delay, ease } };
 
   if (!stats.length) return <EmptyInsights deck={observedDeck} decks={decks} onSelect={onSelect} entry={entry} />;
 
   return <main className="ms-intelligence h-full overflow-y-auto"><div className="ms-intelligence-shell">
-    <motion.header className="ms-intelligence-head" {...entry()}><div><h1>See what shaped the deck.</h1><label className="ms-insight-deck-select"><span>Looking at</span><select value={observedDeck?.id ?? ""} onChange={(event) => onSelect(event.target.value)}>{decks.map((item) => <option key={item.id} value={item.id}>{deckTitle(item)}</option>)}</select><CaretDownIcon /></label><p>{stats.length} recorded moments / {observedDeck?.stats.length ? "a living production record" : "waiting for the first run"}</p></div></motion.header>
+    <motion.header className="ms-intelligence-head" {...entry()}><div><h1>Production insights</h1><p>{stats.length} recorded steps across planning and rendering.</p><label className="ms-insight-deck-select"><span>Presentation</span><select value={observedDeck?.id ?? ""} onChange={(event) => onSelect(event.target.value)}>{decks.map((item) => <option key={item.id} value={item.id}>{deckTitle(item)}</option>)}</select><CaretDownIcon /></label></div></motion.header>
 
     <motion.section className="ms-intelligence-instrument" {...entry(.04)}>
       <div className="ms-efficiency-dial" style={{ "--dial": `${Math.max(8, Math.round((success + cacheRate) / 2))}%` } as CSSProperties}><div><small>Run quality</small><strong>{Math.max(0, Math.round((success + cacheRate) / 2))}</strong><span>of 100</span></div></div>
@@ -47,7 +49,7 @@ function EmptyInsights({ deck, decks, onSelect, entry }: { deck: Deck | null; de
     { icon: <ChartBar />, label: "Production trace", detail: "Timing, token use, and cache reuse appear after the first run." },
   ];
   return <main className="ms-intelligence h-full overflow-y-auto"><div className="ms-intelligence-shell ms-insights-ready">
-    <motion.header className="ms-intelligence-head" {...entry()}><div><h1>Know what the next run will reveal.</h1><p>Insights becomes a production record once this deck reaches planning or rendering. Until then, use it to make sure the setup is intentional.</p><label className="ms-insight-deck-select"><span>Preparing</span><select value={deck?.id ?? ""} onChange={(event) => onSelect(event.target.value)}>{decks.map((item) => <option key={item.id} value={item.id}>{deckTitle(item)}</option>)}</select><CaretDownIcon /></label></div></motion.header>
+    <motion.header className="ms-intelligence-head" {...entry()}><div><h1>Production insights</h1><p>Generation timing, context reuse, and completed output will appear after the first planning run.</p><label className="ms-insight-deck-select"><span>Presentation</span><select value={deck?.id ?? ""} onChange={(event) => onSelect(event.target.value)}>{decks.map((item) => <option key={item.id} value={item.id}>{deckTitle(item)}</option>)}</select><CaretDownIcon /></label></div></motion.header>
     <motion.section className="ms-insights-ready-grid" {...entry(.05)}><article className="ms-insights-ready-lead"><span><Cpu weight="duotone" /></span><div><small>Next production signal</small><h2>{deck?.brief ? "Plan the narrative when you are ready." : "Start with one clear brief."}</h2><p>{deck?.brief ? "The outline run will record the narrative decisions, time spent, and context used for this deck." : "A good brief gives the planner a real point of view to work from."}</p></div><ArrowRight /></article><div className="ms-insights-ready-checks">{readiness.map((item) => <article key={item.label}><span>{item.icon}</span><div><strong>{item.label}</strong><p>{item.detail}</p></div><Check /></article>)}</div></motion.section>
     <motion.section className="ms-insights-measure" {...entry(.1)}><div><h2>Useful signals, not decorative charts.</h2></div><div><article><strong>Thread continuity</strong><p>How much deck context was reused from the previous turn.</p></article><article><strong>Time by stage</strong><p>Where planning or rendering asked for more attention.</p></article><article><strong>Rendered output</strong><p>Which slides completed cleanly and which need another pass.</p></article></div></motion.section>
   </div></main>;

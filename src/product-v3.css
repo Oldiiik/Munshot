@@ -1,0 +1,2184 @@
+/* Moonshot product v3: minimal brutalist workspace. */
+
+.ms-app-shell {
+  --v3-bg: #0d0d0e;
+  --v3-chrome: #101011;
+  --v3-panel: #141415;
+  --v3-surface: #19191b;
+  --v3-line: #2b2b2e;
+  --v3-line-strong: #424247;
+  --v3-text: #f0f0ed;
+  --v3-text-2: #b2b2ac;
+  --v3-text-3: #85857f;
+  --v3-signal: #ff5a45;
+  --v3-signal-ink: #160806;
+  --v3-hover: #1d1d1f;
+  padding: 0 !important;
+  color: var(--v3-text) !important;
+  background: var(--v3-bg) !important;
+  font-family: "Helvetica Neue", "Arial Nova", Arial, sans-serif !important;
+}
+
+.ms-app-shell::before {
+  display: none !important;
+}
+
+.ms-app-frame,
+.ms-app-frame.is-sidebar-collapsed {
+  gap: 0 !important;
+  grid-template-columns: 204px minmax(0, 1fr) !important;
+  background: var(--v3-bg) !important;
+}
+
+.ms-app-frame.is-sidebar-collapsed {
+  grid-template-columns: 52px minmax(0, 1fr) !important;
+}
+
+.ms-app-main {
+  color: var(--v3-text) !important;
+  background: var(--v3-bg) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.ms-app-view,
+.ms-app-view > div,
+.ms-home,
+.ms-learning-studio,
+.ms-intelligence,
+.ms-community-view,
+.ms-vibes-view,
+.ms-settings-pro {
+  background: var(--v3-bg) !important;
+}
+
+/* Sidebar */
+.ms-app-sidebar {
+  color: var(--v3-text) !important;
+  background: var(--v3-chrome) !important;
+  border: 0 !important;
+  border-right: 1px solid var(--v3-line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.ms-reference-brand {
+  min-height: 52px !important;
+  padding: 0 11px !important;
+  border-bottom: 1px solid var(--v3-line);
+}
+
+.ms-sidebar-brand {
+  display: flex;
+  align-items: center;
+  min-height: 51px !important;
+  gap: 9px !important;
+  padding: 0 !important;
+}
+
+.ms-sidebar-logo {
+  width: 18px !important;
+  height: 18px !important;
+  color: var(--v3-text) !important;
+  filter: none !important;
+}
+
+.ms-sidebar-wordmark {
+  display: grid !important;
+  min-width: 0;
+  gap: 1px !important;
+  margin: 0;
+  line-height: 1.05 !important;
+}
+
+.ms-sidebar-wordmark strong {
+  color: var(--v3-text) !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+}
+
+.ms-sidebar-wordmark small {
+  color: var(--v3-text-3) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 7px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase;
+}
+
+.ms-sidebar-collapse {
+  width: 24px !important;
+  height: 24px !important;
+  margin-left: auto !important;
+  color: var(--v3-text-3) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.ms-sidebar-collapse svg {
+  width: 13px;
+  height: 13px;
+}
+
+.ms-reference-compose-wrap {
+  padding: 12px 10px 10px !important;
+}
+
+.ms-reference-compose {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  min-height: 34px !important;
+  gap: 8px !important;
+  padding: 0 10px !important;
+  color: var(--v3-text-2) !important;
+  background: transparent !important;
+  border: 1px solid var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: 10px !important;
+  font-weight: 650 !important;
+}
+
+.ms-reference-compose svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: var(--v3-signal) !important;
+}
+
+.ms-reference-nav {
+  display: flex !important;
+  flex-direction: column;
+  gap: 1px !important;
+  padding: 8px 8px !important;
+}
+
+.ms-sidebar-section-label {
+  display: block;
+  padding: 6px 7px 7px !important;
+  color: var(--v3-text-3) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 7px !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase;
+}
+
+.ms-reference-nav > button {
+  position: relative;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 34px !important;
+  gap: 9px !important;
+  padding: 0 8px !important;
+  color: var(--v3-text-2) !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 0 !important;
+  font-size: 10.5px !important;
+  text-align: left;
+}
+
+.ms-reference-nav > button.is-tools-start {
+  margin-top: 11px;
+}
+
+.ms-reference-nav > button.is-tools-start::before {
+  content: "TOOLS";
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 7px;
+  color: var(--v3-text-3);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.06em;
+}
+
+.ms-reference-nav > button svg {
+  width: 15px !important;
+  height: 15px !important;
+  flex: 0 0 auto;
+}
+
+.ms-reference-nav > button > i {
+  position: absolute;
+  top: 8px;
+  right: -9px;
+  width: 2px;
+  height: 18px;
+  background: var(--v3-signal);
+}
+
+.ms-reference-nav > button.is-active,
+.ms-reference-nav > button[aria-current="page"] {
+  color: var(--v3-text) !important;
+  background: var(--v3-surface) !important;
+  border-color: var(--v3-line) !important;
+}
+
+.ms-sidebar-spacer {
+  min-height: 20px;
+  flex: 1;
+}
+
+.ms-reference-account {
+  margin: 0 !important;
+  padding: 8px !important;
+  background: transparent !important;
+  border-top: 1px solid var(--v3-line) !important;
+}
+
+.ms-sidebar-profile {
+  display: grid !important;
+  grid-template-columns: 28px minmax(0, 1fr) 12px !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 38px !important;
+  gap: 8px !important;
+  padding: 4px !important;
+  color: var(--v3-text-2) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  text-align: left;
+}
+
+.ms-sidebar-avatar {
+  display: grid;
+  width: 28px !important;
+  height: 28px !important;
+  place-items: center;
+  color: var(--v3-text) !important;
+  background: var(--v3-panel) !important;
+  border: 1px solid var(--v3-line-strong) !important;
+  border-radius: 50% !important;
+  font-family: var(--font-mono);
+  font-size: 8px;
+}
+
+.ms-sidebar-profile-copy strong,
+.ms-sidebar-profile-copy small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-sidebar-profile-copy strong {
+  color: var(--v3-text-2) !important;
+  font-size: 9.5px !important;
+  font-weight: 550 !important;
+}
+
+.ms-sidebar-profile-copy small,
+.ms-sidebar-profile-actions {
+  color: var(--v3-text-3) !important;
+  font-size: 7.5px !important;
+}
+
+.ms-sidebar-profile-actions {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 32px;
+  padding: 0 3px 0 4px;
+  border-top: 1px solid var(--v3-line);
+}
+
+.ms-sidebar-profile-actions > div {
+  display: flex;
+  gap: 2px;
+}
+
+.ms-sidebar-profile-actions button {
+  display: grid;
+  width: 27px !important;
+  height: 27px !important;
+  place-items: center;
+  color: var(--v3-text-3) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.ms-sidebar-profile-actions svg {
+  width: 13px !important;
+  height: 13px !important;
+}
+
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-wordmark,
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-compose-label,
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-nav-label,
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-section-label,
+.ms-app-frame.is-sidebar-collapsed .ms-reference-nav > button::before,
+.ms-app-frame.is-sidebar-collapsed .ms-reference-nav > button > i,
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-profile-copy,
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-profile > svg,
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-profile-actions {
+  display: none !important;
+}
+
+.ms-app-frame.is-sidebar-collapsed .ms-reference-brand,
+.ms-app-frame.is-sidebar-collapsed .ms-reference-compose-wrap,
+.ms-app-frame.is-sidebar-collapsed .ms-reference-nav,
+.ms-app-frame.is-sidebar-collapsed .ms-reference-account {
+  padding-inline: 7px !important;
+}
+
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-brand,
+.ms-app-frame.is-sidebar-collapsed .ms-reference-compose,
+.ms-app-frame.is-sidebar-collapsed .ms-reference-nav > button,
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-profile {
+  justify-content: center !important;
+  padding-inline: 0 !important;
+}
+
+.ms-app-frame.is-sidebar-collapsed .ms-sidebar-collapse {
+  display: none !important;
+}
+
+/* Top bar */
+.ms-product-topbar {
+  min-height: 44px !important;
+  flex-basis: 44px !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  padding: 0 14px !important;
+  color: var(--v3-text-2) !important;
+  background: var(--v3-chrome) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--v3-line) !important;
+}
+
+.ms-product-topbar > p {
+  display: none !important;
+}
+
+.ms-product-breadcrumb,
+.ms-product-topbar-actions {
+  min-width: 0;
+  gap: 6px !important;
+  color: var(--v3-text-3) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 8px !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase;
+}
+
+.ms-product-breadcrumb strong {
+  overflow: hidden;
+  color: var(--v3-text-2) !important;
+  font-weight: 500 !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-product-topbar-actions > span {
+  color: var(--v3-text-3) !important;
+  font-size: 8px !important;
+}
+
+.ms-product-topbar-actions > button {
+  min-height: 27px !important;
+  gap: 5px !important;
+  padding: 0 8px !important;
+  color: var(--v3-text) !important;
+  background: transparent !important;
+  border: 1px solid var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: 8px !important;
+  text-transform: uppercase;
+}
+
+/* Shared route structure */
+.ms-home-canvas,
+.ms-learning-shell,
+.ms-intelligence-shell,
+.ms-vibes-shell,
+.ms-settings-shell {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 24px 28px 72px !important;
+}
+
+.ms-home-head,
+.ms-learning-head,
+.ms-intelligence-head,
+.ms-vibes-head,
+.ms-settings-overview {
+  display: flex !important;
+  min-height: 78px !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 24px !important;
+  padding: 0 0 18px !important;
+  border-bottom: 1px solid var(--v3-line-strong) !important;
+}
+
+.ms-home-head h1,
+.ms-learning-head h1,
+.ms-intelligence-head h1,
+.ms-vibes-head h1,
+.ms-settings-overview h1 {
+  margin: 5px 0 0 !important;
+  color: var(--v3-text) !important;
+  font-size: 28px !important;
+  font-weight: 650 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+}
+
+.ms-home-head p,
+.ms-learning-head p,
+.ms-intelligence-head p,
+.ms-vibes-head p,
+.ms-settings-overview p {
+  max-width: 560px !important;
+  margin: 8px 0 0 !important;
+  color: var(--v3-text-3) !important;
+  font-size: 10.5px !important;
+  line-height: 1.5 !important;
+}
+
+.ms-home-head > div:first-child > span,
+.ms-learning-head > div > span,
+.ms-vibes-head > div > span,
+.ms-settings-overview > div > span,
+.ms-home-section-head span,
+.ms-learning-architecture-head span,
+.ms-execution-log header span {
+  color: var(--v3-text-3) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 7.5px !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase;
+}
+
+.ms-home-new,
+.ms-learning-head > button,
+.ms-vibes-head > button {
+  min-height: 32px !important;
+  padding: 0 10px !important;
+  color: var(--v3-signal-ink) !important;
+  background: var(--v3-signal) !important;
+  border: 1px solid var(--v3-signal) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: 9px !important;
+}
+
+/* Home: file browser, not dashboard. */
+.ms-home-create,
+.ms-home-review,
+.ms-home-spaces {
+  display: none !important;
+}
+
+.ms-home-head-actions {
+  display: flex !important;
+  align-items: center;
+  gap: 6px !important;
+  padding: 0 !important;
+}
+
+.ms-home-search {
+  width: 230px !important;
+  height: 32px !important;
+  color: var(--v3-text-3) !important;
+  background: transparent !important;
+  border: 1px solid var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+}
+
+.ms-home-search input {
+  color: var(--v3-text) !important;
+  font-size: 9px !important;
+}
+
+.ms-home-workspace {
+  display: block !important;
+  padding-top: 26px !important;
+}
+
+.ms-home-section-head {
+  padding-bottom: 10px !important;
+  border-color: var(--v3-line) !important;
+}
+
+.ms-home-section-head h2 {
+  margin-top: 5px !important;
+  color: var(--v3-text) !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+.ms-home-section-head > p {
+  color: var(--v3-text-3) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 8px !important;
+}
+
+.ms-home-project-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 22px 14px !important;
+  padding-top: 14px !important;
+}
+
+.ms-home-project {
+  display: block !important;
+  overflow: visible !important;
+  color: var(--v3-text) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-home-project-cover {
+  aspect-ratio: 16 / 9 !important;
+  color: var(--v3-text-3) !important;
+  background: var(--v3-surface) !important;
+  border: 1px solid var(--v3-line) !important;
+  border-radius: 0 !important;
+}
+
+.ms-home-project-cover em {
+  top: 7px !important;
+  left: 7px !important;
+  color: var(--v3-text) !important;
+  background: var(--v3-bg) !important;
+  border: 1px solid var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+}
+
+.ms-home-project-copy {
+  padding: 8px 0 0 !important;
+}
+
+.ms-home-project-copy strong {
+  color: var(--v3-text) !important;
+  font-size: 10.5px !important;
+  font-weight: 550 !important;
+}
+
+.ms-home-project-copy small,
+.ms-home-project-meta {
+  color: var(--v3-text-3) !important;
+  font-size: 8px !important;
+}
+
+.ms-home-project-meta {
+  padding: 6px 0 0 !important;
+  border-top: 0 !important;
+}
+
+.ms-home-project-meta i {
+  color: var(--v3-signal-ink) !important;
+  background: var(--v3-signal) !important;
+}
+
+/* Learning */
+.ms-learning-brief {
+  grid-template-columns: 36px minmax(0, 1fr) auto !important;
+  margin-top: 20px !important;
+  padding: 13px 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-learning-brief > span {
+  width: 32px !important;
+  height: 32px !important;
+  color: var(--v3-text-2) !important;
+  border-color: var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+}
+
+.ms-learning-brief label,
+.ms-learning-brief input,
+.ms-learning-brief > div > div button {
+  color: var(--v3-text-2) !important;
+}
+
+.ms-learning-brief > button {
+  color: var(--v3-text) !important;
+  background: transparent !important;
+  border: 1px solid var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+}
+
+.ms-learning-architecture {
+  margin-top: 26px !important;
+}
+
+.ms-learning-architecture-head,
+.ms-learning-architecture-grid,
+.ms-learning-sequence {
+  border-color: var(--v3-line) !important;
+}
+
+.ms-learning-architecture-head h2,
+.ms-learning-work h2 {
+  color: var(--v3-text) !important;
+  font-size: 15px !important;
+}
+
+.ms-learning-architecture-head p,
+.ms-learning-outcome p,
+.ms-learning-sequence p {
+  color: var(--v3-text-3) !important;
+  font-size: 9px !important;
+}
+
+.ms-learning-outcome,
+.ms-learning-sequence li {
+  background: transparent !important;
+  border-color: var(--v3-line) !important;
+}
+
+.ms-learning-outcome h3,
+.ms-learning-sequence strong {
+  color: var(--v3-text-2) !important;
+}
+
+.ms-lesson-focus,
+.ms-learning-list {
+  color: var(--v3-text-2) !important;
+  background: transparent !important;
+  border: 1px solid var(--v3-line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Insights */
+.ms-intelligence-head > div {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: end !important;
+  width: 100%;
+}
+
+.ms-insight-deck-select {
+  color: var(--v3-text-3) !important;
+  background: transparent !important;
+  border: 1px solid var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+}
+
+.ms-insight-deck-select select {
+  color: var(--v3-text-2) !important;
+}
+
+.ms-intelligence-instrument {
+  grid-template-columns: 135px minmax(0, 1fr) 250px !important;
+  margin-top: 20px !important;
+  padding: 20px 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-efficiency-dial {
+  box-shadow: none !important;
+}
+
+.ms-efficiency-dial::before {
+  background: var(--v3-bg) !important;
+}
+
+.ms-instrument-copy h2,
+.ms-execution-log h2 {
+  color: var(--v3-text) !important;
+}
+
+.ms-instrument-copy p,
+.ms-token-portrait,
+.ms-execution-table {
+  color: var(--v3-text-3) !important;
+}
+
+.ms-execution-table {
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.ms-execution-table > div {
+  border-color: var(--v3-line) !important;
+}
+
+/* Brand */
+.ms-vibes-workspace {
+  grid-template-columns: minmax(0, 1fr) 340px !important;
+  align-items: start !important;
+  gap: 0 !important;
+  margin-top: 20px !important;
+  border: 1px solid var(--v3-line-strong);
+}
+
+.ms-vibe-artboard {
+  height: 520px !important;
+  min-height: 520px !important;
+  padding: 24px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-vibe-artboard::before,
+.ms-vibe-artboard::after {
+  border-radius: 0 !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+.ms-vibe-controls {
+  min-height: 520px !important;
+  padding: 16px !important;
+  background: var(--v3-panel) !important;
+  border: 0 !important;
+  border-left: 1px solid var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-vibe-reference,
+.ms-vibe-controls textarea,
+.ms-vibe-controls input,
+.ms-vibe-reference-url,
+.ms-vibe-reference-actions button,
+.ms-vibe-density button,
+.ms-vibe-control-actions button {
+  color: var(--v3-text-2) !important;
+  background: transparent !important;
+  border-color: var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+}
+
+.ms-vibe-reference-actions button:last-child,
+.ms-vibe-control-actions button:last-child,
+.ms-vibe-density button.is-active {
+  color: var(--v3-signal-ink) !important;
+  background: var(--v3-signal) !important;
+}
+
+.ms-vibes-library {
+  margin-top: 30px !important;
+}
+
+.ms-vibe-library-new,
+.ms-vibe-library-card {
+  background: transparent !important;
+  border-color: var(--v3-line) !important;
+  border-radius: 0 !important;
+}
+
+/* Settings */
+.ms-settings-shell {
+  grid-template-columns: 150px minmax(0, 1fr) !important;
+  column-gap: 28px !important;
+}
+
+.ms-settings-rail {
+  margin-top: 20px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-right: 1px solid var(--v3-line) !important;
+  border-radius: 0 !important;
+}
+
+.ms-settings-rail button {
+  min-height: 36px !important;
+  color: var(--v3-text-2) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.ms-settings-rail button.is-active {
+  color: var(--v3-text) !important;
+  background: var(--v3-surface) !important;
+  box-shadow: inset 2px 0 var(--v3-signal);
+}
+
+.ms-settings-page {
+  max-width: 820px !important;
+}
+
+.ms-settings-page > header,
+.ms-settings-group {
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-settings-page > header {
+  border-bottom: 1px solid var(--v3-line-strong) !important;
+}
+
+.ms-settings-page > header h2,
+.ms-settings-group h3 {
+  color: var(--v3-text) !important;
+}
+
+.ms-settings-rows {
+  background: transparent !important;
+  border: 1px solid var(--v3-line) !important;
+  border-radius: 0 !important;
+}
+
+.ms-setting-row,
+.ms-pipeline-row {
+  color: var(--v3-text-2) !important;
+  border-color: var(--v3-line) !important;
+}
+
+.ms-choice-control,
+.ms-number-control,
+.ms-engine-status,
+.ms-settings-note,
+.ms-advanced-warning {
+  background: transparent !important;
+  border-color: var(--v3-line-strong) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ms-choice-control button.is-active {
+  color: var(--v3-signal-ink) !important;
+  background: var(--v3-signal) !important;
+}
+
+/* Community resource browser */
+.ms-community-v3 {
+  height: 100%;
+  overflow-y: auto;
+  color: var(--v3-text);
+  background: var(--v3-bg);
+}
+
+.ms-community-v3-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+  align-items: end;
+  gap: 30px;
+  min-height: 112px;
+  padding: 24px 28px 19px;
+  border-bottom: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-head span,
+.ms-community-v3-results > header span,
+.ms-community-v3-filters > span,
+.ms-community-v3-direction > div:last-child > span,
+.ms-community-v3-drawer header span,
+.ms-community-v3-drawer-title > span {
+  color: var(--v3-text-3);
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ms-community-v3-head h1 {
+  margin: 6px 0 0;
+  color: var(--v3-text);
+  font-size: 36px;
+  font-weight: 650;
+  line-height: 0.92;
+}
+
+.ms-community-v3-head p {
+  max-width: 420px;
+  margin: 0;
+  color: var(--v3-text-2);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.ms-community-v3-command {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  display: grid;
+  grid-template-columns: auto minmax(260px, 1fr) auto;
+  min-height: 48px;
+  padding: 0 28px;
+  background: var(--v3-chrome);
+  border-bottom: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-command > div {
+  display: flex;
+  align-items: stretch;
+}
+
+.ms-community-v3-command [role="tab"] {
+  position: relative;
+  min-height: 47px;
+  padding: 0 13px;
+  color: var(--v3-text-3);
+  background: transparent;
+  border: 0;
+  font-size: 9px;
+}
+
+.ms-community-v3-command [role="tab"].is-active {
+  color: var(--v3-text);
+}
+
+.ms-community-v3-command [role="tab"].is-active::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  bottom: -1px;
+  left: 10px;
+  height: 2px;
+  background: var(--v3-signal);
+}
+
+.ms-community-v3-command sup {
+  margin-left: 4px;
+  color: var(--v3-text-3);
+  font-family: var(--font-mono);
+  font-size: 7px;
+}
+
+.ms-community-v3-search {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  height: 31px;
+  gap: 8px;
+  margin: 0 12px;
+  padding: 0 10px;
+  color: var(--v3-text-3);
+  background: var(--v3-bg);
+  border: 1px solid var(--v3-line);
+}
+
+.ms-community-v3-search svg {
+  width: 13px;
+  height: 13px;
+}
+
+.ms-community-v3-search input {
+  width: 100%;
+  min-width: 0;
+  color: var(--v3-text);
+  background: transparent;
+  border: 0;
+  font-size: 9px;
+}
+
+.ms-community-v3-search input::placeholder {
+  color: var(--v3-text-3);
+}
+
+.ms-community-v3-sort {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--v3-text-3);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  text-transform: uppercase;
+}
+
+.ms-community-v3-sort select {
+  min-width: 100px;
+  height: 31px;
+  padding: 0 24px 0 8px;
+  color: var(--v3-text-2);
+  background: transparent;
+  border: 1px solid var(--v3-line);
+  border-radius: 0;
+  font-size: 8px;
+  appearance: none;
+}
+
+.ms-community-v3-sort svg {
+  position: absolute;
+  right: 7px;
+  width: 11px;
+  height: 11px;
+  pointer-events: none;
+}
+
+.ms-community-v3-browser {
+  display: grid;
+  grid-template-columns: 164px minmax(0, 1fr);
+  min-height: calc(100vh - 204px);
+}
+
+.ms-community-v3-browser.is-directions {
+  grid-template-columns: 1fr;
+}
+
+.ms-community-v3-browser.is-directions .ms-community-v3-filters {
+  display: none;
+}
+
+.ms-community-v3-filters {
+  padding: 20px 14px;
+  border-right: 1px solid var(--v3-line);
+}
+
+.ms-community-v3-filters > span {
+  display: block;
+  padding: 0 7px 9px;
+}
+
+.ms-community-v3-filters > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 34px;
+  padding: 0 7px;
+  color: var(--v3-text-3);
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--v3-line);
+  border-radius: 0;
+  font-size: 9px;
+  text-align: left;
+}
+
+.ms-community-v3-filters > button i {
+  color: var(--v3-text-3);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-style: normal;
+}
+
+.ms-community-v3-filters > button.is-active {
+  color: var(--v3-text);
+  box-shadow: inset 2px 0 var(--v3-signal);
+}
+
+.ms-community-v3-filters > button:disabled {
+  opacity: 0.28;
+}
+
+.ms-community-v3-filters > div {
+  margin-top: 28px;
+  padding: 12px 7px;
+  border-top: 1px solid var(--v3-line-strong);
+  border-bottom: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-filters > div strong {
+  color: var(--v3-text-2);
+  font-size: 9px;
+  font-weight: 550;
+}
+
+.ms-community-v3-filters > div p {
+  margin: 6px 0 0;
+  color: var(--v3-text-3);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.ms-community-v3-results {
+  min-width: 0;
+  padding: 22px 24px 72px;
+}
+
+.ms-community-v3-results > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-results h2 {
+  margin: 5px 0 0;
+  color: var(--v3-text);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ms-community-v3-results output {
+  color: var(--v3-text-3);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.ms-community-v3-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 26px 14px;
+  padding-top: 14px;
+}
+
+.ms-community-v3-resource {
+  min-width: 0;
+}
+
+.ms-community-v3-cover {
+  position: relative;
+  display: grid;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  place-items: center;
+  color: var(--v3-text-3);
+  background: var(--v3-surface);
+  border: 1px solid var(--v3-line);
+  border-radius: 0;
+}
+
+.ms-community-v3-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ms-community-v3-cover > span {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  padding: 3px 5px;
+  color: var(--v3-text);
+  background: var(--v3-bg);
+  border: 1px solid var(--v3-line-strong);
+  font-family: var(--font-mono);
+  font-size: 6.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ms-community-v3-cover > i {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 7px;
+  color: var(--v3-signal-ink);
+  background: var(--v3-signal);
+  font-size: 7px;
+  font-style: normal;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 150ms ease, transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ms-community-v3-cover > i svg {
+  width: 11px;
+  height: 11px;
+}
+
+.ms-community-v3-resource-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 26px;
+  align-items: start;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.ms-community-v3-resource-copy > button:first-child {
+  min-width: 0;
+  padding: 0;
+  color: var(--v3-text);
+  text-align: left;
+}
+
+.ms-community-v3-resource-copy strong,
+.ms-community-v3-resource-copy small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-community-v3-resource-copy strong {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.ms-community-v3-resource-copy small {
+  margin-top: 4px;
+  color: var(--v3-text-3);
+  font-size: 7.5px;
+}
+
+.ms-community-v3-resource-copy small i {
+  font-family: var(--font-mono);
+  font-style: normal;
+}
+
+.ms-community-v3-resource-copy > button:last-child {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  color: var(--v3-text-3);
+  background: transparent;
+  border: 1px solid var(--v3-line);
+}
+
+.ms-community-v3-resource-copy > button:last-child.is-active {
+  color: var(--v3-signal);
+  border-color: var(--v3-signal);
+}
+
+.ms-community-v3-resource-copy svg {
+  width: 12px;
+  height: 12px;
+}
+
+.ms-community-v3-resource footer {
+  display: flex;
+  gap: 11px;
+  margin-top: 7px;
+  padding-top: 6px;
+  color: var(--v3-text-3);
+  border-top: 1px solid var(--v3-line);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  text-transform: uppercase;
+}
+
+.ms-community-v3-resource footer span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.ms-community-v3-resource footer svg {
+  width: 10px;
+  height: 10px;
+}
+
+.ms-community-v3-empty {
+  display: grid;
+  min-height: 280px;
+  place-items: center;
+  align-content: center;
+  border-bottom: 1px solid var(--v3-line);
+  text-align: center;
+}
+
+.ms-community-v3-empty strong {
+  font-size: 13px;
+}
+
+.ms-community-v3-empty p {
+  margin: 6px 0 14px;
+  color: var(--v3-text-3);
+  font-size: 9px;
+}
+
+.ms-community-v3-empty button {
+  padding: 7px 9px;
+  color: var(--v3-text);
+  border: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 33px;
+  padding: 0 9px;
+  color: var(--v3-text-2);
+  border-bottom: 1px solid var(--v3-line);
+  font-size: 8px;
+}
+
+.ms-community-v3-notice.is-empty {
+  min-height: 14px;
+  border-bottom: 0;
+}
+
+.ms-community-v3-notice svg {
+  width: 12px;
+  height: 12px;
+  color: var(--v3-signal);
+}
+
+.ms-community-v3-direction-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--v3-line-strong);
+  border-left: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-direction {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.8fr) minmax(0, 1fr);
+  min-height: 220px;
+  border-right: 1px solid var(--v3-line-strong);
+  border-bottom: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-direction-stage {
+  position: relative;
+  min-height: 218px;
+  overflow: hidden;
+  padding: 14px;
+  color: var(--three);
+  background: var(--one);
+}
+
+.ms-community-v3-direction-stage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32%;
+  height: 100%;
+  background: var(--two);
+}
+
+.ms-community-v3-direction-stage::after {
+  content: "";
+  position: absolute;
+  right: 11%;
+  bottom: 14px;
+  width: 34%;
+  aspect-ratio: 1;
+  border: 1px solid var(--three);
+}
+
+.ms-community-v3-direction-stage span,
+.ms-community-v3-direction-stage strong {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.ms-community-v3-direction-stage span {
+  font-family: var(--font-mono);
+  font-size: 8px;
+}
+
+.ms-community-v3-direction-stage strong {
+  max-width: 74%;
+  margin-top: 72px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 0.96;
+}
+
+.ms-community-v3-direction-stage > i {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 48%;
+  height: 1px;
+  margin-top: 7px;
+  background: var(--three);
+  opacity: 0.45;
+}
+
+.ms-community-v3-direction-stage > i:first-of-type {
+  margin-top: 24px;
+}
+
+.ms-community-v3-direction > div:last-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.ms-community-v3-direction h3 {
+  margin: 18px 0 0;
+  color: var(--v3-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ms-community-v3-direction p {
+  margin: 7px 0 0;
+  color: var(--v3-text-3);
+  font-size: 8.5px;
+  line-height: 1.5;
+}
+
+.ms-community-v3-direction > div:last-child button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 31px;
+  margin-top: auto;
+  padding: 0 8px;
+  color: var(--v3-text-2);
+  border-top: 1px solid var(--v3-line-strong);
+  border-bottom: 1px solid var(--v3-line-strong);
+  font-size: 8px;
+}
+
+.ms-community-v3-direction button svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Community detail drawer */
+.ms-community-v3-drawer-wrap {
+  --v3-bg: #0d0d0e;
+  --v3-chrome: #101011;
+  --v3-panel: #141415;
+  --v3-surface: #19191b;
+  --v3-line: #2b2b2e;
+  --v3-line-strong: #424247;
+  --v3-text: #f0f0ed;
+  --v3-text-2: #b2b2ac;
+  --v3-text-3: #85857f;
+  --v3-signal: #ff5a45;
+  --v3-signal-ink: #160806;
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+}
+
+.ms-community-v3-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.68);
+  border: 0;
+  border-radius: 0;
+}
+
+.ms-community-v3-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  width: min(620px, 92vw);
+  flex-direction: column;
+  color: var(--v3-text);
+  background-color: #0d0d0e !important;
+  border-left: 1px solid var(--v3-line-strong);
+  box-shadow: none;
+  isolation: isolate;
+  opacity: 1 !important;
+}
+
+.ms-community-v3-drawer > header {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-drawer > header strong {
+  display: block;
+  margin-top: 2px;
+  color: var(--v3-text-2);
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.ms-community-v3-drawer > header button {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: var(--v3-text-2);
+  border: 1px solid var(--v3-line);
+}
+
+.ms-community-v3-drawer > header svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ms-community-v3-drawer-scroll {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  background-color: #0d0d0e !important;
+}
+
+.ms-community-v3-drawer-cover {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  place-items: center;
+  color: var(--v3-text-3);
+  background: var(--v3-surface);
+  border-bottom: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-drawer-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ms-community-v3-drawer-title {
+  padding: 22px 20px;
+  border-bottom: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-drawer-title h2 {
+  max-width: 520px;
+  margin: 9px 0 0;
+  color: var(--v3-text);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.04;
+}
+
+.ms-community-v3-drawer-title p {
+  max-width: 58ch;
+  margin: 11px 0 0;
+  color: var(--v3-text-2);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.ms-community-v3-drawer-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 1px;
+  background: var(--v3-line);
+  border-bottom: 1px solid var(--v3-line);
+}
+
+.ms-community-v3-drawer-actions button {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  color: var(--v3-text-2);
+  background: var(--v3-panel);
+  font-size: 8px;
+}
+
+.ms-community-v3-drawer-actions button:first-child {
+  color: var(--v3-signal-ink);
+  background: var(--v3-signal);
+  font-weight: 650;
+}
+
+.ms-community-v3-drawer-actions button.is-active {
+  color: var(--v3-signal);
+}
+
+.ms-community-v3-drawer-actions svg {
+  width: 13px;
+  height: 13px;
+}
+
+.ms-community-v3-slides,
+.ms-community-v3-comments {
+  padding: 20px;
+  border-bottom: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-slides > header,
+.ms-community-v3-comments > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--v3-line);
+}
+
+.ms-community-v3-slides h3,
+.ms-community-v3-comments h3 {
+  margin: 0;
+  color: var(--v3-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ms-community-v3-slides > header span,
+.ms-community-v3-comments > header span {
+  color: var(--v3-text-3);
+  font-family: var(--font-mono);
+  font-size: 8px;
+}
+
+.ms-community-v3-slides > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 10px;
+  padding-top: 12px;
+}
+
+.ms-community-v3-slides article > div {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--v3-surface);
+  border: 1px solid var(--v3-line);
+}
+
+.ms-community-v3-slides article img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ms-community-v3-slides article > div button {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 24px;
+  padding: 0 6px;
+  color: var(--v3-signal-ink);
+  background: var(--v3-signal);
+  font-size: 7px;
+  opacity: 0;
+}
+
+.ms-community-v3-slides article > div button svg {
+  width: 10px;
+  height: 10px;
+}
+
+.ms-community-v3-slides article > p {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 6px;
+  margin: 6px 0 0;
+  color: var(--v3-text-2);
+  font-size: 8px;
+}
+
+.ms-community-v3-slides article > p span {
+  color: var(--v3-text-3);
+  font-family: var(--font-mono);
+}
+
+.ms-community-v3-no-slides {
+  grid-column: 1 / -1;
+  min-height: 100px;
+  margin: 0;
+  color: var(--v3-text-3);
+  font-size: 9px;
+}
+
+.ms-community-v3-comments > div > article {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) auto;
+  gap: 10px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--v3-line);
+}
+
+.ms-community-v3-comments > div > p {
+  margin: 14px 0;
+  color: var(--v3-text-3);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.ms-community-v3-comments article strong,
+.ms-community-v3-comments article small {
+  color: var(--v3-text-3);
+  font-family: var(--font-mono);
+  font-size: 7px;
+}
+
+.ms-community-v3-comments article p {
+  margin: 0;
+  color: var(--v3-text-2);
+  font-size: 9px;
+}
+
+.ms-community-v3-comments form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px;
+  margin-top: 12px;
+  border: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-comments textarea {
+  min-height: 58px;
+  padding: 8px;
+  color: var(--v3-text);
+  background: transparent;
+  border: 0;
+  resize: none;
+  font-size: 9px;
+}
+
+.ms-community-v3-comments form button {
+  display: grid;
+  place-items: center;
+  color: var(--v3-text);
+  border-left: 1px solid var(--v3-line-strong);
+}
+
+.ms-community-v3-comments form button:disabled {
+  color: var(--v3-text-3);
+  opacity: 0.4;
+}
+
+.ms-community-v3-comments form svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* Interaction */
+.ms-app-shell button,
+.ms-app-shell input,
+.ms-app-shell textarea,
+.ms-app-shell select,
+.ms-community-v3-drawer-wrap button,
+.ms-community-v3-drawer-wrap textarea {
+  outline: none;
+}
+
+.ms-app-shell button:focus-visible,
+.ms-app-shell input:focus-visible,
+.ms-app-shell textarea:focus-visible,
+.ms-app-shell select:focus-visible,
+.ms-community-v3-drawer-wrap button:focus-visible,
+.ms-community-v3-drawer-wrap textarea:focus-visible {
+  outline: 1px solid var(--v3-signal) !important;
+  outline-offset: 2px;
+}
+
+.ms-app-shell button:active,
+.ms-community-v3-drawer-wrap button:active {
+  transform: translateY(1px) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ms-reference-nav > button:hover,
+  .ms-sidebar-profile:hover,
+  .ms-sidebar-profile-actions button:hover,
+  .ms-sidebar-collapse:hover {
+    color: var(--v3-text) !important;
+    background: var(--v3-hover) !important;
+  }
+
+  .ms-home-project:hover,
+  .ms-community-v3-resource:hover {
+    transform: none !important;
+  }
+
+  .ms-home-project:hover .ms-home-project-cover,
+  .ms-community-v3-resource:hover .ms-community-v3-cover {
+    border-color: var(--v3-line-strong) !important;
+  }
+
+  .ms-community-v3-resource:hover .ms-community-v3-cover > i,
+  .ms-community-v3-cover:focus-visible > i {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ms-community-v3-slides article > div:hover button,
+  .ms-community-v3-slides article > div button:focus-visible {
+    opacity: 1;
+  }
+
+  .ms-community-v3-filters > button:not(:disabled):hover,
+  .ms-community-v3-direction > div:last-child button:hover {
+    color: var(--v3-text);
+    background: var(--v3-hover);
+  }
+}
+
+/* Light substrate */
+html.ms-light .ms-app-shell {
+  --v3-bg: #f3f2ee;
+  --v3-chrome: #eeede8;
+  --v3-panel: #f7f6f2;
+  --v3-surface: #e7e5df;
+  --v3-line: #d2d0c9;
+  --v3-line-strong: #b5b2a9;
+  --v3-text: #141414;
+  --v3-text-2: #44443f;
+  --v3-text-3: #6c6b64;
+  --v3-signal: #e54a34;
+  --v3-signal-ink: #ffffff;
+  --v3-hover: #e8e6e0;
+  background: var(--v3-bg) !important;
+}
+
+html.ms-light .ms-community-v3-drawer-wrap {
+  --v3-bg: #f3f2ee;
+  --v3-chrome: #eeede8;
+  --v3-panel: #f7f6f2;
+  --v3-surface: #e7e5df;
+  --v3-line: #d2d0c9;
+  --v3-line-strong: #b5b2a9;
+  --v3-text: #141414;
+  --v3-text-2: #44443f;
+  --v3-text-3: #6c6b64;
+  --v3-signal: #e54a34;
+  --v3-signal-ink: #ffffff;
+}
+
+html.ms-light .ms-community-v3-drawer,
+html.ms-light .ms-community-v3-drawer-scroll {
+  background-color: #f3f2ee !important;
+}
+
+html.ms-light .ms-app-main,
+html.ms-light .ms-app-sidebar,
+html.ms-light .ms-product-topbar,
+html.ms-light .ms-home,
+html.ms-light .ms-learning-studio,
+html.ms-light .ms-intelligence,
+html.ms-light .ms-vibes-view,
+html.ms-light .ms-settings-pro,
+html.ms-light .ms-community-v3 {
+  color: var(--v3-text) !important;
+  background: var(--v3-bg) !important;
+  border-color: var(--v3-line) !important;
+}
+
+html.ms-light .ms-app-sidebar,
+html.ms-light .ms-product-topbar,
+html.ms-light .ms-community-v3-command {
+  background: var(--v3-chrome) !important;
+}
+
+html.ms-light .ms-sidebar-wordmark strong,
+html.ms-light .ms-home-head h1,
+html.ms-light .ms-learning-head h1,
+html.ms-light .ms-intelligence-head h1,
+html.ms-light .ms-vibes-head h1,
+html.ms-light .ms-settings-overview h1 {
+  color: var(--v3-text) !important;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .ms-app-frame,
+  .ms-app-frame.is-sidebar-collapsed {
+    grid-template-columns: 52px minmax(0, 1fr) !important;
+  }
+
+  .ms-sidebar-wordmark,
+  .ms-sidebar-compose-label,
+  .ms-sidebar-nav-label,
+  .ms-sidebar-section-label,
+  .ms-reference-nav > button::before,
+  .ms-reference-nav > button > i,
+  .ms-sidebar-profile-copy,
+  .ms-sidebar-profile > svg,
+  .ms-sidebar-profile-actions {
+    display: none !important;
+  }
+
+  .ms-reference-brand,
+  .ms-reference-compose-wrap,
+  .ms-reference-nav,
+  .ms-reference-account {
+    padding-inline: 7px !important;
+  }
+
+  .ms-sidebar-brand,
+  .ms-reference-compose,
+  .ms-reference-nav > button,
+  .ms-sidebar-profile {
+    justify-content: center !important;
+    padding-inline: 0 !important;
+  }
+
+  .ms-sidebar-collapse {
+    display: none !important;
+  }
+
+  .ms-home-project-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .ms-community-v3-direction-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 820px) {
+  .ms-community-v3-browser {
+    grid-template-columns: 1fr;
+  }
+
+  .ms-community-v3-filters {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0 14px;
+    border-right: 0;
+    border-bottom: 1px solid var(--v3-line);
+  }
+
+  .ms-community-v3-filters > span,
+  .ms-community-v3-filters > div {
+    display: none;
+  }
+
+  .ms-community-v3-filters > button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    gap: 8px;
+    border-top: 0;
+  }
+
+  .ms-community-v3-filters > button.is-active {
+    box-shadow: inset 0 -2px var(--v3-signal);
+  }
+
+  .ms-vibes-workspace {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ms-vibe-controls {
+    border-top: 1px solid var(--v3-line-strong) !important;
+    border-left: 0 !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .ms-app-frame,
+  .ms-app-frame.is-sidebar-collapsed {
+    display: block !important;
+  }
+
+  .ms-app-sidebar {
+    display: none !important;
+  }
+
+  .ms-app-main {
+    height: 100% !important;
+  }
+
+  .ms-product-topbar {
+    min-height: 43px !important;
+    flex-basis: 43px !important;
+  }
+
+  .ms-product-breadcrumb > span,
+  .ms-product-breadcrumb > svg,
+  .ms-product-topbar-actions > span {
+    display: none;
+  }
+
+  .ms-home-canvas,
+  .ms-learning-shell,
+  .ms-intelligence-shell,
+  .ms-vibes-shell,
+  .ms-settings-shell {
+    width: 100% !important;
+    padding: 18px 14px 82px !important;
+  }
+
+  .ms-home-head,
+  .ms-learning-head,
+  .ms-intelligence-head,
+  .ms-vibes-head,
+  .ms-settings-overview {
+    display: block !important;
+    min-height: 0 !important;
+  }
+
+  .ms-home-head h1,
+  .ms-learning-head h1,
+  .ms-intelligence-head h1,
+  .ms-vibes-head h1,
+  .ms-settings-overview h1 {
+    font-size: 24px !important;
+  }
+
+  .ms-home-head-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    margin-top: 15px;
+  }
+
+  .ms-home-search {
+    width: 100% !important;
+  }
+
+  .ms-home-project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px 10px !important;
+  }
+
+  .ms-home-project {
+    display: block !important;
+  }
+
+  .ms-home-project-cover {
+    min-height: 0 !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+
+  .ms-learning-head > button,
+  .ms-vibes-head > button {
+    margin-top: 14px;
+  }
+
+  .ms-intelligence-head > div {
+    display: block !important;
+  }
+
+  .ms-insight-deck-select {
+    margin-top: 14px;
+  }
+
+  .ms-intelligence-instrument {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ms-settings-shell {
+    display: block !important;
+  }
+
+  .ms-settings-rail {
+    display: flex !important;
+    overflow-x: auto;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--v3-line) !important;
+  }
+
+  .ms-settings-rail button {
+    flex: 0 0 auto;
+  }
+
+  .ms-mobile-nav {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    min-height: 58px !important;
+    color: var(--v3-text-3) !important;
+    background: var(--v3-chrome) !important;
+    border-top: 1px solid var(--v3-line-strong) !important;
+    backdrop-filter: none !important;
+  }
+
+  .ms-mobile-nav button.is-active {
+    color: var(--v3-text) !important;
+  }
+
+  .ms-mobile-nav button.is-active::before {
+    background: var(--v3-signal) !important;
+    box-shadow: none !important;
+  }
+
+  .ms-community-v3-head {
+    display: block;
+    min-height: 0;
+    padding: 18px 14px;
+  }
+
+  .ms-community-v3-head h1 {
+    font-size: 28px;
+  }
+
+  .ms-community-v3-head p {
+    margin-top: 12px;
+  }
+
+  .ms-community-v3-command {
+    grid-template-columns: 1fr auto;
+    padding: 0 8px;
+  }
+
+  .ms-community-v3-command > div {
+    grid-column: 1 / -1;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--v3-line);
+  }
+
+  .ms-community-v3-search {
+    margin: 8px 6px;
+  }
+
+  .ms-community-v3-sort {
+    margin-right: 6px;
+  }
+
+  .ms-community-v3-sort > span,
+  .ms-community-v3-sort {
+    font-size: 0;
+  }
+
+  .ms-community-v3-results {
+    padding: 18px 14px 80px;
+  }
+
+  .ms-community-v3-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 10px;
+  }
+
+  .ms-community-v3-direction {
+    grid-template-columns: 1fr;
+  }
+
+  .ms-community-v3-direction-stage {
+    min-height: 190px;
+  }
+
+  .ms-community-v3-drawer {
+    width: 100%;
+  }
+
+  .ms-community-v3-drawer-title h2 {
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ms-home-project-grid,
+  .ms-community-v3-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ms-community-v3-direction-grid {
+    border-left: 0;
+  }
+
+  .ms-community-v3-direction {
+    border-left: 1px solid var(--v3-line-strong);
+  }
+
+  .ms-community-v3-slides > div {
+    grid-template-columns: 1fr;
+  }
+
+  .ms-community-v3-drawer-actions {
+    grid-template-columns: 1fr 74px 74px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-app-shell *,
+  .ms-app-shell *::before,
+  .ms-app-shell *::after,
+  .ms-community-v3-drawer-wrap *,
+  .ms-community-v3-drawer-wrap *::before,
+  .ms-community-v3-drawer-wrap *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

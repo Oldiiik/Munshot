@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   ArrowCounterClockwise as RotateCcw,
@@ -37,11 +37,11 @@ interface Props {
 
 type Section = "workspace" | "generation" | "learning" | "advanced";
 
-const NAV: { id: Section; label: string; icon: typeof SlidersHorizontal }[] = [
-  { id: "workspace", label: "Workspace", icon: SlidersHorizontal },
-  { id: "generation", label: "Generation", icon: WandSparkles },
-  { id: "learning", label: "Learn", icon: BookOpen },
-  { id: "advanced", label: "Advanced", icon: Code2 },
+const NAV: { id: Section; label: string; detail: string; icon: typeof SlidersHorizontal }[] = [
+  { id: "workspace", label: "Workspace", detail: "Canvas and account", icon: SlidersHorizontal },
+  { id: "generation", label: "Generation", detail: "Deck pipeline", icon: WandSparkles },
+  { id: "learning", label: "Learn", detail: "Lesson behavior", icon: BookOpen },
+  { id: "advanced", label: "Advanced", detail: "System directives", icon: Code2 },
 ];
 
 const RATIOS = ["16:9", "4:3", "1:1", "9:16"];
@@ -49,46 +49,49 @@ const pageEase = [0.22, 1, 0.36, 1] as const;
 
 export function SettingsView({ settings, onChange, onReset }: Props) {
   const [section, setSection] = useState<Section>("workspace");
-  const surfaceRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { theme, setTheme } = useTheme();
   const { user, signOut } = useAuth();
   const panelMotion = reduce
     ? { initial: false as const, animate: { opacity: 1 }, exit: { opacity: 0 } }
-    : { initial: { opacity: 0, y: 6 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -3 } };
-  const selectSection = (next: Section) => {
-    surfaceRef.current?.scrollTo({ top: 0 });
-    setSection(next);
-  };
+    : {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+      };
+  const selectSection = (next: Section) => setSection(next);
 
   return (
-    <main ref={surfaceRef} className="ms-settings-pro h-full overflow-y-auto">
+    <main className="ms-settings-pro h-full overflow-y-auto">
       <div className="ms-settings-shell">
         <header className="ms-settings-overview">
           <div>
             <h1>Settings</h1>
-            <p>Make the workspace fit the way you plan, present, and teach.</p>
+            <p>Shape the workspace around how you present and teach.</p>
           </div>
           <div className="ms-settings-session" aria-label="Signed-in account">
             <span>{(user?.email?.[0] ?? "M").toUpperCase()}</span>
-            <div><small>Signed in as</small><strong>{user?.email ?? "Moonshot account"}</strong></div>
+            <div><small>Current account</small><strong>{user?.email ?? "Moonshot account"}</strong></div>
+            <Check weight="bold" aria-hidden="true" />
           </div>
         </header>
 
         <nav className="ms-settings-rail" aria-label="Settings sections">
-          {NAV.map(({ id, label, icon: Icon }) => (
-            <button key={id} type="button" aria-label={label} className={cn(section === id && "is-active")} onClick={() => selectSection(id)}>
-              <Icon weight={section === id ? "fill" : "regular"} />
-              <span>{label}</span>
+          <span className="ms-settings-rail-label">Settings index</span>
+          {NAV.map(({ id, label, detail, icon: Icon }) => (
+            <button key={id} type="button" aria-label={label} aria-current={section === id ? "page" : undefined} className={cn(section === id && "is-active")} onClick={() => selectSection(id)}>
+              <span className="ms-settings-rail-icon"><Icon weight={section === id ? "fill" : "regular"} /></span>
+              <span><strong>{label}</strong><small>{detail}</small></span>
             </button>
           ))}
+          <span className="ms-settings-save-state"><Check weight="bold" /> Saved locally</span>
         </nav>
 
         <AnimatePresence initial={false} mode="wait">
-          <motion.div key={section} className="ms-settings-content" {...panelMotion} transition={{ duration: reduce ? 0 : 0.18, ease: pageEase }}>
+          <motion.div key={section} className="ms-settings-content" {...panelMotion} transition={{ duration: reduce ? 0 : 0.16, ease: pageEase }}>
             {section === "workspace" && (
-              <SettingsPage title="Workspace defaults" description="Set the starting point for every new deck. You can still override these inside Studio.">
-                <SettingsGroup title="Deck setup">
+              <SettingsPage title="Workspace" description="Defaults for new work and the interface around it.">
+                <SettingsGroup title="Presentation defaults">
                   <SettingRow icon={<Presentation />} title="Default slide count" description={`Choose between 1 and ${MAX_SLIDES} slides.`}>
                     <div className="ms-number-control">
                       <button type="button" onClick={() => onChange({ defaultSlideCount: Math.max(1, settings.defaultSlideCount - 1) })} aria-label="Decrease slide count"><Minus /></button>
@@ -103,14 +106,14 @@ export function SettingsView({ settings, onChange, onReset }: Props) {
                   </SettingRow>
                 </SettingsGroup>
 
-                <SettingsGroup title="Appearance">
+                <SettingsGroup title="Display">
                   <SettingRow icon={<Palette />} title="Interface theme" description="Your choice is saved on this device.">
                     <ThemeControl theme={theme} onChange={setTheme} />
                   </SettingRow>
                 </SettingsGroup>
 
                 <SettingsGroup title="Account">
-                  <SettingRow icon={<UserRound />} title={user?.email ?? "Signed in"} description="Personal workspace · Demo plan">
+                  <SettingRow icon={<UserRound />} title={user?.email ?? "Signed in"} description="Signed in on this device">
                     <Button variant="outline" size="sm" onClick={() => void signOut()} className="ms-settings-action"><LogOut /> Sign out</Button>
                   </SettingRow>
                 </SettingsGroup>
@@ -118,7 +121,7 @@ export function SettingsView({ settings, onChange, onReset }: Props) {
             )}
 
             {section === "generation" && (
-              <SettingsPage title="Generation" description="A steady pipeline from the first thought to a finished deck.">
+              <SettingsPage title="Generation" description="The default path from a brief to a finished presentation.">
                 <div className="ms-engine-status"><span><ShieldCheck weight="duotone" /></span><div><strong>Generation is ready</strong><p>Planning and rendering directives are active for the next deck.</p></div><em><Check /> Ready</em></div>
                 <SettingsGroup title="Active pipeline">
                   <PipelineRow title="Read the brief" description="Uses your request, attachments, brand signals, and research preferences." />
@@ -130,7 +133,7 @@ export function SettingsView({ settings, onChange, onReset }: Props) {
             )}
 
             {section === "learning" && (
-              <SettingsPage title="Learn" description="Teaching defaults that keep every lesson clear, sequential, and usable.">
+              <SettingsPage title="Learn" description="Teaching defaults for clear, paced lesson decks.">
                 <SettingsGroup title="Lesson behavior">
                   <StatusRow icon={<GraduationCap />} title="Learning-first outlines" description="Objectives, progression, analogies, and knowledge checks are planned before rendering." />
                   <StatusRow icon={<BookOpen />} title="One idea per slide" description="Lesson slides favor clarity and one supporting visual over density." />

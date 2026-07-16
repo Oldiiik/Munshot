@@ -14,8 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { useTheme, ThemeToggle } from "@/lib/theme";
 import { Logo } from "./Logo";
-import { HeroPrompt } from "./HeroPrompt";
 import { FeatureScene } from "./FeatureScene";
+import { WorkspacePreview } from "./WorkspacePreview";
 import { DeckShowcase } from "./DeckShowcase";
 import { ExportShowcase } from "./ExportShowcase";
 import { ScrollAtmosphere } from "./ScrollAtmosphere";
@@ -98,10 +98,10 @@ function NavLinks() {
   const { t } = useI18n();
   const [hovered, setHovered] = useState<string | null>(null);
   const links = [
-    { href: "#generate", label: "Generate" },
-    { href: "#edit", label: "Edit" },
-    { href: "#output", label: "Examples" },
-    { href: "#export", label: "Export" },
+    { href: "#workspace", label: "Workspace" },
+    { href: "#generate", label: "Story" },
+    { href: "#edit", label: "Design" },
+    { href: "#export", label: "Deliver" },
     { href: "#pricing", label: t.nav.pricing },
   ];
   return (
@@ -210,7 +210,7 @@ function LandingInner({ onAuth }: Props) {
         {/* ---------- Hero ---------- */}
         <section
           id="top"
-          className="ms-grain relative overflow-hidden px-4 pb-24 pt-32 sm:pt-40"
+          className="ms-grain relative overflow-hidden px-4 pb-14 pt-32 sm:pt-36"
         >
           {/* background layers — the hero photo dissolves on an organic mask
               into the shared fixed <ScrollAtmosphere/> behind it, so the hero's
@@ -234,12 +234,12 @@ function LandingInner({ onAuth }: Props) {
                 shows a single moon in every theme (no day-time double) */}
           </div>
 
-          <div className="relative mx-auto max-w-3xl text-center">
+          <div className="relative mx-auto max-w-6xl text-center">
             <motion.h1
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.05 }}
-              className="font-display font-display-tight text-[clamp(3rem,8vw,5.5rem)] leading-[0.95] text-white"
+              className="mx-auto max-w-3xl font-display font-display-tight text-[clamp(3rem,7vw,5rem)] leading-[0.95] text-white"
             >
               {t.hero.title1}
               <br />
@@ -255,15 +255,15 @@ function LandingInner({ onAuth }: Props) {
               {t.hero.subtitle}
             </motion.p>
 
-            <div className="mt-10">
-              <HeroPrompt onSubmit={(brief) => onAuth("register", brief)} />
+            <div id="workspace" className="mt-10">
+              <WorkspacePreview onStart={() => onAuth("register")} />
             </div>
 
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
-              className="mt-16 flex justify-center"
+              className="mt-8 flex justify-center"
             >
               <ChevronDown className="size-5 animate-bounce text-white/30" />
             </motion.div>

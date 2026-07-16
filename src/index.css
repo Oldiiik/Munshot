@@ -1042,11 +1042,18 @@ html.ms-light .ms-app-sidebar { background: rgba(250,251,253,.72) !important; } 
 @media (max-width: 980px) { .ms-app-frame { grid-template-columns: 218px minmax(0,1fr) !important; }.ms-brief-view { padding-inline: 28px !important; }.ms-settings-content { padding-inline: 34px; } }
 @media (max-width: 760px) { .ms-app-frame { display: block !important; }.ms-app-sidebar, .ms-app-topbar { display: none; }.ms-brief-view { padding: 28px 16px 104px !important; }.ms-brief-view > div > div:first-child { grid-template-columns: 1fr; gap: 15px; }.ms-brief-view h1 { font-size: 29px !important; }.ms-brief-view > div > div:first-child > div { width: 48px; height: 48px; }.ms-outline-view > div:nth-child(2), .ms-slide-view > div:nth-child(3) { padding: 18px 12px 100px !important; }.ms-learn-view > div, .ms-insights-new > div, .ms-community-view { padding: 28px 16px 104px !important; }.ms-learn-intro h1, .ms-insights-heading h1 { font-size: 29px !important; }.ms-community-view h1 { font-size: 26px; }.ms-settings-shell { display: block; }.ms-settings-content { padding: 28px 16px 104px; }.ms-settings-page > header h1 { font-size: 29px; }.ms-settings-nav { padding-inline: 10px; }.ms-mobile-nav { z-index: 30; } }
 
-/* Landing feature chapters deliberately use different visual grammars. */
-.ms-signal-ledger { border-top: 1px solid rgba(255,255,255,.17); border-bottom: 1px solid rgba(255,255,255,.1); }.ms-signal-ledger-grid { display: grid; }.ms-signal-ledger-grid article { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 18px; align-items: center; min-height: 104px; padding: 15px 2px; border-top: 1px solid rgba(255,255,255,.1); transition: background 180ms cubic-bezier(.22,1,.36,1), padding 180ms cubic-bezier(.22,1,.36,1); }.ms-signal-ledger-grid article:first-child { border-top: 0; }.ms-signal-icon { display: grid; place-items: center; width: 38px; height: 38px; color: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.18); border-radius: 50%; transition: transform 220ms cubic-bezier(.22,1,.36,1), color 180ms ease, background 180ms ease; }.ms-signal-icon svg { width: 17px; height: 17px; }.ms-signal-ledger h3 { margin: 0; color: #fff; font-size: 17px; font-weight: 580; letter-spacing: 0; }.ms-signal-ledger p { max-width: 650px; margin: 5px 0 0; color: rgba(255,255,255,.48); font-size: 13px; line-height: 1.55; }@media (hover:hover) and (pointer:fine) { .ms-signal-ledger-grid article:hover { padding-left: 12px; background: rgba(255,255,255,.035); }.ms-signal-ledger-grid article:hover .ms-signal-icon { color: #101014; background: rgba(255,255,255,.9); transform: scale(1.08); } }
+/* Landing feature chapters deliberately use two distinct visual grammars. */
+.ms-home { background: #0c0d12; color: rgba(246,248,252,.96); }.ms-home-canvas { width: min(100% - 96px, 1320px); margin: 0 auto; padding: 54px 0 100px; }.ms-home-head { display: flex; align-items: end; justify-content: space-between; gap: 36px; padding-bottom: 35px; border-bottom: 1px solid rgba(255,255,255,.1); }.ms-home-head > div:first-child > span, .ms-home-create-head > span, .ms-home-section-head span { color: rgba(221,229,245,.42); font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }.ms-home-head h1 { max-width: 660px; margin: 12px 0 0; font-size: clamp(34px,4vw,54px); font-weight: 550; line-height: 1.02; letter-spacing: 0; text-wrap: balance; }.ms-home-head p { max-width: 555px; margin: 13px 0 0; color: rgba(226,232,244,.54); font-size: 13px; line-height: 1.55; }.ms-home-head-actions { display: flex; align-items: center; gap: 9px; padding-bottom: 3px; }.ms-home-search { display: flex; align-items: center; width: 210px; height: 36px; gap: 8px; padding: 0 10px; color: rgba(255,255,255,.42); border: 1px solid rgba(255,255,255,.12); border-radius: 7px; }.ms-home-search:focus-within { color: rgba(255,255,255,.76); border-color: rgba(210,222,255,.42); }.ms-home-search svg { width: 14px; height: 14px; }.ms-home-search input { min-width: 0; flex: 1; color: rgba(255,255,255,.86); background: transparent; border: 0; outline: 0; font-size: 10px; }.ms-home-search input::placeholder { color: rgba(255,255,255,.33); }.ms-home-new { display: inline-flex; align-items: center; gap: 7px; min-height: 36px; padding: 0 12px; color: #101116; background: #f1f3f7; border: 0; border-radius: 7px; font-size: 10px; font-weight: 650; white-space: nowrap; }.ms-home-new svg { width: 14px; height: 14px; }.ms-home-create { padding: 29px 0; border-bottom: 1px solid rgba(255,255,255,.1); }.ms-home-create-head { display: flex; align-items: baseline; gap: 12px; }.ms-home-create-head p { margin: 0; color: rgba(227,233,245,.42); font-size: 10px; }.ms-home-create-strip { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); margin-top: 16px; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; }.ms-home-create-strip > button { position: relative; display: grid; grid-template-columns: 26px minmax(0,1fr); gap: 2px 8px; min-height: 94px; padding: 15px; color: rgba(245,247,252,.84); background: rgba(255,255,255,.022); border: 0; border-right: 1px solid rgba(255,255,255,.09); text-align: left; transition: background 160ms ease; }.ms-home-create-strip > button:last-child { border-right: 0; }.ms-home-create-strip > button > svg:first-child { grid-row: span 2; width: 17px; height: 17px; margin-top: 1px; color: rgba(213,224,255,.7); }.ms-home-create-strip strong, .ms-home-create-strip small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.ms-home-create-strip strong { font-size: 10px; font-weight: 600; }.ms-home-create-strip small { color: rgba(230,235,246,.4); font-size: 9px; }.ms-home-create-strip > button > svg:last-child { position: absolute; right: 12px; bottom: 12px; width: 12px; height: 12px; color: rgba(255,255,255,.24); }.ms-home-workspace { display: grid; grid-template-columns: minmax(0,1fr) 278px; gap: 38px; padding-top: 38px; }.ms-home-section-head { display: flex; align-items: end; justify-content: space-between; gap: 14px; padding-bottom: 13px; border-bottom: 1px solid rgba(255,255,255,.1); }.ms-home-section-head h2 { margin: 7px 0 0; color: rgba(249,250,253,.94); font-size: 18px; font-weight: 550; letter-spacing: 0; }.ms-home-section-head > p { margin: 0; color: rgba(225,232,244,.36); font-family: var(--font-mono); font-size: 9px; }.ms-home-project-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; padding-top: 16px; }.ms-home-project { display: block; min-width: 0; overflow: hidden; color: inherit; background: rgba(255,255,255,.022); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; text-align: left; transition: transform 160ms ease, background 160ms ease, border-color 160ms ease; }.ms-home-project-cover { position: relative; display: grid; aspect-ratio: 16 / 9; overflow: hidden; place-items: center; background: rgba(255,255,255,.04); }.ms-home-project-cover img { width: 100%; height: 100%; object-fit: cover; }.ms-home-project-cover i { color: rgba(255,255,255,.5); font-size: 34px; font-style: normal; }.ms-home-project-cover em { position: absolute; top: 8px; left: 8px; padding: 3px 5px; color: rgba(255,255,255,.8); background: rgba(9,10,14,.72); border: 1px solid rgba(255,255,255,.12); border-radius: 4px; font-family: var(--font-mono); font-size: 7px; font-style: normal; letter-spacing: .06em; text-transform: uppercase; }.ms-home-project-copy { display: block; padding: 10px 10px 0; }.ms-home-project-copy strong, .ms-home-project-copy small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.ms-home-project-copy strong { color: rgba(248,249,253,.92); font-size: 11px; font-weight: 600; }.ms-home-project-copy small { margin-top: 5px; color: rgba(229,234,245,.4); font-size: 9px; }.ms-home-project-copy b { padding-inline: 2px; font-weight: 400; }.ms-home-project-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 11px 10px; color: rgba(220,228,244,.42); font-size: 8px; }.ms-home-project-meta i { display: grid; place-items: center; width: 18px; height: 18px; color: #11131b; background: #cbd7fb; border-radius: 50%; font-size: 7px; font-style: normal; font-weight: 700; }.ms-home-empty { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 130px; margin-top: 14px; padding: 20px; color: rgba(239,242,249,.67); background: rgba(255,255,255,.018); border: 1px dashed rgba(255,255,255,.18); border-radius: 8px; text-align: left; }.ms-home-empty svg { width: 18px; height: 18px; }.ms-home-empty span { font-size: 11px; font-weight: 600; }.ms-home-empty small { color: rgba(228,234,245,.4); font-size: 9px; }.ms-home-spaces { margin-top: 42px; }.ms-home-space-list { margin-top: 1px; }.ms-home-space-list > button { display: grid; grid-template-columns: 22px minmax(0,1fr) 24px 14px; align-items: center; width: 100%; gap: 10px; min-height: 62px; color: rgba(244,246,251,.74); background: transparent; border: 0; border-bottom: 1px solid rgba(255,255,255,.09); text-align: left; }.ms-home-space-list > button > svg:first-child { width: 15px; height: 15px; color: rgba(210,222,253,.54); }.ms-home-space-list strong, .ms-home-space-list small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.ms-home-space-list strong { font-size: 10px; font-weight: 580; }.ms-home-space-list small { margin-top: 4px; color: rgba(226,233,246,.36); font-size: 9px; }.ms-home-space-list i { display: grid; place-items: center; width: 21px; height: 21px; color: rgba(229,235,247,.56); background: rgba(255,255,255,.05); border-radius: 4px; font-family: var(--font-mono); font-size: 8px; font-style: normal; }.ms-home-space-list > button > svg:last-child { width: 13px; height: 13px; color: rgba(255,255,255,.28); }.ms-home-review { align-self: start; padding-left: 25px; border-left: 1px solid rgba(255,255,255,.1); }.ms-home-review .ms-home-section-head > button { display: grid; place-items: center; width: 25px; height: 25px; color: rgba(232,238,249,.48); background: transparent; border: 1px solid rgba(255,255,255,.11); border-radius: 5px; }.ms-home-review .ms-home-section-head svg { width: 13px; height: 13px; }.ms-home-review-list { border-bottom: 1px solid rgba(255,255,255,.1); }.ms-home-review-list > button { display: grid; grid-template-columns: 26px minmax(0,1fr) 12px; align-items: center; width: 100%; gap: 10px; min-height: 73px; color: rgba(247,249,253,.78); background: transparent; border: 0; border-top: 1px solid rgba(255,255,255,.09); text-align: left; }.ms-home-review-list > button:first-child { border-top: 0; }.ms-home-review-mark { display: grid; place-items: center; width: 25px; height: 25px; color: rgba(214,226,253,.6); background: rgba(255,255,255,.045); border-radius: 5px; }.ms-home-review-mark.is-1 { color: rgba(241,205,153,.78); }.ms-home-review-mark.is-2 { color: rgba(183,226,198,.8); }.ms-home-review-mark svg { width: 13px; height: 13px; }.ms-home-review-list p { min-width: 0; margin: 0; }.ms-home-review-list strong, .ms-home-review-list small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.ms-home-review-list strong { font-size: 9px; font-weight: 550; line-height: 1.35; }.ms-home-review-list small { margin-top: 4px; color: rgba(229,235,247,.36); font-size: 8px; }.ms-home-review-list > button > svg { width: 12px; height: 12px; color: rgba(255,255,255,.26); }.ms-home-review-empty { display: flex; align-items: center; gap: 9px; min-height: 104px; color: rgba(229,235,247,.42); }.ms-home-review-empty svg { width: 16px; height: 16px; }.ms-home-review-empty p { margin: 0; font-size: 9px; line-height: 1.5; }.ms-home-review-all { display: inline-flex; align-items: center; gap: 6px; margin-top: 15px; padding: 0; color: rgba(234,239,249,.62); background: transparent; border: 0; font-size: 9px; }.ms-home-review-all svg { width: 12px; height: 12px; }.ms-home-create-strip > button:hover, .ms-home-project:hover { background: rgba(255,255,255,.055); border-color: rgba(218,228,255,.25); }.ms-home-project:hover { transform: translateY(-2px); }.ms-home-space-list > button:hover, .ms-home-review-list > button:hover { background: rgba(255,255,255,.03); }.ms-home-new:hover { background: #fff; }
+html.ms-light .ms-home { color: #20242d; background: #f5f7fa; }.ms-light .ms-home-head, .ms-light .ms-home-create, .ms-light .ms-home-section-head, .ms-light .ms-home-space-list > button, .ms-light .ms-home-review, .ms-light .ms-home-review-list, .ms-light .ms-home-review-list > button { border-color: rgba(25,30,39,.12); }.ms-light .ms-home-head h1, .ms-light .ms-home-section-head h2, .ms-light .ms-home-project-copy strong { color: #20242d; }.ms-light .ms-home-head p, .ms-light .ms-home-create-head p, .ms-light .ms-home-project-copy small, .ms-light .ms-home-space-list small, .ms-light .ms-home-review-list small { color: rgba(31,36,46,.56); }.ms-light .ms-home-search, .ms-light .ms-home-create-strip, .ms-light .ms-home-project, .ms-light .ms-home-review .ms-home-section-head > button { border-color: rgba(25,30,39,.14); }.ms-light .ms-home-search input { color: #20242d; }.ms-light .ms-home-create-strip > button, .ms-light .ms-home-project, .ms-light .ms-home-project-cover, .ms-light .ms-home-review-mark, .ms-light .ms-home-space-list i { background: rgba(255,255,255,.72); }.ms-light .ms-home-create-strip strong, .ms-light .ms-home-space-list > button, .ms-light .ms-home-review-list > button { color: rgba(31,36,46,.78); }.ms-light .ms-home-create-strip small, .ms-light .ms-home-review-list strong { color: rgba(31,36,46,.58); }.ms-light .ms-home-project-cover em { color: rgba(31,36,46,.74); background: rgba(255,255,255,.8); border-color: rgba(25,30,39,.12); }.ms-light .ms-home-empty { color: rgba(31,36,46,.68); background: rgba(255,255,255,.42); border-color: rgba(25,30,39,.15); }.ms-light .ms-home-review-mark { color: rgba(39,64,139,.72); }.ms-light .ms-home-create-strip > button:hover, .ms-light .ms-home-project:hover, .ms-light .ms-home-space-list > button:hover, .ms-light .ms-home-review-list > button:hover { background: #fff; }
+@media (max-width: 1100px) { .ms-home-canvas { width: min(100% - 60px, 1320px); }.ms-home-create-strip { grid-template-columns: repeat(3,minmax(0,1fr)); }.ms-home-create-strip > button:nth-child(3) { border-right: 0; }.ms-home-create-strip > button:nth-child(n+4) { border-top: 1px solid rgba(255,255,255,.09); }.ms-home-workspace { grid-template-columns: 1fr; }.ms-home-review { display: grid; grid-template-columns: 180px minmax(0,1fr); gap: 0 26px; padding: 24px 0 0; border-top: 1px solid rgba(255,255,255,.1); border-left: 0; }.ms-home-review .ms-home-section-head { align-self: start; border-bottom: 0; }.ms-home-review-list { border-top: 1px solid rgba(255,255,255,.1); }.ms-home-review-all { grid-column: 2; } }
+@media (max-width: 720px) { .ms-home-canvas { width: min(100% - 32px, 1320px); padding-top: 32px; }.ms-home-head { display: block; padding-bottom: 26px; }.ms-home-head h1 { font-size: 34px; }.ms-home-head-actions { margin-top: 23px; }.ms-home-search { flex: 1; }.ms-home-create-strip { grid-template-columns: 1fr; }.ms-home-create-strip > button, .ms-home-create-strip > button:nth-child(3) { min-height: 70px; border-top: 1px solid rgba(255,255,255,.09); border-right: 0; }.ms-home-create-strip > button:first-child { border-top: 0; }.ms-home-project-grid { grid-template-columns: 1fr; }.ms-home-project { display: grid; grid-template-columns: 116px minmax(0,1fr) 80px; align-items: center; }.ms-home-project-cover { grid-row: span 2; }.ms-home-project-copy { padding: 0; }.ms-home-project-meta { flex-direction: column; align-items: flex-end; padding: 0 10px; }.ms-home-spaces { margin-top: 34px; }.ms-home-review { display: block; padding-top: 30px; }.ms-home-review .ms-home-section-head { padding-bottom: 13px; border-bottom: 1px solid rgba(255,255,255,.1); }.ms-home-review-list { border-top: 0; }.ms-home-review-all { margin-top: 16px; } }
+.ms-workspace-preview { position: relative; overflow: hidden; color: rgba(239,242,249,.9); background: rgba(13,15,22,.79); border: 1px solid rgba(255,255,255,.16); border-radius: 12px; box-shadow: 0 38px 110px -48px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.12); text-align: left; }.ms-workspace-topbar { display: grid; grid-template-columns: minmax(230px,1fr) auto minmax(230px,1fr); align-items: center; min-height: 52px; padding: 0 13px; border-bottom: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.025); }.ms-workspace-crumbs, .ms-workspace-actions, .ms-workspace-modes { display: flex; align-items: center; }.ms-workspace-crumbs { min-width: 0; gap: 8px; color: rgba(239,242,249,.47); font-size: 10px; }.ms-workspace-crumbs svg { color: #e8ecff; }.ms-workspace-crumbs i { color: rgba(255,255,255,.2); font-style: normal; }.ms-workspace-crumbs strong { overflow: hidden; color: rgba(255,255,255,.82); font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }.ms-workspace-saved { margin-left: 5px; color: rgba(178,228,191,.65); font-size: 8px; }.ms-workspace-modes { gap: 2px; padding: 3px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 7px; }.ms-workspace-modes button { min-width: 55px; padding: 5px 8px; color: rgba(255,255,255,.42); background: transparent; border: 0; border-radius: 4px; font-size: 9px; }.ms-workspace-modes button.is-active { color: #12141b; background: rgba(255,255,255,.9); font-weight: 650; }.ms-workspace-actions { justify-content: flex-end; gap: 4px; }.ms-workspace-actions > button { display: grid; place-items: center; width: 26px; height: 26px; color: rgba(255,255,255,.58); background: transparent; border: 0; border-radius: 5px; }.ms-workspace-actions svg { width: 13px; height: 13px; }.ms-workspace-actions .ms-workspace-avatar { width: 24px; height: 24px; margin-left: 5px; color: #14151c; background: #c9d5fb; border-radius: 50%; font-size: 8px; font-weight: 700; }.ms-workspace-actions .ms-workspace-share, .ms-workspace-actions .ms-workspace-present { display: inline-flex; width: auto; gap: 5px; padding: 0 8px; margin-left: 3px; border: 1px solid rgba(255,255,255,.14); font-size: 9px; }.ms-workspace-actions .ms-workspace-present { color: #12141a; background: rgba(255,255,255,.9); border-color: transparent; }.ms-workspace-main { display: grid; grid-template-columns: 42px 196px minmax(0,1fr) 194px; min-height: 422px; }.ms-workspace-rail { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 0; border-right: 1px solid rgba(255,255,255,.09); background: rgba(0,0,0,.12); }.ms-workspace-rail button { display: grid; place-items: center; width: 28px; height: 28px; color: rgba(255,255,255,.42); background: transparent; border: 0; border-radius: 5px; }.ms-workspace-rail button.is-active { color: #11131a; background: rgba(255,255,255,.9); }.ms-workspace-rail svg { width: 15px; height: 15px; }.ms-workspace-rail > span { flex: 1; }.ms-workspace-story-panel, .ms-workspace-properties { padding: 13px; background: rgba(255,255,255,.025); }.ms-workspace-story-panel { border-right: 1px solid rgba(255,255,255,.09); }.ms-workspace-properties { border-left: 1px solid rgba(255,255,255,.09); }.ms-workspace-panel-head { display: flex; align-items: center; justify-content: space-between; color: rgba(255,255,255,.78); font-size: 11px; font-weight: 600; }.ms-workspace-panel-head button { display: grid; place-items: center; width: 22px; height: 22px; color: rgba(255,255,255,.45); background: transparent; border: 0; border-radius: 4px; }.ms-workspace-panel-head svg { width: 13px; height: 13px; }.ms-workspace-phase { display: flex; justify-content: space-between; gap: 8px; margin: 15px 0 8px; color: rgba(255,255,255,.36); font-size: 8px; }.ms-workspace-phase strong { color: rgba(255,255,255,.57); font-weight: 500; }.ms-workspace-story-list { border-top: 1px solid rgba(255,255,255,.08); }.ms-workspace-story-list > button { display: grid; grid-template-columns: 22px minmax(0,1fr) 5px; width: 100%; gap: 7px; padding: 10px 5px; color: rgba(255,255,255,.48); background: transparent; border: 0; border-bottom: 1px solid rgba(255,255,255,.07); text-align: left; }.ms-workspace-story-list > button.is-selected { color: #fff; background: rgba(255,255,255,.075); box-shadow: inset 2px 0 0 rgba(220,228,255,.95); }.ms-workspace-story-list > button > span { padding-top: 1px; color: rgba(255,255,255,.3); font-family: var(--font-mono); font-size: 8px; }.ms-workspace-story-list small, .ms-workspace-story-list strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.ms-workspace-story-list small { color: rgba(255,255,255,.34); font-size: 8px; }.ms-workspace-story-list strong { margin-top: 4px; font-size: 9px; font-weight: 500; }.ms-workspace-story-list i { width: 4px; height: 4px; margin-top: 5px; background: #edb56e; border-radius: 50%; }.ms-workspace-new-slide { display: inline-flex; align-items: center; gap: 5px; margin-top: 13px; padding: 0; color: rgba(255,255,255,.58); background: transparent; border: 0; font-size: 9px; }.ms-workspace-new-slide svg { width: 12px; height: 12px; }.ms-workspace-canvas { display: grid; grid-template-rows: 36px minmax(0,1fr) 49px; min-width: 0; background: #161820; }.ms-workspace-canvas-tools { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; color: rgba(255,255,255,.37); border-bottom: 1px solid rgba(255,255,255,.07); font-size: 8px; }.ms-workspace-canvas-tools > span + span { margin-right: auto; }.ms-workspace-canvas-tools button { display: inline-flex; align-items: center; gap: 4px; padding: 4px 6px; color: rgba(255,255,255,.5); background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 4px; font-size: 8px; }.ms-workspace-canvas-tools svg { width: 10px; height: 10px; }.ms-workspace-slide-frame { position: relative; align-self: center; justify-self: center; width: min(74%, 520px); aspect-ratio: 16 / 9; overflow: hidden; background: #f4f4f1; border: 1px solid rgba(255,255,255,.15); box-shadow: 0 18px 36px -20px rgba(0,0,0,.75); }.ms-workspace-slide-frame img { width: 100%; height: 100%; object-fit: cover; }.ms-workspace-selection { position: absolute; top: 16%; left: 10%; padding: 4px 6px; color: #20222a; background: rgba(255,255,255,.82); border: 1px solid #5373ff; box-shadow: 0 0 0 1px rgba(83,115,255,.38); font-size: 7px; }.ms-workspace-annotation { display: flex; gap: 13px; align-items: center; padding: 0 12px; color: rgba(255,255,255,.42); border-top: 1px solid rgba(255,255,255,.07); font-size: 8px; }.ms-workspace-annotation span { color: rgba(255,255,255,.27); text-transform: uppercase; }.ms-workspace-annotation p { overflow: hidden; margin: 0; text-overflow: ellipsis; white-space: nowrap; }.ms-workspace-properties > label { display: block; margin-top: 17px; color: rgba(255,255,255,.38); font-size: 8px; }.ms-workspace-properties label > button { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 6px; padding: 7px; color: rgba(255,255,255,.7); background: rgba(0,0,0,.13); border: 1px solid rgba(255,255,255,.08); border-radius: 5px; font-size: 9px; text-align: left; }.ms-workspace-properties label svg { width: 11px; height: 11px; }.ms-workspace-density { display: flex; gap: 4px; margin-top: 7px; }.ms-workspace-density i { display: block; width: 22px; height: 4px; background: rgba(255,255,255,.12); border-radius: 1px; }.ms-workspace-density i.is-on { background: rgba(213,223,255,.82); }.ms-workspace-brand-dot { width: 7px; height: 7px; background: #b9c8ff; border-radius: 50%; }.ms-workspace-writing { margin-top: 18px; padding-top: 13px; border-top: 1px solid rgba(255,255,255,.08); }.ms-workspace-writing > span { display: block; margin-bottom: 7px; color: rgba(255,255,255,.42); font-size: 8px; }.ms-workspace-writing button { display: block; width: 100%; padding: 6px 7px; color: rgba(255,255,255,.64); background: transparent; border: 0; border-radius: 4px; font-size: 9px; text-align: left; }.ms-workspace-filmstrip { display: grid; grid-template-columns: 92px minmax(0,1fr) 110px; align-items: center; min-height: 105px; padding: 10px 12px; border-top: 1px solid rgba(255,255,255,.1); background: rgba(0,0,0,.14); }.ms-workspace-film-control { display: inline-flex; align-items: center; gap: 5px; padding: 0; color: rgba(255,255,255,.48); background: transparent; border: 0; font-size: 9px; }.ms-workspace-film-control:last-child { justify-self: end; }.ms-workspace-film-control svg { width: 12px; height: 12px; }.ms-workspace-thumbnails { display: flex; justify-content: center; gap: 8px; min-width: 0; }.ms-workspace-thumbnails button { position: relative; width: 104px; overflow: hidden; padding: 3px; background: transparent; border: 1px solid transparent; border-radius: 4px; }.ms-workspace-thumbnails button.is-active { border-color: rgba(209,220,255,.88); }.ms-workspace-thumbnails span { position: absolute; z-index: 1; top: 5px; left: 5px; display: grid; place-items: center; width: 13px; height: 13px; color: #15171e; background: rgba(255,255,255,.9); border-radius: 2px; font-size: 7px; }.ms-workspace-thumbnails img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }.ms-workspace-start { position: absolute; right: 15px; bottom: 116px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; color: #11131a; background: rgba(255,255,255,.94); border: 0; border-radius: 7px; box-shadow: 0 10px 24px -14px #000; font-size: 9px; font-weight: 650; }.ms-workspace-start svg { width: 13px; height: 13px; }.ms-workspace-preview button { transition: background 160ms ease, color 160ms ease, border-color 160ms ease; }.ms-workspace-preview button:hover { color: #fff; background-color: rgba(255,255,255,.09); }.ms-workspace-preview .ms-workspace-present:hover, .ms-workspace-preview .ms-workspace-start:hover, .ms-workspace-preview .ms-workspace-modes button.is-active:hover { color: #11131a; background-color: #fff; }
+@media (max-width: 900px) { .ms-workspace-main { grid-template-columns: 38px 180px minmax(0,1fr); }.ms-workspace-properties { display: none; }.ms-workspace-topbar { grid-template-columns: 1fr auto; }.ms-workspace-modes { display: none; }.ms-workspace-saved, .ms-workspace-actions > button:nth-child(1), .ms-workspace-actions > button:nth-child(2), .ms-workspace-actions .ms-workspace-share { display: none; }.ms-workspace-filmstrip { grid-template-columns: 70px minmax(0,1fr); }.ms-workspace-film-control:last-child { display: none; } }
+@media (max-width: 620px) { .ms-workspace-preview { border-radius: 8px; }.ms-workspace-topbar { min-height: 44px; padding-inline: 8px; }.ms-workspace-crumbs { gap: 5px; }.ms-workspace-crumbs > span:nth-of-type(1), .ms-workspace-crumbs i, .ms-workspace-crumbs > span:nth-of-type(2) { display: none; }.ms-workspace-actions .ms-workspace-avatar { display: none; }.ms-workspace-actions .ms-workspace-present { padding-inline: 7px; }.ms-workspace-main { grid-template-columns: 34px minmax(0,1fr); min-height: 343px; }.ms-workspace-story-panel { display: none; }.ms-workspace-rail { gap: 3px; }.ms-workspace-rail button { width: 25px; height: 25px; }.ms-workspace-canvas { grid-template-rows: 31px minmax(0,1fr) 45px; }.ms-workspace-slide-frame { width: 84%; }.ms-workspace-selection { font-size: 5px; }.ms-workspace-filmstrip { min-height: 77px; padding: 8px; }.ms-workspace-film-control { display: none; }.ms-workspace-thumbnails { justify-content: flex-start; gap: 5px; overflow: hidden; }.ms-workspace-thumbnails button { flex: 0 0 72px; }.ms-workspace-start { right: 9px; bottom: 85px; padding: 7px; font-size: 8px; }.ms-workspace-start svg { width: 11px; height: 11px; }.ms-workspace-annotation { gap: 7px; padding-inline: 8px; font-size: 7px; }.ms-workspace-annotation p { white-space: normal; line-height: 1.25; }.ms-workspace-canvas-tools { padding-inline: 8px; } }
+.ms-signal-index { border-top: 1px solid rgba(255,255,255,.16); }.ms-signal-index-head { display: flex; justify-content: space-between; gap: 18px; padding: 10px 0; color: rgba(255,255,255,.36); border-bottom: 1px solid rgba(255,255,255,.1); font-family: var(--font-mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }.ms-signal-index-list article { display: grid; grid-template-columns: 42px 54px minmax(0,1fr) auto; gap: 18px; align-items: center; min-height: 110px; padding: 15px 4px; border-bottom: 1px solid rgba(255,255,255,.1); transition: background 180ms cubic-bezier(.22,1,.36,1), padding 180ms cubic-bezier(.22,1,.36,1); }.ms-signal-number { align-self: stretch; display: flex; align-items: flex-start; padding-top: 3px; color: rgba(255,255,255,.32); font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; }.ms-signal-icon { display: grid; place-items: center; width: 44px; height: 44px; color: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.2); border-radius: 50%; transition: transform 220ms cubic-bezier(.22,1,.36,1), color 180ms ease, background 180ms ease; }.ms-signal-icon svg { width: 18px; height: 18px; }.ms-signal-index h3 { margin: 0; color: #fff; font-size: 17px; font-weight: 580; letter-spacing: 0; }.ms-signal-index p { max-width: 610px; margin: 5px 0 0; color: rgba(255,255,255,.48); font-size: 13px; line-height: 1.55; }.ms-signal-status { align-self: start; margin-top: 3px; color: rgba(255,255,255,.34); font-family: var(--font-mono); font-size: 9px; letter-spacing: .07em; text-transform: uppercase; white-space: nowrap; }@media (hover:hover) and (pointer:fine) { .ms-signal-index-list article:hover { padding-left: 12px; background: rgba(255,255,255,.035); }.ms-signal-index-list article:hover .ms-signal-icon { color: #101014; background: rgba(255,255,255,.92); transform: rotate(-9deg) scale(1.08); }.ms-signal-index-list article:hover .ms-signal-number, .ms-signal-index-list article:hover .ms-signal-status { color: rgba(255,255,255,.72); } }
 
-.ms-handoff-storyboard { position: relative; display: grid; grid-template-columns: minmax(0,1fr) 230px; gap: 36px; padding: 28px 0 0; border-top: 1px solid rgba(255,255,255,.15); }.ms-handoff-intro { max-width: 400px; }.ms-handoff-intro p { margin: 0; color: rgba(255,255,255,.75); font-size: 17px; font-weight: 500; line-height: 1.32; }.ms-handoff-steps { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-column: 1 / -1; gap: 1px; overflow: hidden; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.11); border-radius: 12px; }.ms-handoff-steps article { position: relative; min-height: 220px; padding: 20px; background: rgba(10,10,14,.72); transition: background 180ms cubic-bezier(.22,1,.36,1), transform 180ms cubic-bezier(.22,1,.36,1); }.ms-handoff-steps article:nth-child(2) { background: rgba(255,255,255,.055); }.ms-handoff-icon { display: grid; place-items: center; width: 48px; height: 48px; color: rgba(255,255,255,.82); border: 1px solid rgba(255,255,255,.19); border-radius: 10px 10px 10px 2px; }.ms-handoff-icon svg { width: 21px; height: 21px; }.ms-handoff-steps h3 { margin: 20px 0 0; color: #fff; font-size: 16px; font-weight: 590; letter-spacing: 0; }.ms-handoff-steps p { margin: 8px 0 0; color: rgba(255,255,255,.45); font-size: 12px; line-height: 1.55; }.ms-handoff-orbit { position: absolute; top: 13px; right: 0; width: 168px; height: 92px; overflow: hidden; pointer-events: none; }.ms-handoff-orbit::before { content: ""; position: absolute; right: 0; top: 11px; width: 128px; height: 128px; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; }.ms-handoff-orbit span, .ms-handoff-orbit i, .ms-handoff-orbit b { position: absolute; display: block; border-radius: 50%; }.ms-handoff-orbit span { top: 7px; right: 91px; width: 8px; height: 8px; background: rgba(255,255,255,.78); }.ms-handoff-orbit i { top: 52px; right: 9px; width: 5px; height: 5px; background: rgba(255,255,255,.5); }.ms-handoff-orbit b { top: 80px; right: 72px; width: 4px; height: 4px; background: rgba(255,255,255,.38); }@media (hover:hover) and (pointer:fine) { .ms-handoff-steps article:hover { z-index: 1; background: rgba(255,255,255,.1); transform: translateY(-4px); }.ms-handoff-steps article:hover .ms-handoff-icon { color: #0c0c10; background: rgba(255,255,255,.93); } }
-@media (max-width: 640px) { .ms-signal-ledger-grid article { grid-template-columns: 38px minmax(0,1fr); gap: 12px; min-height: 96px; }.ms-signal-icon { width: 34px; height: 34px; }.ms-signal-ledger h3 { font-size: 15px; }.ms-signal-ledger p { font-size: 11px; }.ms-handoff-storyboard { display: block; }.ms-handoff-orbit { top: 0; transform: scale(.78); transform-origin: top right; }.ms-handoff-intro { max-width: 72%; }.ms-handoff-intro p { font-size: 15px; }.ms-handoff-steps { grid-template-columns: 1fr; margin-top: 27px; }.ms-handoff-steps article { min-height: 170px; }.ms-handoff-steps h3 { margin-top: 15px; } }
+.ms-handoff-route { border-top: 1px solid rgba(255,255,255,.16); }.ms-handoff-route-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; padding: 22px 0 34px; }.ms-handoff-route-head p { max-width: 440px; margin: 0; color: rgba(255,255,255,.8); font-size: 17px; font-weight: 500; line-height: 1.32; }.ms-handoff-route-head > span { color: rgba(255,255,255,.36); font-family: var(--font-mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }.ms-handoff-stops { position: relative; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(20px,5vw,72px); }.ms-handoff-stops::before { content: ""; position: absolute; top: 25px; right: 0; left: 0; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.52), rgba(255,255,255,.18) 77%, transparent); }.ms-handoff-stops article { position: relative; min-height: 214px; padding-top: 0; }.ms-handoff-stops article:nth-child(2) { margin-top: 46px; }.ms-handoff-stops article:nth-child(3) { margin-top: 14px; }.ms-handoff-stop-mark { display: flex; align-items: center; gap: 10px; height: 51px; }.ms-handoff-stop-mark > span:first-child { display: grid; place-items: center; width: 51px; height: 51px; color: rgba(255,255,255,.84); background: #111117; border: 1px solid rgba(255,255,255,.48); border-radius: 50%; font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; }.ms-handoff-icon { display: grid; place-items: center; width: 33px; height: 33px; color: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.14); border-radius: 50%; }.ms-handoff-icon svg { width: 16px; height: 16px; }.ms-handoff-stops h3 { margin: 23px 0 0; color: #fff; font-size: 17px; font-weight: 590; letter-spacing: 0; }.ms-handoff-stops p { max-width: 260px; margin: 8px 0 0; color: rgba(255,255,255,.47); font-size: 12px; line-height: 1.6; }@media (hover:hover) and (pointer:fine) { .ms-handoff-stops article { transition: transform 180ms cubic-bezier(.22,1,.36,1); }.ms-handoff-stops article:hover { transform: translateY(-7px); }.ms-handoff-stops article:hover .ms-handoff-stop-mark > span:first-child { color: #101014; background: rgba(255,255,255,.94); }.ms-handoff-stops article:hover .ms-handoff-icon { color: #fff; border-color: rgba(255,255,255,.48); } }
+@media (max-width: 640px) { .ms-signal-index-list article { grid-template-columns: 28px 38px minmax(0,1fr); gap: 12px; min-height: 104px; }.ms-signal-icon { width: 34px; height: 34px; }.ms-signal-index h3 { font-size: 15px; }.ms-signal-index p { font-size: 11px; }.ms-signal-status { display: none; }.ms-handoff-route-head { display: block; padding-bottom: 27px; }.ms-handoff-route-head > span { display: block; margin-top: 13px; }.ms-handoff-stops { display: block; padding-left: 19px; }.ms-handoff-stops::before { top: 0; bottom: 10px; left: 0; width: 1px; height: auto; background: linear-gradient(180deg, rgba(255,255,255,.52), rgba(255,255,255,.1)); }.ms-handoff-stops article, .ms-handoff-stops article:nth-child(2), .ms-handoff-stops article:nth-child(3) { min-height: 0; margin: 0; padding-bottom: 31px; }.ms-handoff-stop-mark { margin-left: -19px; }.ms-handoff-stops h3 { margin-top: 14px; }.ms-handoff-stops p { max-width: 420px; } }
 
 /* Moonshot production desk and generation instrument. */
 .ms-workbench-shell, .ms-intelligence-shell { width: 100%; max-width: 1220px; margin: 0 auto; padding: 44px 48px 96px; }.ms-workbench-head, .ms-intelligence-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; }.ms-workbench-head h1, .ms-intelligence-head h1 { max-width: 670px; margin: 10px 0 0; font-size: 40px; font-weight: 570; line-height: 1.03; letter-spacing: 0; text-wrap: balance; }.ms-workbench-controls { display: flex; align-items: center; gap: 13px; }.ms-workbench-controls > span { color: rgba(255,255,255,.35); font-size: 9px; white-space: nowrap; }.ms-workbench-controls > button { display: inline-flex; align-items: center; gap: 7px; min-height: 38px; padding: 0 13px; color: #111116; background: #f2f2ef; border: 0; border-radius: 7px; font-size: 10px; font-weight: 650; }.ms-workbench-controls svg { width: 14px; height: 14px; }
@@ -3041,8 +3048,6 @@ html.ms-light .ms-community-pulse, .ms-light .ms-community-pulse > div + div, .m
 .ms-brief-view { align-items: flex-start !important; padding: 56px 48px 112px !important; }
 .ms-compose-shell { display: grid; width: min(100%, 1220px) !important; max-width: none !important; grid-template-columns: minmax(230px, .62fr) minmax(0, 1.38fr); gap: clamp(36px, 6vw, 96px); align-items: start; }
 .ms-compose-intro { position: sticky; top: 48px; margin: 0 !important; padding-top: 34px; text-align: left !important; }
-.ms-compose-intro-mark { width: 46px !important; height: 46px !important; margin: 0 0 20px !important; border-radius: 14px !important; }
-.ms-compose-intro-mark svg { width: 21px; height: 21px; }
 .ms-compose-intro h1 { max-width: 9ch !important; margin: 0 !important; color: rgba(248,249,253,.95); font-size: clamp(36px, 3.8vw, 54px) !important; font-weight: 400 !important; line-height: 1.02 !important; text-align: left !important; }
 .ms-compose-intro p { max-width: 33ch !important; margin: 17px 0 0 !important; color: rgba(230,235,246,.57) !important; font-size: 13px !important; text-align: left !important; }
 .ms-compose-workspace { min-width: 0; }
@@ -3224,26 +3229,1209 @@ html.ms-light .ms-vibes-library-head span { color: rgba(31,36,46,.55); }
 
 /* Light theme for the landing feature chapters (their base styles use literal
    whites for the dark stage). */
-html.ms-light .ms-signal-ledger { border-top-color: rgba(28,32,42,.18); border-bottom-color: rgba(28,32,42,.1); }
-html.ms-light .ms-signal-ledger-grid article { border-top-color: rgba(28,32,42,.1); }
+html.ms-light .ms-signal-index { border-top-color: rgba(28,32,42,.18); }
+html.ms-light .ms-signal-index-head, html.ms-light .ms-signal-index-list article { border-color: rgba(28,32,42,.1); }
 html.ms-light .ms-signal-icon { color: rgba(31,36,46,.72); border-color: rgba(28,32,42,.2); }
-html.ms-light .ms-signal-ledger h3 { color: #20242d; }
-html.ms-light .ms-signal-ledger p { color: rgba(31,36,46,.56); }
-html.ms-light .ms-handoff-storyboard { border-top-color: rgba(28,32,42,.16); }
-html.ms-light .ms-handoff-intro p { color: rgba(31,36,46,.78); }
-html.ms-light .ms-handoff-steps { background: rgba(28,32,42,.14); border-color: rgba(28,32,42,.12); }
-html.ms-light .ms-handoff-steps article { background: rgba(255,255,255,.82); }
-html.ms-light .ms-handoff-steps article:nth-child(2) { background: #ffffff; }
+html.ms-light .ms-signal-index h3 { color: #20242d; }
+html.ms-light .ms-signal-index p, html.ms-light .ms-signal-number, html.ms-light .ms-signal-status, html.ms-light .ms-signal-index-head { color: rgba(31,36,46,.56); }
+html.ms-light .ms-handoff-route { border-top-color: rgba(28,32,42,.16); }
+html.ms-light .ms-handoff-route-head p { color: rgba(31,36,46,.78); }
+html.ms-light .ms-handoff-route-head > span { color: rgba(31,36,46,.52); }
+html.ms-light .ms-handoff-stops::before { background: linear-gradient(90deg, rgba(28,32,42,.55), rgba(28,32,42,.18) 77%, transparent); }
 html.ms-light .ms-handoff-icon { color: rgba(31,36,46,.82); border-color: rgba(28,32,42,.22); }
-html.ms-light .ms-handoff-steps h3 { color: #20242d; }
-html.ms-light .ms-handoff-steps p { color: rgba(31,36,46,.56); }
-html.ms-light .ms-handoff-orbit::before { border-color: rgba(28,32,42,.22); }
-html.ms-light .ms-handoff-orbit span { background: rgba(34,39,51,.65); }
-html.ms-light .ms-handoff-orbit i { background: rgba(34,39,51,.45); }
-html.ms-light .ms-handoff-orbit b { background: rgba(34,39,51,.35); }
+html.ms-light .ms-handoff-stop-mark > span:first-child { color: rgba(31,36,46,.82); background: #f7f8fb; border-color: rgba(28,32,42,.4); }
+html.ms-light .ms-handoff-stops h3 { color: #20242d; }
+html.ms-light .ms-handoff-stops p { color: rgba(31,36,46,.56); }
 @media (hover:hover) and (pointer:fine) {
-  html.ms-light .ms-signal-ledger-grid article:hover { background: rgba(34,39,51,.05); }
-  html.ms-light .ms-signal-ledger-grid article:hover .ms-signal-icon { color: #f6f6f4; background: #22262f; }
-  html.ms-light .ms-handoff-steps article:hover { background: #fff; }
-  html.ms-light .ms-handoff-steps article:hover .ms-handoff-icon { color: #f6f6f4; background: #22262f; }
+  html.ms-light .ms-signal-index-list article:hover { background: rgba(34,39,51,.05); }
+  html.ms-light .ms-signal-index-list article:hover .ms-signal-icon, html.ms-light .ms-handoff-stops article:hover .ms-handoff-stop-mark > span:first-child { color: #f6f6f4; background: #22262f; }
+}
+@media (max-width: 640px) { html.ms-light .ms-handoff-stops::before { background: linear-gradient(180deg, rgba(28,32,42,.55), rgba(28,32,42,.1)); } }
+
+/* Landing product evidence: two distinct working surfaces replace the old
+   abstract feature ledger and process timeline. */
+.ms-generation-workbench,
+.ms-canva-workbench {
+  overflow: hidden;
+  color: rgba(248,249,253,.94);
+  background: #0d0e13;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px;
+  box-shadow: 0 22px 60px -44px rgba(0,0,0,.9);
+}
+
+.ms-generation-bar,
+.ms-canva-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 62px;
+  padding: 0 20px;
+  background: rgba(255,255,255,.025);
+  border-bottom: 1px solid rgba(255,255,255,.11);
+}
+
+.ms-generation-bar > div,
+.ms-canva-bar > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.ms-generation-bar span,
+.ms-canva-bar span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(241,244,252,.54);
+  font-size: 10.5px;
+}
+
+.ms-generation-bar span i,
+.ms-canva-bar span i {
+  width: 7px;
+  height: 7px;
+  background: #8193ff;
+  border-radius: 2px;
+  box-shadow: 0 0 0 3px rgba(129,147,255,.1);
+}
+
+.ms-generation-bar strong,
+.ms-canva-bar strong {
+  overflow: hidden;
+  color: rgba(250,251,255,.92);
+  font-size: 12px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-generation-bar > div:last-child small {
+  color: rgba(240,243,251,.45);
+  font-size: 10px;
+}
+
+.ms-generation-bar > div:last-child b {
+  padding: 5px 8px;
+  color: rgba(239,242,251,.78);
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.ms-generation-grid {
+  display: grid;
+  grid-template-columns: .82fr 1.08fr 1.42fr;
+  min-height: 430px;
+}
+
+.ms-generation-source,
+.ms-generation-outline {
+  min-width: 0;
+  padding: 24px 20px;
+  border-right: 1px solid rgba(255,255,255,.1);
+}
+
+.ms-generation-source > header,
+.ms-generation-outline > header,
+.ms-generation-render figcaption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ms-generation-source > header > span,
+.ms-generation-outline > header > span,
+.ms-generation-render figcaption > span {
+  display: grid;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: rgba(214,222,255,.9);
+  background: rgba(129,147,255,.1);
+  border: 1px solid rgba(129,147,255,.25);
+  border-radius: 6px;
+}
+
+.ms-generation-source svg,
+.ms-generation-outline svg,
+.ms-generation-render figcaption svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ms-generation-source header small,
+.ms-generation-outline header small,
+.ms-generation-render figcaption small {
+  display: block;
+  color: rgba(241,244,252,.4);
+  font-size: 9.5px;
+}
+
+.ms-generation-source header strong,
+.ms-generation-outline header strong,
+.ms-generation-render figcaption strong {
+  display: block;
+  margin-top: 2px;
+  color: rgba(250,251,255,.92);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ms-generation-source > p,
+.ms-generation-outline > p,
+.ms-generation-render figcaption p {
+  margin: 15px 0 0;
+  color: rgba(233,237,247,.5);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+.ms-generation-assets {
+  margin-top: 24px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+.ms-generation-assets > span {
+  display: grid;
+  grid-template-columns: 30px minmax(0,1fr);
+  min-height: 60px;
+  align-content: center;
+  column-gap: 9px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.ms-generation-assets i {
+  grid-row: 1 / 3;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  color: rgba(230,235,250,.66);
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 5px;
+  font-size: 8px;
+  font-style: normal;
+}
+
+.ms-generation-assets b {
+  overflow: hidden;
+  color: rgba(247,249,255,.78);
+  font-size: 10px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-generation-assets small {
+  margin-top: 2px;
+  color: rgba(233,237,247,.37);
+  font-size: 8.5px;
+}
+
+.ms-generation-palette {
+  display: flex;
+  gap: 5px;
+  margin-top: 22px;
+}
+
+.ms-generation-palette i {
+  display: block;
+  flex: 1;
+  height: 7px;
+  border-radius: 2px;
+}
+
+.ms-generation-palette i:nth-child(1) { background: #f5f5f2; }
+.ms-generation-palette i:nth-child(2) { background: #101116; }
+.ms-generation-palette i:nth-child(3) { background: #536cff; }
+.ms-generation-palette i:nth-child(4) { background: #b8beca; }
+
+.ms-generation-outline > header em {
+  margin-left: auto;
+  color: rgba(236,240,250,.34);
+  font-size: 8.5px;
+  font-style: normal;
+}
+
+.ms-generation-outline ol {
+  margin: 24px 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(255,255,255,.1);
+  list-style: none;
+}
+
+.ms-generation-outline li {
+  display: grid;
+  grid-template-columns: 28px minmax(0,1fr) 14px;
+  gap: 9px;
+  align-items: center;
+  min-height: 65px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.ms-generation-outline li > i {
+  color: rgba(219,225,244,.38);
+  font-size: 9px;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.ms-generation-outline li b,
+.ms-generation-outline li small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-generation-outline li b {
+  color: rgba(248,249,253,.84);
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+.ms-generation-outline li small {
+  margin-top: 3px;
+  color: rgba(232,236,247,.38);
+  font-size: 8.5px;
+}
+
+.ms-generation-outline li > em {
+  color: rgba(236,240,250,.28);
+  font-size: 8px;
+  font-style: normal;
+  letter-spacing: 2px;
+  writing-mode: vertical-rl;
+}
+
+.ms-generation-render {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  margin: 0;
+  padding: 20px;
+  background: rgba(255,255,255,.018);
+}
+
+.ms-generation-render > div {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  place-items: center;
+  padding: 15px;
+  background: #07080c;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 6px;
+}
+
+.ms-generation-render img {
+  display: block;
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 20px 45px -26px rgba(0,0,0,.9);
+}
+
+.ms-generation-render figcaption {
+  padding-top: 16px;
+}
+
+.ms-generation-render figcaption p {
+  margin-top: 4px;
+}
+
+/* Canva handoff is a real editing surface: filmstrip, canvas, layers. */
+.ms-canva-bar > div:last-child svg {
+  width: 15px;
+  height: 15px;
+  color: rgba(214,222,255,.82);
+}
+
+.ms-canva-grid {
+  display: grid;
+  grid-template-columns: 116px minmax(0,1fr) 292px;
+  min-height: 500px;
+}
+
+.ms-canva-filmstrip {
+  min-width: 0;
+  padding: 18px 14px;
+  background: rgba(255,255,255,.018);
+  border-right: 1px solid rgba(255,255,255,.1);
+}
+
+.ms-canva-filmstrip > span {
+  display: block;
+  margin-bottom: 13px;
+  color: rgba(239,242,250,.42);
+  font-size: 9.5px;
+}
+
+.ms-canva-filmstrip button {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 4px;
+  overflow: hidden;
+  background: rgba(255,255,255,.025);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 5px;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.ms-canva-filmstrip button.is-current {
+  background: rgba(129,147,255,.08);
+  border-color: rgba(129,147,255,.72);
+}
+
+.ms-canva-filmstrip button > i {
+  position: absolute;
+  z-index: 2;
+  top: 7px;
+  left: 7px;
+  display: grid;
+  width: 17px;
+  height: 17px;
+  place-items: center;
+  color: rgba(250,251,255,.88);
+  background: rgba(10,11,16,.82);
+  border-radius: 3px;
+  font-size: 7px;
+  font-style: normal;
+}
+
+.ms-canva-filmstrip img {
+  display: block;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.ms-canva-canvas {
+  min-width: 0;
+  padding: 18px 22px 20px;
+  background: #090a0f;
+}
+
+.ms-canva-canvas-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 29px;
+  color: rgba(240,243,251,.46);
+  font-size: 9.5px;
+}
+
+.ms-canva-canvas-head small {
+  font-size: 8.5px;
+}
+
+.ms-canva-artboard {
+  position: relative;
+  margin-top: 8px;
+  padding: 13px;
+  background: rgba(255,255,255,.035);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 6px;
+}
+
+.ms-canva-artboard img {
+  display: block;
+  width: 100%;
+  border-radius: 3px;
+}
+
+.ms-canva-selection {
+  position: absolute;
+  top: 24%;
+  right: 12%;
+  width: 35%;
+  height: 39%;
+  border: 1px solid #91a0ff;
+  pointer-events: none;
+}
+
+.ms-canva-selection i {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #f8f9ff;
+  border: 1px solid #778aff;
+}
+
+.ms-canva-selection i:nth-child(1) { top: -4px; left: -4px; }
+.ms-canva-selection i:nth-child(2) { top: -4px; right: -4px; }
+.ms-canva-selection i:nth-child(3) { bottom: -4px; left: -4px; }
+.ms-canva-selection i:nth-child(4) { right: -4px; bottom: -4px; }
+
+.ms-canva-canvas > p {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 13px 0 0;
+  color: rgba(236,240,250,.48);
+  font-size: 10px;
+}
+
+.ms-canva-canvas > p svg {
+  flex: 0 0 auto;
+  width: 13px;
+  height: 13px;
+  color: rgba(181,194,255,.85);
+}
+
+.ms-canva-layers {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 20px;
+  border-left: 1px solid rgba(255,255,255,.1);
+}
+
+.ms-canva-layers > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.ms-canva-layers > header small,
+.ms-canva-layers > header strong {
+  display: block;
+}
+
+.ms-canva-layers > header small {
+  color: rgba(237,241,251,.4);
+  font-size: 9px;
+}
+
+.ms-canva-layers > header strong {
+  margin-top: 3px;
+  color: rgba(250,251,255,.9);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ms-canva-layers > header svg {
+  width: 17px;
+  height: 17px;
+  color: rgba(196,206,255,.78);
+}
+
+.ms-canva-layer-list > span {
+  display: grid;
+  grid-template-columns: 31px minmax(0,1fr) auto;
+  gap: 9px;
+  align-items: center;
+  min-height: 52px;
+  border-bottom: 1px solid rgba(255,255,255,.085);
+}
+
+.ms-canva-layer-list i {
+  display: grid;
+  width: 31px;
+  height: 27px;
+  place-items: center;
+  color: rgba(219,226,248,.62);
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 4px;
+  font-size: 7px;
+  font-style: normal;
+}
+
+.ms-canva-layer-list b {
+  overflow: hidden;
+  color: rgba(246,248,253,.76);
+  font-size: 10px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-canva-layer-list small {
+  color: rgba(233,237,248,.34);
+  font-size: 8px;
+}
+
+.ms-canva-destination {
+  margin-top: 18px;
+  padding: 13px 0;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+.ms-canva-destination span,
+.ms-canva-destination strong,
+.ms-canva-destination small {
+  display: block;
+}
+
+.ms-canva-destination span {
+  color: rgba(236,240,250,.38);
+  font-size: 9px;
+}
+
+.ms-canva-destination strong {
+  margin-top: 4px;
+  color: rgba(249,250,254,.82);
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+.ms-canva-destination small {
+  margin-top: 4px;
+  color: rgba(233,237,248,.4);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.ms-canva-layers > button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  margin-top: auto;
+  padding: 0 13px;
+  color: #11131a;
+  background: #f2f4fb;
+  border: 0;
+  border-radius: 6px;
+  text-align: left;
+  transition: background-color 150ms ease, transform 150ms cubic-bezier(.22,1,.36,1);
+}
+
+.ms-canva-layers > button > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ms-canva-layers > button span,
+.ms-canva-layers > button small,
+.ms-canva-layers > button strong {
+  display: block;
+}
+
+.ms-canva-layers > button small {
+  color: rgba(17,19,26,.54);
+  font-size: 8px;
+}
+
+.ms-canva-layers > button strong {
+  margin-top: 1px;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+@media (hover:hover) and (pointer:fine) {
+  .ms-generation-outline li:hover,
+  .ms-generation-assets > span:hover,
+  .ms-canva-layer-list > span:hover {
+    background: rgba(255,255,255,.025);
+  }
+
+  .ms-canva-filmstrip button:hover {
+    border-color: rgba(255,255,255,.28);
+  }
+
+  .ms-canva-layers > button:hover {
+    background: #ffffff;
+  }
+
+  .ms-canva-layers > button:active {
+    transform: scale(.985);
+  }
+}
+
+html.ms-light .ms-generation-workbench,
+html.ms-light .ms-canva-workbench {
+  color: #171b24;
+  background: #f7f8fb;
+  border-color: rgba(29,34,45,.18);
+  box-shadow: 0 22px 60px -44px rgba(33,41,62,.28);
+}
+
+html.ms-light .ms-generation-bar,
+html.ms-light .ms-canva-bar,
+html.ms-light .ms-generation-source,
+html.ms-light .ms-generation-outline,
+html.ms-light .ms-canva-filmstrip,
+html.ms-light .ms-canva-layers {
+  border-color: rgba(29,34,45,.12);
+}
+
+html.ms-light .ms-generation-source header strong,
+html.ms-light .ms-generation-outline header strong,
+html.ms-light .ms-generation-render figcaption strong,
+html.ms-light .ms-generation-assets b,
+html.ms-light .ms-generation-outline li b,
+html.ms-light .ms-canva-layers > header strong,
+html.ms-light .ms-canva-layer-list b,
+html.ms-light .ms-canva-destination strong {
+  color: #202530;
+}
+
+html.ms-light .ms-generation-source > p,
+html.ms-light .ms-generation-outline > p,
+html.ms-light .ms-generation-render figcaption p,
+html.ms-light .ms-canva-canvas > p,
+html.ms-light .ms-canva-destination small {
+  color: #5e687b;
+}
+
+html.ms-light .ms-generation-assets > span,
+html.ms-light .ms-generation-outline ol,
+html.ms-light .ms-generation-outline li,
+html.ms-light .ms-canva-layer-list > span,
+html.ms-light .ms-canva-layers > header,
+html.ms-light .ms-canva-destination {
+  border-color: rgba(29,34,45,.11);
+}
+
+html.ms-light .ms-generation-assets i,
+html.ms-light .ms-canva-layer-list i,
+html.ms-light .ms-generation-source > header > span,
+html.ms-light .ms-generation-outline > header > span,
+html.ms-light .ms-generation-render figcaption > span {
+  color: #4659ce;
+  background: rgba(83,101,216,.08);
+  border-color: rgba(83,101,216,.2);
+}
+
+html.ms-light .ms-generation-render > div,
+html.ms-light .ms-canva-canvas {
+  background: #eceff5;
+}
+
+html.ms-light .ms-canva-artboard {
+  background: #f8f9fb;
+  border-color: rgba(29,34,45,.13);
+}
+
+html.ms-light .ms-canva-filmstrip button {
+  background: #ffffff;
+  border-color: rgba(29,34,45,.14);
+}
+
+@media (max-width: 900px) {
+  .ms-generation-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .ms-generation-render {
+    grid-column: 1 / -1;
+    min-height: 430px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+
+  .ms-canva-grid {
+    grid-template-columns: 100px minmax(0,1fr);
+  }
+
+  .ms-canva-layers {
+    grid-column: 1 / -1;
+    min-height: 420px;
+    border-top: 1px solid rgba(255,255,255,.1);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .ms-generation-workbench,
+  .ms-canva-workbench {
+    margin-top: 40px !important;
+  }
+
+  .ms-generation-bar,
+  .ms-canva-bar {
+    min-height: 58px;
+    padding-inline: 14px;
+  }
+
+  .ms-generation-bar > div:last-child small,
+  .ms-canva-bar > div:last-child span {
+    display: none;
+  }
+
+  .ms-generation-grid {
+    display: block;
+  }
+
+  .ms-generation-source,
+  .ms-generation-outline {
+    padding: 20px 16px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+
+  .ms-generation-render {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .ms-canva-grid {
+    display: block;
+  }
+
+  .ms-canva-filmstrip {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 8px;
+    padding: 14px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+
+  .ms-canva-filmstrip > span {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+
+  .ms-canva-filmstrip button {
+    margin: 0;
+  }
+
+  .ms-canva-canvas {
+    padding: 14px;
+  }
+
+  .ms-canva-layers {
+    min-height: 410px;
+    padding: 18px 16px;
+  }
+}
+
+/* Landing evidence v2: art-directed product boards instead of equal-column
+   mock dashboards. The artifact stays nocturnal in both site themes. */
+.ms-generation-workbench {
+  position: relative;
+  min-height: 650px;
+  padding-top: 70px;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.ms-generation-workbench .ms-generation-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  min-height: 52px;
+  padding: 0 4px;
+  background: transparent;
+  border-top: 1px solid rgba(255,255,255,.16);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.ms-generation-grid {
+  position: relative;
+  display: block;
+  min-height: 560px;
+}
+
+.ms-generation-source,
+.ms-generation-outline,
+.ms-generation-render {
+  position: absolute;
+  overflow: hidden;
+  background: #101117;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 8px;
+}
+
+.ms-generation-source {
+  z-index: 3;
+  top: 46px;
+  left: 0;
+  width: 29%;
+  min-height: 404px;
+  padding: 23px 20px;
+  box-shadow: 0 28px 60px -42px rgba(0,0,0,.9);
+}
+
+.ms-generation-outline {
+  z-index: 4;
+  bottom: 0;
+  left: 23%;
+  width: 36%;
+  min-height: 422px;
+  padding: 23px 20px;
+  box-shadow: 0 30px 70px -38px rgba(0,0,0,.94);
+}
+
+.ms-generation-render {
+  z-index: 1;
+  top: 0;
+  right: 0;
+  width: 66%;
+  height: 500px;
+  padding: 20px;
+  background: #090a0f;
+  box-shadow: 0 40px 90px -52px rgba(0,0,0,.95);
+}
+
+.ms-generation-render > div {
+  padding: 18px;
+  background: #05060a;
+}
+
+.ms-generation-render figcaption {
+  min-height: 72px;
+}
+
+.ms-generation-render figcaption > div {
+  min-width: 0;
+}
+
+.ms-generation-render figcaption p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-generation-source,
+.ms-generation-outline {
+  border-right: 1px solid rgba(255,255,255,.14);
+}
+
+.ms-generation-outline ol {
+  margin-top: 20px;
+}
+
+.ms-generation-outline li {
+  min-height: 60px;
+}
+
+.ms-canva-workbench {
+  position: relative;
+  min-height: 690px;
+  padding-top: 70px;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.ms-canva-workbench .ms-canva-bar {
+  position: absolute;
+  top: 0;
+  right: 25%;
+  left: 0;
+  min-height: 52px;
+  padding: 0 4px;
+  background: transparent;
+  border-top: 1px solid rgba(255,255,255,.16);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.ms-canva-grid {
+  position: relative;
+  display: block;
+  min-height: 610px;
+}
+
+.ms-canva-canvas {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 78%;
+  height: 548px;
+  padding: 18px 22px 20px;
+  overflow: hidden;
+  background: #090a0f;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 8px;
+  box-shadow: 0 36px 80px -48px rgba(0,0,0,.95);
+}
+
+.ms-canva-artboard {
+  max-height: 445px;
+  overflow: hidden;
+}
+
+.ms-canva-layers {
+  position: absolute;
+  z-index: 4;
+  top: 38px;
+  right: 0;
+  width: 30%;
+  height: 510px;
+  min-height: 0;
+  padding: 20px;
+  overflow: hidden;
+  background: #111218;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px;
+  box-shadow: 0 32px 75px -40px rgba(0,0,0,.95);
+}
+
+.ms-canva-filmstrip {
+  position: absolute;
+  z-index: 5;
+  bottom: 0;
+  left: 28px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 52%;
+  min-height: 112px;
+  padding: 13px;
+  background: #15161d;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 7px;
+  box-shadow: 0 26px 60px -34px rgba(0,0,0,.92);
+}
+
+.ms-canva-filmstrip > span {
+  flex: 0 0 42px;
+  margin: 0;
+  text-align: center;
+}
+
+.ms-canva-filmstrip button {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+}
+
+.ms-canva-layers > button {
+  flex: 0 0 auto;
+}
+
+/* Keep the embedded product board dark when the surrounding landing flips. */
+html.ms-light .ms-generation-workbench,
+html.ms-light .ms-canva-workbench {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+html.ms-light .ms-generation-source,
+html.ms-light .ms-generation-outline,
+html.ms-light .ms-canva-layers,
+html.ms-light .ms-canva-filmstrip {
+  color: rgba(248,249,253,.94);
+  background: #111218;
+  border-color: rgba(255,255,255,.15);
+}
+
+html.ms-light .ms-generation-render,
+html.ms-light .ms-generation-render > div,
+html.ms-light .ms-canva-canvas {
+  background: #090a0f;
+  border-color: rgba(255,255,255,.14);
+}
+
+html.ms-light .ms-canva-artboard {
+  background: rgba(255,255,255,.035);
+  border-color: rgba(255,255,255,.1);
+}
+
+html.ms-light .ms-generation-bar strong,
+html.ms-light .ms-canva-bar strong,
+html.ms-light .ms-generation-source header strong,
+html.ms-light .ms-generation-outline header strong,
+html.ms-light .ms-generation-render figcaption strong,
+html.ms-light .ms-generation-assets b,
+html.ms-light .ms-generation-outline li b,
+html.ms-light .ms-canva-layers > header strong,
+html.ms-light .ms-canva-layer-list b,
+html.ms-light .ms-canva-destination strong {
+  color: rgba(250,251,255,.92);
+}
+
+html.ms-light .ms-generation-bar span,
+html.ms-light .ms-canva-bar span,
+html.ms-light .ms-generation-source > p,
+html.ms-light .ms-generation-outline > p,
+html.ms-light .ms-generation-render figcaption p,
+html.ms-light .ms-canva-canvas > p,
+html.ms-light .ms-canva-destination small {
+  color: rgba(233,237,247,.52);
+}
+
+html.ms-light .ms-generation-assets > span,
+html.ms-light .ms-generation-outline ol,
+html.ms-light .ms-generation-outline li,
+html.ms-light .ms-canva-layer-list > span,
+html.ms-light .ms-canva-layers > header,
+html.ms-light .ms-canva-destination {
+  border-color: rgba(255,255,255,.1);
+}
+
+html.ms-light .ms-generation-assets i,
+html.ms-light .ms-canva-layer-list i,
+html.ms-light .ms-generation-source > header > span,
+html.ms-light .ms-generation-outline > header > span,
+html.ms-light .ms-generation-render figcaption > span {
+  color: rgba(214,222,255,.9);
+  background: rgba(129,147,255,.1);
+  border-color: rgba(129,147,255,.25);
+}
+
+html.ms-light .ms-canva-filmstrip button {
+  background: rgba(255,255,255,.025);
+  border-color: rgba(255,255,255,.1);
+}
+
+html.ms-light .ms-generation-workbench .ms-generation-bar,
+html.ms-light .ms-canva-workbench .ms-canva-bar {
+  border-color: rgba(24,30,42,.14);
+}
+
+html.ms-light .ms-generation-bar strong,
+html.ms-light .ms-canva-bar strong {
+  color: #202631;
+}
+
+html.ms-light .ms-generation-bar span,
+html.ms-light .ms-canva-bar span {
+  color: #667084;
+}
+
+html.ms-light .ms-generation-bar > div:last-child small {
+  color: #667084;
+}
+
+html.ms-light .ms-generation-bar > div:last-child b {
+  color: #3e4758;
+  background: rgba(31,38,52,.045);
+  border-color: rgba(31,38,52,.12);
+}
+
+html.ms-light .ms-canva-bar > div:last-child svg {
+  color: #687287;
+}
+
+@media (max-width: 900px) {
+  .ms-generation-workbench,
+  .ms-canva-workbench {
+    min-height: 0;
+    padding-top: 0;
+    overflow: hidden;
+    background: #0d0e13;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 8px;
+  }
+
+  .ms-generation-workbench .ms-generation-bar,
+  .ms-canva-workbench .ms-canva-bar {
+    position: static;
+    min-height: 58px;
+    padding: 0 16px;
+  }
+
+  .ms-generation-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    min-height: 0;
+  }
+
+  .ms-generation-source,
+  .ms-generation-outline,
+  .ms-generation-render {
+    position: static;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .ms-generation-render {
+    grid-column: 1 / -1;
+    min-height: 430px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+
+  .ms-canva-grid {
+    display: grid;
+    grid-template-columns: 100px minmax(0,1fr);
+    min-height: 0;
+  }
+
+  .ms-canva-filmstrip,
+  .ms-canva-canvas,
+  .ms-canva-layers {
+    position: static;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .ms-canva-filmstrip {
+    display: block;
+    min-height: 0;
+    padding: 18px 14px;
+  }
+
+  .ms-canva-filmstrip > span {
+    display: block;
+    margin-bottom: 13px;
+  }
+
+  .ms-canva-filmstrip button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .ms-canva-canvas {
+    min-height: 500px;
+  }
+
+  .ms-canva-layers {
+    grid-column: 1 / -1;
+    min-height: 420px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+}
+
+@media (max-width: 640px) {
+  .ms-generation-bar > div:first-child,
+  .ms-canva-bar > div:first-child {
+    width: 100%;
+  }
+
+  .ms-generation-bar > div:last-child,
+  .ms-canva-bar > div:last-child {
+    display: none;
+  }
+
+  .ms-generation-grid,
+  .ms-canva-grid {
+    display: block;
+  }
+
+  .ms-generation-source,
+  .ms-generation-outline,
+  .ms-generation-render,
+  .ms-canva-filmstrip,
+  .ms-canva-canvas,
+  .ms-canva-layers {
+    width: auto;
+  }
+
+  .ms-generation-render,
+  .ms-canva-canvas {
+    min-height: 0;
+  }
+
+  .ms-canva-filmstrip {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
 }

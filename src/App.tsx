@@ -11,6 +11,7 @@ import {
 } from "@phosphor-icons/react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { Sidebar } from "./components/Sidebar";
 import { BriefForm } from "./components/studio/BriefForm";
@@ -99,6 +100,7 @@ export default function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [studioEditorOpen, setStudioEditorOpen] = useState(false);
   const [learnEditorOpen, setLearnEditorOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   // Learn is a page inside Moonshot, so it no longer re-themes the whole product.
   useEffect(() => {
@@ -698,6 +700,8 @@ export default function App() {
     );
   };
 
+  const editorOpen = (view === "studio" && studioEditorOpen) || (view === "learn" && learnEditorOpen);
+
   return (
     <TooltipProvider delayDuration={200}>
       <div className="ms-app-shell h-screen w-screen overflow-hidden text-foreground">
@@ -718,8 +722,16 @@ export default function App() {
             isAdmin={isAdmin}
           />
           <main className="ms-app-main relative flex min-h-0 min-w-0 flex-col overflow-hidden bg-card">
-            <div className="ms-app-view min-h-0 flex-1 overflow-hidden">
-              <div className="h-full">
+            <div className="ms-app-view relative min-h-0 flex-1 overflow-hidden">
+              <AnimatePresence initial={false} mode="sync">
+              <motion.div
+                key={`${view}:${editorOpen ? "editor" : "index"}`}
+                className="ms-view-transition h-full"
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: reduceMotion ? 0.08 : 0.16, ease: [0.23, 1, 0.32, 1] }}
+              >
               {view === "studio" && (
                 studioEditorOpen ? renderStudio() : (
                   <DashboardView
@@ -754,7 +766,8 @@ export default function App() {
                   onReset={resetSettings}
                 />
               )}
-              </div>
+              </motion.div>
+              </AnimatePresence>
             </div>
             <MobileNav view={view} setView={setView} onOpenDashboard={openDashboard} />
           </main>
@@ -780,8 +793,8 @@ const MOBILE_NAV: { id: View; label: string; icon: typeof LayoutTemplate }[] = [
   { id: "studio", label: "Home", icon: LayoutTemplate },
   { id: "learn", label: "Learn", icon: BookOpen },
   { id: "insights", label: "Insights", icon: BarChart3 },
-  { id: "community", label: "Library", icon: Globe },
-  { id: "vibes", label: "Vibes", icon: Palette },
+  { id: "community", label: "Explore", icon: Globe },
+  { id: "vibes", label: "Brand", icon: Palette },
   { id: "settings", label: "Settings", icon: Settings2 },
 ];
 

@@ -127,43 +127,104 @@ export function FeatureScene({
           </motion.div>
         </div>
 
-        {variant === "signal" ? <SignalLedger points={points} /> : <HandoffStoryboard points={points} />}
+        {variant === "signal" ? <GenerationWorkbench points={points} /> : <CanvaWorkbench points={points} />}
       </div>
     </section>
   );
 }
 
-function SignalLedger({ points }: Pick<Props, "points">) {
+function GenerationWorkbench({ points }: Pick<Props, "points">) {
+  const SourceIcon = points[0].icon;
+  const OutlineIcon = points[1].icon;
+  const RenderIcon = points[2].icon;
   return (
-    <div className="ms-signal-ledger mt-16">
-      <div className="ms-signal-ledger-grid">
-        {points.map((point, index) => {
-          const Icon = point.icon;
-          return <motion.article key={point.label} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.38, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}>
-            <div className="ms-signal-icon"><Icon strokeWidth={1.65} /></div>
-            <div><h3>{point.label}</h3><p>{point.body}</p></div>
-          </motion.article>;
-        })}
+    <motion.div
+      className="ms-generation-workbench mt-16"
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-70px" }}
+      transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+      aria-label="From source material to rendered presentation"
+    >
+      <header className="ms-generation-bar">
+        <div><span><i /> Brand system active</span><strong>Product launch / PS5 Pro</strong></div>
+        <div><small>Outline approved</small><b>6 slides</b></div>
+      </header>
+
+      <div className="ms-generation-grid">
+        <section className="ms-generation-source">
+          <header><span><SourceIcon strokeWidth={1.7} /></span><div><small>Source</small><strong>{points[0].label}</strong></div></header>
+          <p>{points[0].body}</p>
+          <div className="ms-generation-assets">
+            <span><i>PS</i><b>brand-system.pdf</b><small>4.8 MB</small></span>
+            <span><i>AI</i><b>launch-brief.docx</b><small>2 pages</small></span>
+            <span><i>URL</i><b>playstation.com</b><small>Reference</small></span>
+          </div>
+          <div className="ms-generation-palette" aria-label="Inferred palette"><i /><i /><i /><i /></div>
+        </section>
+
+        <section className="ms-generation-outline">
+          <header><span><OutlineIcon strokeWidth={1.7} /></span><div><small>Narrative</small><strong>{points[1].label}</strong></div><em>Drag to reorder</em></header>
+          <p>{points[1].body}</p>
+          <ol>
+            {["A generational leap", "Inside the new GPU", "Built for what comes next", "The games define it"].map((item, index) => (
+              <li key={item}><i>{String(index + 1).padStart(2, "0")}</i><span><b>{item}</b><small>{["Opening", "Product", "Vision", "Close"][index]}</small></span><em>••</em></li>
+            ))}
+          </ol>
+        </section>
+
+        <figure className="ms-generation-render">
+          <div><img src="/samples/ps5/ps51.webp" alt="Rendered PlayStation 5 Pro presentation cover" /></div>
+          <figcaption><span><RenderIcon strokeWidth={1.7} /></span><div><small>Rendered slide</small><strong>{points[2].label}</strong><p>{points[2].body}</p></div></figcaption>
+        </figure>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-function HandoffStoryboard({ points }: Pick<Props, "points">) {
+function CanvaWorkbench({ points }: Pick<Props, "points">) {
+  const BatchIcon = points[0].icon;
+  const EditIcon = points[1].icon;
+  const OpenIcon = points[2].icon;
+  const slides = ["/samples/future/future1.webp", "/samples/future/future2.webp", "/samples/future/future3.webp"];
   return (
-    <div className="ms-handoff-storyboard mt-16">
-      <div className="ms-handoff-orbit" aria-hidden="true"><span /><i /><b /></div>
-      <div className="ms-handoff-intro"><p>Not an export. A working file with room to keep directing the idea.</p></div>
-      <div className="ms-handoff-steps">
-        {points.map((point, index) => {
-          const Icon = point.icon;
-          return <motion.article key={point.label} initial={{ opacity: 0, y: 16, filter: "blur(3px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.42, delay: index * 0.09, ease: [0.22, 1, 0.36, 1] }}>
-            <div className="ms-handoff-icon"><Icon strokeWidth={1.55} /></div>
-            <h3>{point.label}</h3>
-            <p>{point.body}</p>
-          </motion.article>;
-        })}
+    <motion.div
+      className="ms-canva-workbench mt-16"
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-70px" }}
+      transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+      aria-label="Editable presentation handoff to Canva"
+    >
+      <header className="ms-canva-bar">
+        <div><span><i /> Moonshot deck</span><strong>The future of AI interfaces</strong></div>
+        <div><BatchIcon strokeWidth={1.7} /><span>3 slides selected</span></div>
+      </header>
+
+      <div className="ms-canva-grid">
+        <aside className="ms-canva-filmstrip" aria-label="Selected slides">
+          <span>Slides</span>
+          {slides.map((slide, index) => <button type="button" key={slide} className={index === 1 ? "is-current" : ""} aria-label={`Select slide ${index + 1}`}><i>{index + 1}</i><img src={slide} alt="" /></button>)}
+        </aside>
+
+        <section className="ms-canva-canvas">
+          <div className="ms-canva-canvas-head"><span>Slide 02</span><small>1920 × 1080</small></div>
+          <div className="ms-canva-artboard">
+            <img src="/samples/future/future2.webp" alt="AI interfaces presentation slide ready for editing" />
+            <span className="ms-canva-selection" aria-hidden="true"><i /><i /><i /><i /></span>
+          </div>
+          <p><EditIcon strokeWidth={1.7} /> {points[1].body}</p>
+        </section>
+
+        <aside className="ms-canva-layers">
+          <header><div><small>Canva handoff</small><strong>{points[1].label}</strong></div><EditIcon strokeWidth={1.7} /></header>
+          <div className="ms-canva-layer-list">
+            {["Headline", "Editorial image", "Evidence labels", "Footer and folio"].map((layer, index) => <span key={layer}><i>{["T", "IMG", "TAG", "TXT"][index]}</i><b>{layer}</b><small>{index === 1 ? "Image" : "Text"}</small></span>)}
+          </div>
+          <div className="ms-canva-destination"><span>Opens in</span><strong>aldyarsadirbai's Canva</strong><small>{points[2].body}</small></div>
+          <button type="button"><OpenIcon strokeWidth={1.8} /><span><small>{points[2].label}</small><strong>Open editable deck</strong></span></button>
+        </aside>
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -1,21 +1,18 @@
-import { type FormEvent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import {
-  ArrowRight,
   ArrowSquareOut as ArrowUpRight,
   ChartBar as BarChart3,
   ClockCounterClockwise,
   FolderSimple,
-  Funnel,
+  GridFour as Grid2X2,
   List,
   MagnifyingGlass as Search,
   Plus,
-  Sparkle as Sparkles,
-  SquaresFour as Grid2X2,
 } from "@phosphor-icons/react";
 
 import type { Deck } from "@/types";
-import { cn, deckTitle } from "@/lib/utils";
+import { deckTitle } from "@/lib/utils";
 
 interface Props {
   decks: Deck[];
@@ -25,8 +22,6 @@ interface Props {
   onOpenInsights: (id: string) => void;
 }
 
-type Layout = "grid" | "list";
-type Filter = "all" | "active" | "ready";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 function completed(deck: Deck) {
@@ -49,104 +44,124 @@ function updated(value: number) {
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(value);
 }
 
+function phase(deck: Deck) {
+  if (deck.phase === "brief" || deck.phase === "outline") return "Story";
+  return completed(deck) >= deck.slideCount && deck.slideCount > 0 ? "Review" : "Design";
+}
+
+const createPaths = [
+  { icon: Plus, title: "Blank deck", note: "Start with a clear frame" },
+  { icon: List, title: "From brief", note: "Build the narrative first", brief: true },
+  { icon: FolderSimple, title: "Import deck", note: "Bring in existing material" },
+  { icon: Grid2X2, title: "Templates", note: "Begin from an approved system" },
+  { icon: BarChart3, title: "From data", note: "Turn evidence into a story" },
+];
+
 export function DashboardView({ decks, onCreate, onCreateFromBrief, onOpen, onOpenInsights }: Props) {
-  const [brief, setBrief] = useState("");
   const [query, setQuery] = useState("");
-  const [layout, setLayout] = useState<Layout>("grid");
-  const [filter, setFilter] = useState<Filter>("all");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
   const reduce = useReducedMotion();
-  const date = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "short", day: "numeric" }).format(new Date());
   const recent = useMemo(() => [...decks].sort((a, b) => b.updatedAt - a.updatedAt), [decks]);
-  const filtered = useMemo(() => {
+  const projects = useMemo(() => {
     const term = query.trim().toLowerCase();
-    const matched = term ? recent.filter((deck) => `${deckTitle(deck)} ${deck.brief}`.toLowerCase().includes(term)) : recent;
-    if (filter === "active") return matched.filter((deck) => completed(deck) < deck.slideCount);
-    if (filter === "ready") return matched.filter((deck) => deck.slideCount > 0 && completed(deck) >= deck.slideCount);
-    return matched;
-  }, [filter, query, recent]);
-  const selected = recent.find((deck) => deck.id === selectedId) ?? filtered[0] ?? recent[0] ?? null;
-  const rendered = decks.reduce((sum, deck) => sum + completed(deck), 0);
+    return term ? recent.filter((deck) => `${deckTitle(deck)} ${deck.brief}`.toLowerCase().includes(term)) : recent;
+  }, [query, recent]);
   const entry = (delay = 0) => reduce
     ? { initial: { opacity: 0 }, animate: { opacity: 1 } }
-    : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: .28, delay, ease } };
-
-  const submit = (event: FormEvent) => {
-    event.preventDefault();
-    const value = brief.trim();
-    if (!value) return;
-    onCreateFromBrief(value);
-    setBrief("");
-  };
+    : { initial: { opacity: 0, y: 4 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.18, delay, ease } };
 
   return (
-    <main className="ms-library h-full overflow-y-auto">
-      <div className="ms-library-canvas">
-        <motion.header className="ms-library-intro" {...entry()}>
+    <main className="ms-library ms-home h-full overflow-y-auto">
+      <div className="ms-home-canvas">
+        <motion.header className="ms-home-head" {...entry()}>
           <div>
-            <div className="ms-library-eyebrow">{date}</div>
-            <h1>Library</h1>
-            <p>A focused place for every deck, working thought, and visual direction in motion.</p>
+            <h1>Presentations</h1>
+            <p>Create, continue, and review every deck moving through your workspace.</p>
           </div>
-          <div className="ms-library-intro-actions"><label className="ms-library-search"><Search /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search your decks" aria-label="Search your decks" /></label><button type="button" onClick={onCreate} className="ms-library-new"><Plus /> New deck</button></div>
+          <div className="ms-home-head-actions">
+            <label className="ms-home-search"><Search /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search projects" aria-label="Search projects" /></label>
+            <button type="button" className="ms-home-new" onClick={onCreate}><Plus /> New presentation</button>
+          </div>
         </motion.header>
 
-        <motion.form className="ms-library-compose" onSubmit={submit} {...entry(.04)}>
-          <Sparkles weight="duotone" />
-          <label>
-            <span>Create from a prompt</span>
-            <input value={brief} onChange={(event) => setBrief(event.target.value)} placeholder="A decision, a launch, a story worth seeing clearly..." />
-          </label>
-          <button type="submit" disabled={!brief.trim()} aria-label="Create a deck from this brief"><ArrowRight /></button>
-        </motion.form>
-
-        <motion.section className="ms-library-workspace" {...entry(.09)}>
-          <div className="ms-library-focus">
-            <div className="ms-library-section-label"><span>Selected deck</span><i /> {selected ? updated(selected.updatedAt) : "New workspace"}</div>
-            {selected ? <FeaturedDeck deck={selected} onOpen={onOpen} onOpenInsights={onOpenInsights} /> : <button type="button" className="ms-library-empty-focus" onClick={onCreate}><Plus /> Create your first deck</button>}
+        <motion.section className="ms-home-create" aria-label="Create a presentation" {...entry(.05)}>
+          <div className="ms-home-create-head"><span>New presentation</span><p>Choose a starting point.</p></div>
+          <div className="ms-home-create-strip">
+            {createPaths.map(({ icon: Icon, title, note, brief }) => (
+              <button key={title} type="button" onClick={() => brief ? onCreateFromBrief("") : onCreate()}>
+                <Icon weight="regular" /><strong>{title}</strong><small>{note}</small><ArrowUpRight />
+              </button>
+            ))}
           </div>
-          {selected && <LibraryInspector deck={selected} onOpen={onOpen} onOpenInsights={onOpenInsights} />}
         </motion.section>
 
-        <section className="ms-library-index">
-          <motion.div className="ms-library-index-head" {...entry(.14)}>
-            <div><span>All decks</span><h2>{query ? "Search results" : "Everything in the library"}</h2></div>
-            <div className="ms-library-index-tools"><div className="ms-library-filters" role="group" aria-label="Filter decks"><Funnel /><button type="button" className={filter === "all" ? "is-active" : ""} onClick={() => setFilter("all")}>All</button><button type="button" className={filter === "active" ? "is-active" : ""} onClick={() => setFilter("active")}>Active</button><button type="button" className={filter === "ready" ? "is-active" : ""} onClick={() => setFilter("ready")}>Ready</button></div><p>{rendered} slides rendered / {filtered.length} deck{filtered.length === 1 ? "" : "s"}</p><div role="group" aria-label="Library layout"><button type="button" className={layout === "grid" ? "is-active" : ""} onClick={() => setLayout("grid")} aria-label="Grid layout"><Grid2X2 /></button><button type="button" className={layout === "list" ? "is-active" : ""} onClick={() => setLayout("list")} aria-label="List layout"><List /></button></div></div>
-          </motion.div>
-          {filtered.length ? (
-            <div className={`ms-library-items is-${layout}`}>
-              <button type="button" className="ms-library-compose-tile" onClick={onCreate}><Plus /><span>Start with a blank page</span><small>Set the decision, then shape the story.</small></button>
-              {filtered.map((deck, index) => <DeckCard key={deck.id} deck={deck} index={index} layout={layout} reduce={!!reduce} selected={deck.id === selected?.id} onPreview={setSelectedId} onOpen={onOpen} />)}
+        <div className="ms-home-workspace">
+          <motion.section className="ms-home-projects" {...entry(.1)}>
+            <div className="ms-home-section-head"><div><h2>{query ? "Project results" : "Recent projects"}</h2></div><p>{projects.length} project{projects.length === 1 ? "" : "s"}</p></div>
+            {projects.length ? (
+              <div className="ms-home-project-grid">
+                {projects.map((deck, index) => <ProjectCard key={deck.id} deck={deck} index={index} reduce={!!reduce} onOpen={onOpen} />)}
+              </div>
+            ) : (
+              <button type="button" className="ms-home-empty" onClick={onCreate}><Plus /><span>No matching projects</span><small>Start a new presentation or change your search.</small></button>
+            )}
+
+            <div className="ms-home-spaces">
+              <div className="ms-home-section-head"><div><span>Project spaces</span><h2>Where the work lives</h2></div></div>
+              <div className="ms-home-space-list">
+                <Space name="Personal" note="Your active presentations" count={recent.length} />
+                <Space name="Client work" note="Shared decks and approvals" count={Math.max(0, recent.length - 1)} />
+                <Space name="Archived" note="Finished work, kept close" count={0} />
+              </div>
             </div>
-          ) : <div className="ms-library-empty-results"><FolderSimple weight="duotone" /><div><strong>No {filter === "all" ? "matching" : filter} decks yet.</strong><p>Try another view, or start a new deck from a blank page.</p></div><button type="button" onClick={() => { setFilter("all"); setQuery(""); }}>Show all decks</button></div>}
-        </section>
+          </motion.section>
+
+          <motion.aside className="ms-home-review" {...entry(.15)}>
+            <div className="ms-home-section-head"><div><span>Review activity</span><h2>Needs attention</h2></div><button type="button" aria-label="Open insights"><BarChart3 /></button></div>
+            <div className="ms-home-review-list">
+              {recent.slice(0, 4).map((deck, index) => <ReviewItem key={deck.id} deck={deck} index={index} onOpenInsights={onOpenInsights} />)}
+              {!recent.length && <div className="ms-home-review-empty"><ClockCounterClockwise /><p>Review signals appear as projects move from story to delivery.</p></div>}
+            </div>
+            <button type="button" className="ms-home-review-all" onClick={() => recent[0] && onOpenInsights(recent[0].id)}>Open review queue <ArrowUpRight /></button>
+          </motion.aside>
+        </div>
       </div>
     </main>
   );
 }
 
-function FeaturedDeck({ deck, onOpen, onOpenInsights }: { deck: Deck; onOpen: (id: string) => void; onOpenInsights: (id: string) => void }) {
+function ProjectCard({ deck, index, reduce, onOpen }: { deck: Deck; index: number; reduce: boolean; onOpen: (id: string) => void }) {
   const image = cover(deck);
   const done = completed(deck);
-  const progress = deck.slideCount ? Math.round(done / deck.slideCount * 100) : 0;
-  return <article className="ms-library-feature">
-    <button type="button" className="ms-library-feature-cover" onClick={() => onOpen(deck.id)}>{image ? <img src={image} alt="" /> : <span>{deckTitle(deck).slice(0, 1)}</span>}</button>
-    <div className="ms-library-feature-copy"><span>Updated {updated(deck.updatedAt)}</span><h3>{deckTitle(deck)}</h3><p>{deck.brief || "The story is ready for its first clear decision."}</p><div><i><b style={{ transform: `scaleX(${progress / 100})` }} /></i><small>{done} of {deck.slideCount} slides ready</small></div></div>
-    <div className="ms-library-feature-actions"><button type="button" onClick={() => onOpen(deck.id)}>Open deck <ArrowUpRight /></button><button type="button" onClick={() => onOpenInsights(deck.id)} aria-label={`View insights for ${deckTitle(deck)}`}><BarChart3 /> Insights</button></div>
-  </article>;
+  const state = phase(deck);
+  const initial = deckTitle(deck).slice(0, 1).toUpperCase();
+  return (
+    <motion.button
+      type="button"
+      onClick={() => onOpen(deck.id)}
+      className="ms-home-project"
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: .26, delay: reduce ? 0 : Math.min(index * .05, .22), ease }}
+    >
+      <span className="ms-home-project-cover">{image ? <img src={image} alt="" /> : <i>{initial}</i>}<em>{state}</em></span>
+      <span className="ms-home-project-copy"><strong>{deckTitle(deck)}</strong><small>{done} of {deck.slideCount} slides <b>·</b> Updated {updated(deck.updatedAt)}</small></span>
+      <span className="ms-home-project-meta"><span>{state === "Review" ? "Ready for review" : `${Math.max(deck.slideCount - done, 0)} left`}</span><i>{initial}</i></span>
+    </motion.button>
+  );
 }
 
-function LibraryInspector({ deck, onOpen, onOpenInsights }: { deck: Deck; onOpen: (id: string) => void; onOpenInsights: (id: string) => void }) {
+function ReviewItem({ deck, index, onOpenInsights }: { deck: Deck; index: number; onOpenInsights: (id: string) => void }) {
   const done = completed(deck);
-  return <aside className="ms-library-inspector"><div><span>Deck details</span><strong>{deck.mode === "edu" ? "Learning deck" : "Presentation"}</strong></div><dl><div><dt>Slides</dt><dd>{done}/{deck.slideCount}</dd></div><div><dt>Updated</dt><dd><ClockCounterClockwise /> {updated(deck.updatedAt)}</dd></div></dl><div className="ms-library-inspector-actions"><button type="button" onClick={() => onOpen(deck.id)}>Open deck <ArrowUpRight /></button><button type="button" onClick={() => onOpenInsights(deck.id)}>Inspect run</button></div></aside>;
+  const title = deckTitle(deck);
+  const messages = [
+    `${title} has ${Math.max(deck.slideCount - done, 0)} slides still in progress`,
+    `${title} is ready for a narrative check`,
+    `Review the visual system in ${title}`,
+    `Sources can be checked before delivery`,
+  ];
+  return <button type="button" onClick={() => onOpenInsights(deck.id)}><span className={`ms-home-review-mark is-${index}`}><ClockCounterClockwise /></span><p><strong>{messages[index]}</strong><small>{phase(deck)} · Updated {updated(deck.updatedAt)}</small></p><ArrowUpRight /></button>;
 }
 
-function DeckCard({ deck, index, layout, reduce, selected, onPreview, onOpen }: { deck: Deck; index: number; layout: Layout; reduce: boolean; selected: boolean; onPreview: (id: string) => void; onOpen: (id: string) => void }) {
-  const image = cover(deck);
-  const done = completed(deck);
-  return <motion.button type="button" className={cn("ms-library-deck", selected && "is-selected")} onClick={() => onOpen(deck.id)} onMouseEnter={() => onPreview(deck.id)} onFocus={() => onPreview(deck.id)} initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .22, delay: reduce ? 0 : Math.min(index * .035, .2), ease }} whileTap={{ scale: .99 }}>
-    <span className="ms-library-deck-image">{image ? <img src={image} alt="" /> : <i>{deckTitle(deck).slice(0, 1)}</i>}</span>
-    <span className="ms-library-deck-copy"><strong>{deckTitle(deck)}</strong><small>{done}/{deck.slideCount} slides / {updated(deck.updatedAt)}</small></span>
-    {layout === "list" && <ArrowUpRight />}
-  </motion.button>;
+function Space({ name, note, count }: { name: string; note: string; count: number }) {
+  return <button type="button"><FolderSimple /><span><strong>{name}</strong><small>{note}</small></span><i>{count}</i><ArrowUpRight /></button>;
 }

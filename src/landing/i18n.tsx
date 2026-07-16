@@ -21,10 +21,10 @@ const en = {
     getStarted: "Get started",
   },
   hero: {
-    title1: "The deck your",
-    title2: "brand deserves.",
+    title1: "A workspace for",
+    title2: "decks with a point of view.",
     subtitle:
-      "Write a brief, attach your brand, pick a slide count. Moonshot infers the brand, drafts an editable outline, then renders every slide — start to finish.",
+      "Brief, story, design, review and delivery live in one project. Moonshot helps at the exact step where the work needs it.",
   },
   prompt: {
     examples: [
@@ -188,10 +188,10 @@ const ru: Dict = {
     getStarted: "Начать",
   },
   hero: {
-    title1: "Презентация, достойная",
-    title2: "вашего бренда.",
+    title1: "Рабочее пространство для",
+    title2: "презентаций с точкой зрения.",
     subtitle:
-      "Напишите бриф, прикрепите материалы бренда, выберите число слайдов. Moonshot считывает бренд, готовит редактируемый план и отрисовывает каждый слайд — от начала до конца.",
+      "Бриф, история, дизайн, ревью и выпуск живут в одном проекте. Moonshot помогает именно там, где это нужно работе.",
   },
   prompt: {
     examples: [

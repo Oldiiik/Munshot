@@ -1,45 +1,152 @@
-import { type FormEvent, type ReactNode, useMemo, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { type FormEvent, useMemo, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
-  ArrowRight as ArrowRightIcon,
-  BookOpen as BookOpenIcon,
-  GraduationCap as GraduationCapIcon,
-  ListChecks as ListChecksIcon,
-  Plus as PlusIcon,
-  Sparkle as SparkleIcon,
-  Target as TargetIcon,
+  ArrowRight,
+  BookOpen,
+  Check,
+  Clock,
 } from "@phosphor-icons/react";
 
 import type { Deck } from "@/types";
 import { deckTitle } from "@/lib/utils";
+import { deckCover } from "@/lib/demo";
 
-interface Props { lessons: Deck[]; onCreate: () => void; onCreateFromTopic: (topic: string) => void; onOpen: (id: string) => void }
-const PHASE: Record<Deck["phase"], string> = { brief: "Set the lesson brief", outline: "Review learning arc", slides: "Lesson in production" };
-const PROMPTS = ["Explain photosynthesis", "Teach supply and demand", "Intro to neural networks"];
-const ease = [0.22, 1, 0.36, 1] as const;
-function rendered(lesson: Deck) { return Object.values(lesson.slides).filter((slide) => slide.status === "done").length; }
+interface Props {
+  lessons: Deck[];
+  onCreate: () => void;
+  onCreateFromTopic: (topic: string) => void;
+  onOpen: (id: string) => void;
+}
+
+type LessonFilter = "all" | "building" | "ready";
+
+const PHASE: Record<Deck["phase"], string> = {
+  brief: "Brief",
+  outline: "Learning arc",
+  slides: "Slides",
+};
+
+const ease = [0.23, 1, 0.32, 1] as const;
+
+function rendered(lesson: Deck) {
+  return Object.values(lesson.slides).filter((slide) => slide.status === "done").length;
+}
+
+function isReady(lesson: Deck) {
+  return lesson.slideCount > 0 && rendered(lesson) >= lesson.slideCount;
+}
+
+function relativeDate(timestamp: number) {
+  const elapsed = Date.now() - timestamp;
+  const hours = Math.floor(elapsed / 3_600_000);
+  if (hours < 1) return "Just now";
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return days === 1 ? "Yesterday" : `${days}d ago`;
+}
 
 export function LearnView({ lessons, onCreate, onCreateFromTopic, onOpen }: Props) {
   const [topic, setTopic] = useState("");
-  const reduce = useReducedMotion();
+  const [filter, setFilter] = useState<LessonFilter>("all");
+  const reduceMotion = useReducedMotion();
   const recent = useMemo(() => [...lessons].sort((a, b) => b.updatedAt - a.updatedAt), [lessons]);
-  const primary = recent[0] ?? null;
-  const submit = (event: FormEvent) => { event.preventDefault(); if (topic.trim()) onCreateFromTopic(topic.trim()); };
-  const entry = (delay = 0) => reduce ? { initial: { opacity: 0 }, animate: { opacity: 1 } } : { initial: { opacity: 0, y: 8, filter: "blur(3px)" }, animate: { opacity: 1, y: 0, filter: "blur(0px)" }, transition: { duration: .22, delay, ease } };
+  const visibleLessons = useMemo(
+    () => recent.filter((lesson) => filter === "all" || (filter === "ready" ? isReady(lesson) : !isReady(lesson))),
+    [filter, recent],
+  );
 
-  return <main className="ms-learning-studio h-full overflow-y-auto"><div className="ms-learning-shell">
-    <motion.header className="ms-learning-head" {...entry()}><div><h1>Give the idea a place to land.</h1><p>Build a visual lesson around one clear outcome, then let the sequence carry it.</p></div><button type="button" onClick={onCreate}><PlusIcon /> Blank lesson</button></motion.header>
+  const submit = (event: FormEvent) => {
+    event.preventDefault();
+    const nextTopic = topic.trim();
+    if (nextTopic) onCreateFromTopic(nextTopic);
+  };
 
-    <motion.form className="ms-learning-brief" onSubmit={submit} {...entry(.04)}><span><GraduationCapIcon /></span><div><label htmlFor="lesson-topic">Start with the learner</label><input id="lesson-topic" value={topic} onChange={(event) => setTopic(event.target.value)} placeholder="What should feel clear by the end?" autoComplete="off" /><div>{PROMPTS.map((prompt) => <button key={prompt} type="button" onClick={() => setTopic(prompt)}>{prompt}</button>)}</div></div><motion.button type="submit" disabled={!topic.trim()} whileTap={{ scale: .95 }}>Build lesson <ArrowRightIcon /></motion.button></motion.form>
+  const enter = reduceMotion
+    ? { initial: false as const, animate: { opacity: 1 } }
+    : {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { duration: 0.18, ease },
+      };
 
-    <section className="ms-learning-architecture"><div className="ms-learning-architecture-head"><div><h2>Give every idea a route through the learner.</h2></div><p>Moonshot uses this sequence when it plans a lesson, so the deck earns understanding before it asks for recall.</p></div><div className="ms-learning-architecture-grid"><article className="ms-learning-outcome"><span><TargetIcon /> Desired outcome</span><strong>{topic.trim() || primary?.brief || "Name what learners should be able to explain."}</strong><p>Start with a visible change in understanding, not a list of topics to cover.</p></article><ol className="ms-learning-sequence"><ArchitectureStage icon={<BookOpenIcon />} title="Activate" detail="Start from a familiar question, tension, or misconception." /><ArchitectureStage icon={<TargetIcon />} title="Model" detail="Explain one core idea with a concrete visual or analogy." /><ArchitectureStage icon={<ListChecksIcon />} title="Practice" detail="Ask learners to work with the idea before moving on." /><ArchitectureStage icon={<SparkleIcon />} title="Transfer" detail="Close with a new situation that proves the idea can travel." /></ol></div></section>
+  return (
+    <main className="ms-learn-v8">
+      <div className="ms-learn-v8-shell">
+        <motion.header className="ms-learn-v8-header" {...enter}>
+          <div>
+            <h1>Learn</h1>
+            <p>Create a visual lesson from one topic or learning outcome.</p>
+          </div>
+          <div className="ms-learn-v8-header-actions">
+            <span>{recent.length} lesson{recent.length === 1 ? "" : "s"}</span>
+          </div>
+        </motion.header>
 
-    <section className="ms-learning-work"><motion.div className="ms-learning-section-head" {...entry(.1)}><div><h2>{primary ? "Return to the lesson" : "Start your first lesson"}</h2></div><span>{recent.length} lesson{recent.length === 1 ? "" : "s"}</span></motion.div>{primary ? <LessonFocus lesson={primary} reduce={!!reduce} onOpen={onOpen} /> : <button type="button" className="ms-learning-empty" onClick={onCreate}><span><SparkleIcon /></span><div><strong>Start with the outcome.</strong><p>Moonshot will help turn it into a clear visual explanation.</p></div><ArrowRightIcon /></button>}
-      {recent.length > 1 && <div className="ms-learning-list">{recent.slice(1).map((lesson, index) => <LessonRow key={lesson.id} lesson={lesson} index={index} reduce={!!reduce} onOpen={onOpen} />)}</div>}
-    </section>
-  </div></main>;
+        <motion.form className="ms-learn-v8-composer" onSubmit={submit} {...enter}>
+          <div className="ms-learn-v8-input-row">
+            <textarea value={topic} onChange={(event) => setTopic(event.target.value)} placeholder="What should the learner understand by the end?" aria-label="Lesson topic and outcome" rows={2} />
+            <button type="submit" disabled={!topic.trim()}>Build lesson <ArrowRight weight="bold" /></button>
+          </div>
+        </motion.form>
+
+        <section className="ms-learn-v8-library">
+          <header>
+            <div><h2>Your lessons</h2></div>
+            <div className="ms-learn-v8-filters" role="tablist" aria-label="Filter lessons">
+              {(["all", "building", "ready"] as const).map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  role="tab"
+                  aria-selected={filter === item}
+                  className={filter === item ? "is-active" : ""}
+                  onClick={() => setFilter(item)}
+                >
+                  {item === "all" ? "All" : item === "building" ? "In progress" : "Ready"}
+                </button>
+              ))}
+            </div>
+          </header>
+
+          <AnimatePresence initial={false} mode="popLayout">
+            {visibleLessons.length ? (
+              <motion.div key={filter} className="ms-learn-v8-list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.14 }}>
+                {visibleLessons.map((lesson, index) => (
+                  <LessonRow key={lesson.id} lesson={lesson} featured={index === 0 && filter === "all"} onOpen={onOpen} />
+                ))}
+              </motion.div>
+            ) : (
+              <motion.button key={`empty-${filter}`} type="button" className="ms-learn-v8-empty" onClick={onCreate} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <span><BookOpen /></span>
+                <div><strong>{filter === "ready" ? "No finished lessons yet" : "No lessons here yet"}</strong><p>Start with a topic and Moonshot will prepare the first learning arc.</p></div>
+                <ArrowRight />
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </section>
+      </div>
+    </main>
+  );
 }
 
-function ArchitectureStage({ icon, title, detail }: { icon: ReactNode; title: string; detail: string }) { return <li><i>{icon}</i><div><strong>{title}</strong><small>{detail}</small></div></li>; }
-function LessonFocus({ lesson, reduce, onOpen }: { lesson: Deck; reduce: boolean; onOpen: (id: string) => void }) { const complete = rendered(lesson); const progress = lesson.slideCount ? Math.round(complete / lesson.slideCount * 100) : 0; return <motion.button type="button" className="ms-lesson-focus" onClick={() => onOpen(lesson.id)} initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .22, ease }} whileTap={{ scale: .994 }}><span className="ms-lesson-focus-symbol"><BookOpenIcon /></span><span className="ms-lesson-focus-copy"><small>{PHASE[lesson.phase]}</small><strong>{deckTitle(lesson)}</strong><em>{lesson.brief || "Your next lesson is ready for an objective."}</em><i><b style={{ transform: `scaleX(${progress / 100})` }} /></i><small>{complete} of {lesson.slideCount} slides rendered</small></span><span className="ms-lesson-focus-open">Continue <ArrowRightIcon /></span></motion.button>; }
-function LessonRow({ lesson, index, reduce, onOpen }: { lesson: Deck; index: number; reduce: boolean; onOpen: (id: string) => void }) { return <motion.button type="button" onClick={() => onOpen(lesson.id)} initial={reduce ? { opacity: 0 } : { opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .18, delay: reduce ? 0 : Math.min(index * .035, .14), ease }}><div><strong>{deckTitle(lesson)}</strong><small>{PHASE[lesson.phase]}</small></div><span>{rendered(lesson)}/{lesson.slideCount}</span><ArrowRightIcon /></motion.button>; }
+function LessonRow({ lesson, featured, onOpen }: { lesson: Deck; featured: boolean; onOpen: (id: string) => void }) {
+  const complete = rendered(lesson);
+  const progress = lesson.slideCount ? Math.min(100, Math.round((complete / lesson.slideCount) * 100)) : 0;
+  const ready = isReady(lesson);
+  const cover = deckCover(lesson);
+
+  return (
+    <button type="button" className={featured ? "ms-learn-v8-item is-featured" : "ms-learn-v8-item"} onClick={() => onOpen(lesson.id)}>
+      <span className="ms-learn-v8-cover">
+        {cover ? <img src={cover} alt="" /> : <span><BookOpen /><small>Lesson</small></span>}
+      </span>
+      <span className="ms-learn-v8-item-copy">
+        <span className="ms-learn-v8-item-state">{ready ? <><Check weight="bold" /> Ready</> : PHASE[lesson.phase]}</span>
+        <strong>{deckTitle(lesson)}</strong>
+        <small>{lesson.brief || "Add a learning outcome"}</small>
+        <span className="ms-learn-v8-progress"><i><b style={{ transform: `scaleX(${progress / 100})` }} /></i><small>{complete} of {lesson.slideCount} slides</small></span>
+      </span>
+      <span className="ms-learn-v8-item-action"><span><Clock /> {relativeDate(lesson.updatedAt)}</span><ArrowRight aria-hidden="true" /></span>
+    </button>
+  );
+}

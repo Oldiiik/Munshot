@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import {
-  Sparkle as Sparkles,
-  GraduationCap,
   Paperclip,
   Image as ImageIcon,
   FileText,
@@ -95,13 +93,6 @@ export function BriefForm({ deck, busy, status, onChange, onGenerate, onBrowseCo
         className="ms-compose-shell w-full max-w-3xl"
       >
         <div className="ms-compose-intro mb-9 text-center">
-          <div className="ms-compose-intro-mark mx-auto mb-5 grid size-14 place-items-center rounded-[20px] border border-border bg-gradient-to-b from-primary/15 to-transparent text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
-            {edu ? (
-              <GraduationCap className="size-6" />
-            ) : (
-              <Sparkles className="size-6" />
-            )}
-          </div>
           <h1 className="text-[30px] font-semibold leading-tight tracking-tight">
             {edu ? "Build a lesson from the curriculum" : "Design a deck from a brief"}
           </h1>

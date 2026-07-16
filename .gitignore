@@ -1,6 +1,8 @@
 node_modules
 dist
 visual-review
+vite.out.log
+vite.err.log
 .env
 .env.*
 .vercel
